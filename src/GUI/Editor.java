@@ -163,7 +163,11 @@ public class Editor extends javax.swing.JFrame {
     //GuardarComo
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         Tab tab = (Tab) tabs.getSelectedComponent();
-        ArchivosManager.guardarComo(tab);
+        if(tab.getOrigen() == null){
+            ArchivosManager.guardarComo(tab, true);
+        }else{
+            ArchivosManager.guardarComo(tab, false);
+        }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     //Salir

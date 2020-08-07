@@ -54,18 +54,19 @@ public class ArchivosManager {
         }
     }
     
-    public static void guardarComo(Tab tab){
+    public static void guardarComo(Tab tab, boolean cambiar){
         JFileChooser filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int resultado = filechooser.showOpenDialog(null);
         if(resultado == JFileChooser.APPROVE_OPTION){
             File temp = filechooser.getSelectedFile();
             if(temp != null){
-                String extension = JOptionPane.showInputDialog("Por favor ingrese la extension del archivo:");
-                if(extension.isEmpty() || extension == null){
-                    JOptionPane.showMessageDialog(null, "No se ingreso una extension para el archivo, no se guardaron los cambios.", "Error", JOptionPane.ERROR_MESSAGE);
+                String nombre = JOptionPane.showInputDialog("Por favor ingrese el nombre del archivo:\nNOTA: No olvide revisar la extension.", tab.getNombre()+"."+tab.getExtension());
+                if(nombre == null || nombre.isEmpty() || !nombre.contains(".")){
+                    JOptionPane.showMessageDialog(null, "No se ingreso un nombre valido para el archivo, no se guardaron los cambios.", "Error", JOptionPane.ERROR_MESSAGE);
                 }else{
-                    File file = new File(temp+"/"+tab.getNombre()+"."+extension);
+                    File file = new File(temp+"/"+nombre);
+                    if(cambiar) tab.setOrigen(file);
                     guardarArchivo(tab, file);
                 }
             }

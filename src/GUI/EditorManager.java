@@ -74,8 +74,9 @@ public class EditorManager {
                     if(tab.getOrigen() != null){
                         ArchivosManager.guardarArchivo(tab, tab.getOrigen());
                     }else{
-                        ArchivosManager.guardarComo(tab);
+                        ArchivosManager.guardarComo(tab, false);
                     }
+                    tabs.remove(tabs.getSelectedIndex());
                     break;
                 }
                 case 1:{//no
@@ -93,7 +94,7 @@ public class EditorManager {
         if(tab.getOrigen() != null){
             ArchivosManager.guardarArchivo(tab, tab.getOrigen());
         }else{
-            ArchivosManager.guardarComo(tab);
+            ArchivosManager.guardarComo(tab, true);
         }
     }
 }
