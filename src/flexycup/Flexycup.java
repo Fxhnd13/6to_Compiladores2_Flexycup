@@ -5,6 +5,8 @@
  */
 package flexycup;
 
+import GUI.Editor;
+
 /**
  *
  * @author jose_
@@ -15,7 +17,8 @@ public class Flexycup {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        Editor editor = new Editor();
+        editor.setVisible(true);
     }
     
 }

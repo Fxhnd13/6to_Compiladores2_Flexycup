@@ -20,11 +20,13 @@ public class Tab extends JScrollPane{
     private boolean modificado;
     private JTextArea texto;
     
-    public Tab(String nombre, File origen){
+    public Tab(String nombre, File origen, String extension, String contenido){
         super(new JTextArea());
         this.nombre = nombre;
         this.origen = origen;
+        this.extension = extension;
         this.texto = (JTextArea)super.getViewport().getView();
+        this.texto.setText(contenido);
     }
     
     public Tab(String nombre){
@@ -72,5 +74,10 @@ public class Tab extends JScrollPane{
 
     public void setTexto(JTextArea texto) {
         this.texto = texto;
+    }
+
+    @Override
+    public String toString() {
+        return "Nombre: "+this.nombre+"\nExtension: "+this.extension+"\nRuta:"+this.origen.getAbsolutePath()+"\nModificado:"+this.modificado;
     }
 }
