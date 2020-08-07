@@ -72,7 +72,7 @@ public class EditorManager {
             switch(resultado){
                 case 0:{//si
                     if(tab.getOrigen() != null){
-                        ArchivosManager.guardarArchivo(tab);
+                        ArchivosManager.guardarArchivo(tab, tab.getOrigen());
                     }else{
                         ArchivosManager.guardarComo(tab);
                     }
@@ -91,7 +91,7 @@ public class EditorManager {
     void guardarTab(JTabbedPane tabs) {
         Tab tab = (Tab) tabs.getSelectedComponent();
         if(tab.getOrigen() != null){
-            ArchivosManager.guardarArchivo(tab);
+            ArchivosManager.guardarArchivo(tab, tab.getOrigen());
         }else{
             ArchivosManager.guardarComo(tab);
         }

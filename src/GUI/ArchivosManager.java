@@ -29,16 +29,16 @@ public class ArchivosManager {
         return file;
     }
     
-    public static void guardarArchivo(Tab tab){
-        tab.setModificado(false);
+    public static void guardarArchivo(Tab tab, File origen){
         FileWriter fichero = null;
         PrintWriter pw = null;
         try
         {
-            fichero = new FileWriter(tab.getOrigen());
+            fichero = new FileWriter(origen);
             pw = new PrintWriter(fichero);
 
             pw.print(tab.getTexto().getText());
+            tab.setModificado(false);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -55,7 +55,6 @@ public class ArchivosManager {
     }
     
     public static void guardarComo(Tab tab){
-        tab.setModificado(false);
         JFileChooser filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         int resultado = filechooser.showOpenDialog(null);
@@ -67,10 +66,9 @@ public class ArchivosManager {
                     JOptionPane.showMessageDialog(null, "No se ingreso una extension para el archivo, no se guardaron los cambios.", "Error", JOptionPane.ERROR_MESSAGE);
                 }else{
                     File file = new File(temp+"/"+tab.getNombre()+"."+extension);
-                    tab.setOrigen(file);
+                    guardarArchivo(tab, file);
                 }
             }
         }
-        guardarArchivo(tab);
     }
 }
