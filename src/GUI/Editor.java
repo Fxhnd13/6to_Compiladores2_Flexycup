@@ -183,6 +183,7 @@ public class Editor extends javax.swing.JFrame {
     //Cerrar pestaña
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         manager.cerrarTab(tabs);
+        if(tabs.getComponentCount() == 0) informacionLabel.setText("Linea: 0  |  Columna: 0");
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     /**
@@ -246,7 +247,7 @@ public class Editor extends javax.swing.JFrame {
                 } catch (BadLocationException ex) {
                     Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                informacionLabel.setText("Línea: " + row + " Columna: " + col);
+                informacionLabel.setText("Línea: " + row + "  |  Columna: " + col);
             }
         });
         tab.getTexto().addKeyListener(new KeyListener(){

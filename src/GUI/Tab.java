@@ -19,6 +19,7 @@ public class Tab extends JScrollPane{
     private File origen;
     private boolean modificado;
     private JTextArea texto;
+    private NumeroLinea numeroLinea;
     
     public Tab(String nombre, File origen, String extension, String contenido){
         super(new JTextArea());
@@ -27,6 +28,8 @@ public class Tab extends JScrollPane{
         this.extension = extension;
         this.texto = (JTextArea)super.getViewport().getView();
         this.texto.setText(contenido);
+        numeroLinea = new NumeroLinea(this.texto);
+        this.setRowHeaderView(numeroLinea);
     }
     
     public Tab(String nombre){
@@ -34,6 +37,8 @@ public class Tab extends JScrollPane{
         this.nombre = nombre;
         this.origen = null;
         this.texto = (JTextArea)super.getViewport().getView();
+        numeroLinea = new NumeroLinea(this.texto);
+        this.setRowHeaderView(numeroLinea);
     }
 
     public String getNombre() {
