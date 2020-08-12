@@ -5,17 +5,22 @@
  */
 package GUI;
 
+import analizadores.estructuraGramatica.secciones.LexerSecciones;
+import analizadores.estructuraGramatica.secciones.ParserSecciones;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.StringReader;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.text.BadLocationException;
@@ -95,6 +100,50 @@ public class EditorManager {
             ArchivosManager.guardarArchivo(tab, tab.getOrigen());
         }else{
             ArchivosManager.guardarComo(tab, true);
+        }
+    }
+
+    void parsearSecciones(String texto){
+        try {
+            LexerSecciones lexer = new LexerSecciones(new StringReader(texto));
+            ParserSecciones parser = new ParserSecciones(lexer);
+            List<String> secciones = (List<String>) parser.parse().value;
+            for (int i = 0; i < secciones.size(); i++) {
+                switch(i){
+                    case 0:{
+                        System.out.println("---------------------------------------------------------------------------------------");
+                        System.out.println("Seccion de informacion:   ");
+                        System.out.println(secciones.get(0));
+                        break;
+                    }
+                    case 1:{
+                        System.out.println("---------------------------------------------------------------------------------------");
+                        System.out.println("Seccion de Codigo:   ");
+                        System.out.println(secciones.get(1));
+                        break;
+                    }
+                    case 2:{
+                        System.out.println("---------------------------------------------------------------------------------------");
+                        System.out.println("Seccion de Expresiones Regulares:   ");
+                        System.out.println(secciones.get(2));
+                        break;
+                    }
+                    case 3:{
+                        System.out.println("---------------------------------------------------------------------------------------");
+                        System.out.println("Seccion de Simbolos:   ");
+                        System.out.println(secciones.get(3));
+                        break;
+                    }
+                    case 4:{
+                        System.out.println("---------------------------------------------------------------------------------------");
+                        System.out.println("Seccion de reglas gramaticales:   ");
+                        System.out.println(secciones.get(4));
+                        break;
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

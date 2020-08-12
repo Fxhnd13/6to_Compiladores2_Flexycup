@@ -49,6 +49,8 @@ public class Editor extends javax.swing.JFrame {
         jMenuItem4 = new javax.swing.JMenuItem();
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -106,6 +108,18 @@ public class Editor extends javax.swing.JFrame {
         jMenu1.add(jMenuItem5);
 
         jMenuBar1.add(jMenu1);
+
+        jMenu3.setText("Pruebas");
+
+        jMenuItem7.setText("Separar Secciones");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu3);
 
         jMenu2.setText("Acerca de...");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -186,6 +200,10 @@ public class Editor extends javax.swing.JFrame {
         if(tabs.getComponentCount() == 0) informacionLabel.setText("Linea: 0  |  Columna: 0");
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText());
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -225,6 +243,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JLabel informacionLabel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
@@ -232,6 +251,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
     private javax.swing.JTabbedPane tabs;
     // End of variables declaration//GEN-END:variables
 

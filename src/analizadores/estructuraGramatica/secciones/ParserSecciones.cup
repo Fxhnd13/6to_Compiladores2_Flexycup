@@ -1,0 +1,120 @@
+package analizadores.estructuraGramatica.secciones;
+
+import java.util.ArrayList;
+import java.util.List;
+import java_cup.runtime.Symbol;
+import java_cup.runtime.XMLElement;
+
+action code{::}
+
+parser code{:
+
+    public ParserSecciones(LexerSecciones lex) { 
+        super(lex);   
+    }
+
+    public void unrecovered_syntax_error(Symbol cur_token){
+        System.err.println("No se pudo recuperar y seguir analizando "+cur_token.value);
+    }
+
+    public void syntax_error(Symbol s){
+        String message = "";
+        StringBuilder m = new StringBuilder("Error:");
+        String cadena = (String) s.value;
+        int linea = s.left;
+        int columna = s.right;
+        switch(s.toString()){
+            
+        }
+    }
+:}
+
+/* Terminals (tokens returned by the scanner). */
+
+non terminal List<String>          S, resto1, resto2, resto3, resto4;
+
+terminal String                    SECCION, SEPARADOR;
+
+start with S;
+
+S::=                SECCION:informacion SEPARADOR resto1:secciones {:
+                        if(secciones == null){
+                            secciones = new ArrayList<String>();
+                            if(informacion != null) secciones.add(informacion);
+                        }else{
+                            secciones.add(0, informacion);
+                        }
+                        RESULT = secciones;
+                    :}
+                    | error SEPARADOR resto1:secciones {:
+                        if(secciones == null) secciones = new ArrayList<String>();
+                        RESULT = secciones;
+                    :}
+                    | error {:
+                        RESULT = new ArrayList<String>();
+                    :}
+                    ;
+
+resto1::=           SECCION:codigoUsuario SEPARADOR resto2:secciones {:
+                        if(secciones == null){
+                            secciones = new ArrayList<String>();
+                            if(codigoUsuario != null) secciones.add(codigoUsuario);
+                        }else{
+                            secciones.add(0, codigoUsuario);
+                        }
+                        RESULT = secciones;
+                    :}
+                    |SEPARADOR resto2:secciones {:
+                        if(secciones == null) secciones = new ArrayList<String>();
+                        RESULT = secciones;
+                    :}
+                    | error {:
+                        RESULT = new ArrayList<String>();
+                    :}
+                    ;
+
+resto2::=           SECCION:expresionesRegulares SEPARADOR resto3:secciones {:
+                        if(secciones == null){
+                            secciones = new ArrayList<String>();
+                            if(expresionesRegulares != null) secciones.add(expresionesRegulares);
+                        }else{
+                            secciones.add(0, expresionesRegulares);
+                        }
+                        RESULT = secciones;
+                    :}
+                    | error SEPARADOR resto3:secciones {:
+                        if(secciones == null) secciones = new ArrayList<String>();
+                        RESULT = secciones;
+                    :}
+                    | error {:
+                        RESULT = new ArrayList<String>();
+                    :}
+                    ;
+
+resto3::=           SECCION:simbolos SEPARADOR resto4:secciones {:
+                        if(secciones == null){
+                            secciones = new ArrayList<String>();
+                            if(simbolos != null) secciones.add(simbolos);
+                        }else{
+                            secciones.add(0, simbolos);
+                        }
+                        RESULT = secciones;
+                    :}
+                    | error SEPARADOR resto4:secciones {:
+                        if(secciones == null) secciones = new ArrayList<String>();
+                        RESULT = secciones;
+                    :}
+                    | error {:
+                        RESULT = new ArrayList<String>();
+                    :}
+                    ;
+
+resto4::=           SECCION:reglasGramaticales {:
+                        List<String> secciones = new ArrayList<String>();
+                        secciones.add(reglasGramaticales);
+                        RESULT = secciones;
+                    :}
+                    | error {:
+                        RESULT = new ArrayList<String>();
+                    :}
+                    ;
