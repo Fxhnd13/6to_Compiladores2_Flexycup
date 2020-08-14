@@ -1,0 +1,62 @@
+package analizadores.estructuraGramatica;
+
+import java.util.List;
+import java_cup.runtime.Symbol;
+import java_cup.runtime.XMLElement;
+
+action code {::}
+
+parser code {:
+    
+        private List<String> listErrores;
+
+        public ParserGramatica(LexerGramatica lex) { 
+            super(lex);   
+            listErrores = lex.getErrorsList();
+	}
+        
+        public void setAccion(String tipo, String mensaje, String accion){
+            System.out.println(tipo+"         "+mensaje);
+        }
+
+        public void unrecovered_syntax_error(Symbol cur_token){
+            System.err.println("No se pudo recuperar y seguir analizando, error con el token: "+cur_token.value);
+        }
+
+        public void syntax_error(Symbol s){
+            String message = "";
+            StringBuilder m = new StringBuilder("Error:");
+            String cadena = (String) s.value;
+            int linea = s.left;
+            int columna = s.right;
+            switch(s.toString()){
+                //anotamos los diferentes mensajes dependiendo del simbolo que causó el problema
+            }
+            listErrores.add("Se ha encontrado un error en la linea: "+linea+", columna: "+columna+" con la cadena "+cadena+"|Descripcion: "+message);
+        }
+
+        public List<String> getErrores(){
+            return listErrores;
+        }
+
+        public void setErrores(List<String> e){
+            listErrores = e;
+        }
+:}
+
+/* terminales y no terminales */
+
+terminal                                    PR_NOMBRE, PR_AUTOR, PR_VERSION, PR_LANZAMIENTO, PR_EXTENSION, ASIGNACION_INF, ASIGNACION_GRAMA;
+terminal                                    ASIGNACION_ER, SEPARADOR_SECCCION, UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE, O, COR_A, COR_C;
+terminal                                    PAR_A, PAR_C, FIN_DE_LINEA, SALTO_DE_LINEA, TABULACION, RETORNO, IGNORAR, CADENA, JAVA_CODE, ENTERO;
+terminal                                    VERSION, ID;
+
+non terminal                                S;
+
+/* precedencia */
+
+/* gramatica */
+
+start with S;
+
+S::=                                        ;
