@@ -83,10 +83,17 @@ JavaCode             = "{" [^*] ~"}"
     "version"                               { return symbol(yyline+1, yycolumn+1, "version", sym.PR_VERSION);}
     "lanzamiento"                           { return symbol(yyline+1, yycolumn+1, "lanzamiento", sym.PR_LANZAMIENTO);}
     "extension"                             { return symbol(yyline+1, yycolumn+1, "extension", sym.PR_EXTENSION);}
+    "terminal"                              { return symbol(yyline+1, yycolumn+1, "terminal", sym.PR_TERMINAL);}
+    "entero"                                { return symbol(yyline+1, yycolumn+1, "entero", sym.PR_ENTERO);}
+    "real"                                  { return symbol(yyline+1, yycolumn+1, "real", sym.PR_REAL);}
+    "cadena"                                { return symbol(yyline+1, yycolumn+1, "cadena", sym.PR_CADENA);}
+    "no"                                    { return symbol(yyline+1, yycolumn+1, "no", sym.PR_NO);}
+    "a-z"                                   { return symbol(yyline+1, yycolumn+1, sym.RANGO_LETRAS_MIN);}
+    "0-9"                                   { return symbol(yyline+1, yycolumn+1, sym.RANGO_NUMEROS);}
     ":"                                     { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_INF);}
     "::"                                    { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_GRAMA);}
     "="                                     { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_ER); }
-    "%%"                                    { return symbol(yyline+1, yycolumn+1, sym.SEPARADOR_SECCCION);}
+    "%%"                                    { return symbol(yyline+1, yycolumn+1, sym.SEPARADOR);}
     "+"                                     { return symbol(yyline+1, yycolumn+1, sym.UNA_O_MAS_VECES);}
     "*"                                     { return symbol(yyline+1, yycolumn+1, sym.CERO_O_MAS_VECES);}
     "?"                                     { return symbol(yyline+1, yycolumn+1, sym.PUEDE_O_NO_PUEDE);}
@@ -95,6 +102,7 @@ JavaCode             = "{" [^*] ~"}"
     "]"                                     { return symbol(yyline+1, yycolumn+1, sym.COR_C);}
     "("                                     { return symbol(yyline+1, yycolumn+1, sym.PAR_A);}
     ")"                                     { return symbol(yyline+1, yycolumn+1, sym.PAR_C);}
+    ","                                     { return symbol(yyline+1, yycolumn+1, sym.COMA);}
     ";"                                     { return symbol(yyline+1, yycolumn+1, sym.FIN_DE_LINEA);}
     "\\n"                                   { return symbol(yyline+1, yycolumn+1, sym.SALTO_DE_LINEA);}
     "\\t"                                   { return symbol(yyline+1, yycolumn+1, sym.TABULACION);}

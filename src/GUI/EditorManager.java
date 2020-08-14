@@ -8,6 +8,7 @@ package GUI;
 import analizadores.estructuraGramatica.secciones.LexerSecciones;
 import analizadores.estructuraGramatica.secciones.ParserSecciones;
 import analizadores.estructuraGramatica.LexerGramatica;
+import analizadores.estructuraGramatica.ParserGramatica;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
@@ -145,12 +146,15 @@ public class EditorManager {
             }
             String cadena = "";
             for (int i = 0; i < secciones.size(); i++) {
-                if(i!=1) cadena+=secciones.get(i);
+                if(i!=1) {
+                    if(i>1 && i<secciones.size()) cadena+="%%";
+                    cadena+=secciones.get(i);
+                }
             }
+            System.out.println(cadena);
             LexerGramatica lexer2 = new LexerGramatica(new StringReader(cadena));
-            while(lexer2.isAnalizando()){
-                lexer2.next_token();
-            }
+            ParserGramatica parser2 = new ParserGramatica(lexer2);
+            System.out.println((String)parser2.parse().value);
         } catch (Exception ex) {
             Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }
