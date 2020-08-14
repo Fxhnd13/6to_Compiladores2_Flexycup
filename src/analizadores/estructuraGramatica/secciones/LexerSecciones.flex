@@ -20,7 +20,7 @@ import java_cup.runtime.Symbol;
     }
 %}
 
-Separator = "%%"
+Separador = "%"{2}
 
 %init{
 //Codigo a ejecutarse al crearse la clase
@@ -32,10 +32,10 @@ Separator = "%%"
 <YYINITIAL> {
 
     /* Reserved words */
-    {Separator}                { return symbol(sym.SEPARADOR, yyline, yycolumn, yytext());}
-    [^{Separator}]+            {  return symbol(sym.SECCION, yyline, yycolumn, yytext());    }
+    "%%"                { return symbol(sym.SEPARADOR, yyline+1, yycolumn+1, yytext());}
+    [^"%%"]+            {  return symbol(sym.SECCION, yyline+1, yycolumn+1, yytext());    }
+    "%"                 { return symbol(sym.SEPARADOR_UNITARIO, yyline+1, yycolumn+1, yytext());}
 }
 
 /* error fallback */
-    [^]                              { throw new Error("Illegal character <"+
-                                                        yytext()+"> at (Line,Column): <"+yyline+","+yycolumn+">"); }
+    [^]                              { throw new Error("Illegal character <"+yytext()+"> at (Line,Column): <"+yyline+","+yycolumn+">"); }

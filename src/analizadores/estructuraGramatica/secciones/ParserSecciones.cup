@@ -32,12 +32,12 @@ parser code{:
 /* Terminals (tokens returned by the scanner). */
 
 non terminal List<String>          S, resto1, resto2, resto3, resto4;
-
-terminal String                    SECCION, SEPARADOR;
+non terminal String                sections;
+terminal String                    SECCION, SEPARADOR, SEPARADOR_UNITARIO;
 
 start with S;
 
-S::=                SECCION:informacion SEPARADOR resto1:secciones {:
+S::=                sections:informacion SEPARADOR resto1:secciones {:
                         if(secciones == null){
                             secciones = new ArrayList<String>();
                             if(informacion != null) secciones.add(informacion);
@@ -55,7 +55,7 @@ S::=                SECCION:informacion SEPARADOR resto1:secciones {:
                     :}
                     ;
 
-resto1::=           SECCION:codigoUsuario SEPARADOR resto2:secciones {:
+resto1::=           sections:codigoUsuario SEPARADOR resto2:secciones {:
                         if(secciones == null){
                             secciones = new ArrayList<String>();
                             if(codigoUsuario != null) secciones.add(codigoUsuario);
@@ -73,7 +73,7 @@ resto1::=           SECCION:codigoUsuario SEPARADOR resto2:secciones {:
                     :}
                     ;
 
-resto2::=           SECCION:expresionesRegulares SEPARADOR resto3:secciones {:
+resto2::=           sections:expresionesRegulares SEPARADOR resto3:secciones {:
                         if(secciones == null){
                             secciones = new ArrayList<String>();
                             if(expresionesRegulares != null) secciones.add(expresionesRegulares);
@@ -91,7 +91,7 @@ resto2::=           SECCION:expresionesRegulares SEPARADOR resto3:secciones {:
                     :}
                     ;
 
-resto3::=           SECCION:simbolos SEPARADOR resto4:secciones {:
+resto3::=           sections:simbolos SEPARADOR resto4:secciones {:
                         if(secciones == null){
                             secciones = new ArrayList<String>();
                             if(simbolos != null) secciones.add(simbolos);
@@ -109,12 +109,23 @@ resto3::=           SECCION:simbolos SEPARADOR resto4:secciones {:
                     :}
                     ;
 
-resto4::=           SECCION:reglasGramaticales {:
+resto4::=           sections:reglasGramaticales {:
                         List<String> secciones = new ArrayList<String>();
                         secciones.add(reglasGramaticales);
                         RESULT = secciones;
                     :}
                     | error {:
                         RESULT = new ArrayList<String>();
+                    :}
+                    ;
+
+sections::=         sections:masContenido SEPARADOR_UNITARIO SECCION:contenido {:
+                        if(masContenido == null) masContenido = "";
+                        if(contenido == null) contenido = "";
+                        RESULT = masContenido+"%"+contenido;
+                    :}
+                    |SECCION:contenido {:
+                        if(contenido == null) contenido ="";
+                        RESULT = contenido;
                     :}
                     ;

@@ -34,10 +34,12 @@ public class ParserSecciones extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\012\000\002\002\004\000\002\002\005\000\002\002" +
-    "\005\000\002\003\005\000\002\003\004\000\002\004\005" +
-    "\000\002\004\005\000\002\005\005\000\002\005\005\000" +
-    "\002\006\003" });
+    "\000\021\000\002\002\004\000\002\002\005\000\002\002" +
+    "\005\000\002\002\003\000\002\003\005\000\002\003\004" +
+    "\000\002\003\003\000\002\004\005\000\002\004\005\000" +
+    "\002\004\003\000\002\005\005\000\002\005\005\000\002" +
+    "\005\003\000\002\006\003\000\002\006\003\000\002\007" +
+    "\005\000\002\007\003" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -45,20 +47,25 @@ public class ParserSecciones extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\033\000\006\003\005\004\004\001\002\000\004\005" +
-    "\034\001\002\000\004\005\010\001\002\000\004\002\007" +
-    "\001\002\000\004\002\001\001\002\000\006\004\012\005" +
-    "\013\001\002\000\004\002\uffff\001\002\000\004\005\032" +
-    "\001\002\000\006\003\015\004\014\001\002\000\004\005" +
-    "\030\001\002\000\004\005\017\001\002\000\004\002\ufffd" +
-    "\001\002\000\006\003\021\004\020\001\002\000\004\005" +
-    "\026\001\002\000\004\005\023\001\002\000\004\002\ufffb" +
-    "\001\002\000\004\004\024\001\002\000\004\002\ufff8\001" +
-    "\002\000\004\002\ufff9\001\002\000\004\004\024\001\002" +
-    "\000\004\002\ufffa\001\002\000\006\003\021\004\020\001" +
-    "\002\000\004\002\ufffc\001\002\000\006\003\015\004\014" +
-    "\001\002\000\004\002\ufffe\001\002\000\006\004\012\005" +
-    "\013\001\002\000\004\002\000\001\002" });
+    "\000\040\000\006\003\005\004\004\001\002\000\010\002" +
+    "\ufff1\005\ufff1\006\ufff1\001\002\000\006\002\ufffe\005\041" +
+    "\001\002\000\004\002\040\001\002\000\006\005\010\006" +
+    "\011\001\002\000\010\003\014\004\004\005\015\001\002" +
+    "\000\004\004\012\001\002\000\010\002\ufff2\005\ufff2\006" +
+    "\ufff2\001\002\000\004\002\000\001\002\000\004\002\ufffb" +
+    "\001\002\000\006\003\020\004\004\001\002\000\006\005" +
+    "\017\006\011\001\002\000\006\003\020\004\004\001\002" +
+    "\000\006\002\ufff8\005\035\001\002\000\006\005\023\006" +
+    "\011\001\002\000\004\002\ufffd\001\002\000\006\003\024" +
+    "\004\004\001\002\000\006\002\ufff5\005\033\001\002\000" +
+    "\004\002\ufffa\001\002\000\006\005\027\006\011\001\002" +
+    "\000\006\003\030\004\004\001\002\000\004\002\ufff3\001" +
+    "\002\000\004\002\ufff7\001\002\000\006\002\ufff4\006\011" +
+    "\001\002\000\006\003\030\004\004\001\002\000\004\002" +
+    "\ufff6\001\002\000\006\003\024\004\004\001\002\000\004" +
+    "\002\ufff9\001\002\000\004\002\ufffc\001\002\000\004\002" +
+    "\001\001\002\000\010\003\014\004\004\005\015\001\002" +
+    "\000\004\002\uffff\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -66,16 +73,19 @@ public class ParserSecciones extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\033\000\004\002\005\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
-    "\003\010\001\001\000\002\001\001\000\002\001\001\000" +
-    "\004\004\015\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\004\005\021\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\004\006\024" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\006" +
-    "\026\001\001\000\002\001\001\000\004\005\030\001\001" +
-    "\000\002\001\001\000\004\004\032\001\001\000\002\001" +
-    "\001\000\004\003\034\001\001\000\002\001\001" });
+    "\000\040\000\006\002\005\007\006\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\006\003\012\007\015\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
+    "\004\036\007\020\001\001\000\002\001\001\000\006\004" +
+    "\021\007\020\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\006\005\024\007\025\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
+    "\006\030\007\031\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\006\006\033\007\031\001\001" +
+    "\000\002\001\001\000\006\005\035\007\025\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\006" +
+    "\003\041\007\015\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -176,7 +186,7 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // S ::= SECCION SEPARADOR resto1 
+          case 1: // S ::= sections SEPARADOR resto1 
             {
               List<String> RESULT =null;
 		int informacionleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)).left;
@@ -214,7 +224,18 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // resto1 ::= SECCION SEPARADOR resto2 
+          case 3: // S ::= error 
+            {
+              List<String> RESULT =null;
+		
+                        RESULT = new ArrayList<String>();
+                    
+              CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("S",0, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
+            }
+          return CUP$ParserSecciones$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 4: // resto1 ::= sections SEPARADOR resto2 
             {
               List<String> RESULT =null;
 		int codigoUsuarioleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)).left;
@@ -237,7 +258,7 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // resto1 ::= SEPARADOR resto2 
+          case 5: // resto1 ::= SEPARADOR resto2 
             {
               List<String> RESULT =null;
 		int seccionesleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).left;
@@ -252,7 +273,18 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // resto2 ::= SECCION SEPARADOR resto3 
+          case 6: // resto1 ::= error 
+            {
+              List<String> RESULT =null;
+		
+                        RESULT = new ArrayList<String>();
+                    
+              CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("resto1",1, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
+            }
+          return CUP$ParserSecciones$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // resto2 ::= sections SEPARADOR resto3 
             {
               List<String> RESULT =null;
 		int expresionesRegularesleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)).left;
@@ -275,7 +307,7 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // resto2 ::= error SEPARADOR resto3 
+          case 8: // resto2 ::= error SEPARADOR resto3 
             {
               List<String> RESULT =null;
 		int seccionesleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).left;
@@ -290,7 +322,18 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // resto3 ::= SECCION SEPARADOR resto4 
+          case 9: // resto2 ::= error 
+            {
+              List<String> RESULT =null;
+		
+                        RESULT = new ArrayList<String>();
+                    
+              CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("resto2",2, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
+            }
+          return CUP$ParserSecciones$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 10: // resto3 ::= sections SEPARADOR resto4 
             {
               List<String> RESULT =null;
 		int simbolosleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)).left;
@@ -313,7 +356,7 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // resto3 ::= error SEPARADOR resto4 
+          case 11: // resto3 ::= error SEPARADOR resto4 
             {
               List<String> RESULT =null;
 		int seccionesleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).left;
@@ -328,7 +371,18 @@ class CUP$ParserSecciones$actions {
           return CUP$ParserSecciones$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // resto4 ::= SECCION 
+          case 12: // resto3 ::= error 
+            {
+              List<String> RESULT =null;
+		
+                        RESULT = new ArrayList<String>();
+                    
+              CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("resto3",3, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
+            }
+          return CUP$ParserSecciones$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 13: // resto4 ::= sections 
             {
               List<String> RESULT =null;
 		int reglasGramaticalesleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).left;
@@ -340,6 +394,51 @@ class CUP$ParserSecciones$actions {
                         RESULT = secciones;
                     
               CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("resto4",4, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
+            }
+          return CUP$ParserSecciones$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 14: // resto4 ::= error 
+            {
+              List<String> RESULT =null;
+		
+                        RESULT = new ArrayList<String>();
+                    
+              CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("resto4",4, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
+            }
+          return CUP$ParserSecciones$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 15: // sections ::= sections SEPARADOR_UNITARIO SECCION 
+            {
+              String RESULT =null;
+		int masContenidoleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)).left;
+		int masContenidoright = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)).right;
+		String masContenido = (String)((java_cup.runtime.Symbol) CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)).value;
+		int contenidoleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).left;
+		int contenidoright = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).right;
+		String contenido = (String)((java_cup.runtime.Symbol) CUP$ParserSecciones$stack.peek()).value;
+		
+                        if(masContenido == null) masContenido = "";
+                        if(contenido == null) contenido = "";
+                        RESULT = masContenido+"%"+contenido;
+                    
+              CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("sections",5, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.elementAt(CUP$ParserSecciones$top-2)), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
+            }
+          return CUP$ParserSecciones$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 16: // sections ::= SECCION 
+            {
+              String RESULT =null;
+		int contenidoleft = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).left;
+		int contenidoright = ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()).right;
+		String contenido = (String)((java_cup.runtime.Symbol) CUP$ParserSecciones$stack.peek()).value;
+		
+                        if(contenido == null) contenido ="";
+                        RESULT = contenido;
+                    
+              CUP$ParserSecciones$result = parser.getSymbolFactory().newSymbol("sections",5, ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserSecciones$stack.peek()), RESULT);
             }
           return CUP$ParserSecciones$result;
 
