@@ -47,14 +47,14 @@ parser code {:
 /* terminales y no terminales */
 
 terminal                                    PR_NOMBRE, PR_AUTOR, PR_VERSION, PR_LANZAMIENTO, PR_EXTENSION, ASIGNACION_INF, ASIGNACION_GRAMA;
-terminal                                    ASIGNACION_ER, SEPARADOR, UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE, O, COR_A, COR_C;
+terminal                                    ASIGNACION_ER, SEPARADOR, UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE, O, COR_A, COR_C, CARACTER_EXPLICITO;
 terminal                                    PAR_A, PAR_C, FIN_DE_LINEA, SALTO_DE_LINEA, TABULACION, RETORNO, IGNORAR, CADENA, JAVA_CODE, ENTERO;
 terminal                                    VERSION, ID, RANGO_NUMEROS, RANGO_LETRAS_MIN, PR_TERMINAL, PR_NO, PR_ENTERO, PR_REAL, PR_CADENA, COMA;
 
 non terminal String                         s;
 non terminal                                informacion, dato, listadoIds, gramatica, reglaGramatical, listadoSimbolos, simbolo, codigoJava;
 non terminal                                simbolos, declaracionSimbolos, tipoSimbolo, tipoDato, listadoIdsConComa, expresiones, declaracionExpresion;
-non terminal                                expresionRegular, rango, restoDeclaracionExpresion;
+non terminal                                expresionRegular, rango, restoDeclaracionExpresion, anyTerminal;
 
 /* precedencia */
 
@@ -68,6 +68,7 @@ precedence left     PAR_A, COR_A;
 start with s;
 
 s::=                                        informacion SEPARADOR gramatica {: RESULT = "Se completo Exitosamente"; :}
+                                            |error SEPARADOR gramatica
                                             ;
 
 informacion::=                              informacion dato
@@ -79,17 +80,20 @@ dato::=                                     PR_NOMBRE ASIGNACION_INF listadoIds 
                                             |PR_VERSION ASIGNACION_INF VERSION FIN_DE_LINEA
                                             |PR_LANZAMIENTO ASIGNACION_INF ENTERO FIN_DE_LINEA
                                             |PR_EXTENSION ASIGNACION_INF ID FIN_DE_LINEA
+                                            |error FIN_DE_LINEA
                                             ;
 
-listadoIds::=                               listadoIds ID
-                                            |ID
+listadoIds::=                               listadoIds anyTerminal
+                                            |anyTerminal
                                             ;
 
 gramatica::=                                gramatica reglaGramatical
                                             |simbolos SEPARADOR reglaGramatical
+                                            |error SEPARADOR reglaGramatical
                                             ;
 
 reglaGramatical::=                          ID ASIGNACION_GRAMA listadoSimbolos codigoJava FIN_DE_LINEA
+                                            |error FIN_DE_LINEA
                                             ;
 
 listadoSimbolos::=                          listadoSimbolos simbolo
@@ -106,9 +110,11 @@ codigoJava::=                               JAVA_CODE
 
 simbolos::=                                 simbolos declaracionSimbolos
                                             |expresiones SEPARADOR declaracionSimbolos
+                                            |error SEPARADOR declaracionSimbolos
                                             ;
 
 declaracionSimbolos::=                      tipoSimbolo tipoDato listadoIdsConComa FIN_DE_LINEA
+                                            |error FIN_DE_LINEA
                                             ;
 
 tipoSimbolo::=                              PR_TERMINAL
@@ -131,6 +137,7 @@ expresiones::=                              expresiones declaracionExpresion
 
 declaracionExpresion::=                     ID restoDeclaracionExpresion
                                             |IGNORAR restoDeclaracionExpresion
+                                            |error FIN_DE_LINEA
                                             ;
 
 restoDeclaracionExpresion::=                ASIGNACION_ER expresionRegular FIN_DE_LINEA
@@ -153,3 +160,6 @@ expresionRegular::=                         expresionRegular PUEDE_O_NO_PUEDE
 rango::=                                    RANGO_LETRAS_MIN
                                             |RANGO_NUMEROS
                                             ;
+
+anyTerminal::=                              PR_NOMBRE|PR_AUTOR|PR_VERSION|PR_LANZAMIENTO|PR_EXTENSION|
+                                            CARACTER_EXPLICITO|ENTERO|ID|PR_TERMINAL|PR_NO|PR_ENTERO|PR_REAL|PR_CADENA|COMA;

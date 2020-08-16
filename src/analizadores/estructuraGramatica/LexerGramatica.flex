@@ -120,4 +120,4 @@ JavaCode             = "{" [^*] ~"}"
 }
 
 /* error fallback */
-[^]                              {   error(yytext());    }
+    [^]                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.CARACTER_EXPLICITO);}
