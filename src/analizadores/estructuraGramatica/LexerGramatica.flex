@@ -40,13 +40,13 @@ JavaCode             = "{" [^*] ~"}"
 
     private Symbol symbol(int linea, int columna, String lexema, int type){
         Symbol simbolo = new Symbol(type, linea, columna, lexema);
-        System.out.println(type+"|"+lexema+"|<"+linea+","+columna+">");
+        //System.out.println(type+"|"+lexema+"|<"+linea+","+columna+">");
         return simbolo;
     }
 
     private Symbol symbol(int linea, int columna, int type){
         Symbol simbolo = new Symbol(type,linea,columna);
-        System.out.println(type+"|"+yytext()+"|<"+linea+","+columna+">");
+        //System.out.println(type+"|"+yytext()+"|<"+linea+","+columna+">");
         return simbolo;
     }
 

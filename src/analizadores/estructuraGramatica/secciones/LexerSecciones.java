@@ -274,7 +274,7 @@ public class LexerSecciones implements java_cup.runtime.Scanner {
 
     private Symbol symbol(int type, int linea, int columna, String lexema){
         Symbol simbolo = new Symbol(type, linea, columna, lexema);
-        System.out.println(simbolo.toString());
+        //System.out.println(simbolo.toString());
         return simbolo;
     }
 

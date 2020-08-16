@@ -33,22 +33,29 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\062\000\002\002\004\000\002\002\005\000\002\003" +
-    "\004\000\002\003\003\000\002\004\006\000\002\004\006" +
+    "\000\107\000\002\002\004\000\002\002\005\000\002\002" +
+    "\005\000\002\003\004\000\002\003\003\000\002\004\006" +
     "\000\002\004\006\000\002\004\006\000\002\004\006\000" +
-    "\002\005\004\000\002\005\003\000\002\006\004\000\002" +
-    "\006\005\000\002\007\007\000\002\010\004\000\002\010" +
-    "\003\000\002\011\005\000\002\011\003\000\002\012\003" +
-    "\000\002\012\002\000\002\013\004\000\002\013\005\000" +
-    "\002\014\006\000\002\015\003\000\002\015\004\000\002" +
-    "\016\003\000\002\016\003\000\002\016\003\000\002\016" +
-    "\002\000\002\017\005\000\002\017\003\000\002\020\004" +
-    "\000\002\020\003\000\002\021\004\000\002\021\004\000" +
-    "\002\024\005\000\002\022\004\000\002\022\004\000\002" +
-    "\022\004\000\002\022\005\000\002\022\004\000\002\022" +
-    "\005\000\002\022\003\000\002\022\003\000\002\022\003" +
-    "\000\002\022\003\000\002\022\005\000\002\022\005\000" +
-    "\002\023\003\000\002\023\003" });
+    "\002\004\006\000\002\004\004\000\002\005\004\000\002" +
+    "\005\003\000\002\006\004\000\002\006\005\000\002\006" +
+    "\005\000\002\007\007\000\002\007\004\000\002\010\004" +
+    "\000\002\010\003\000\002\011\005\000\002\011\003\000" +
+    "\002\012\003\000\002\012\002\000\002\013\004\000\002" +
+    "\013\005\000\002\013\005\000\002\014\006\000\002\015" +
+    "\003\000\002\015\004\000\002\016\003\000\002\016\003" +
+    "\000\002\016\003\000\002\016\002\000\002\017\005\000" +
+    "\002\017\003\000\002\020\004\000\002\020\003\000\002" +
+    "\021\004\000\002\021\004\000\002\021\004\000\002\024" +
+    "\005\000\002\022\004\000\002\022\004\000\002\022\004" +
+    "\000\002\022\005\000\002\022\004\000\002\022\005\000" +
+    "\002\022\003\000\002\022\003\000\002\022\003\000\002" +
+    "\022\003\000\002\022\005\000\002\022\005\000\002\022" +
+    "\003\000\002\023\003\000\002\023\003\000\002\025\003" +
+    "\000\002\025\003\000\002\025\003\000\002\025\003\000" +
+    "\002\025\003\000\002\025\003\000\002\025\003\000\002" +
+    "\025\003\000\002\025\003\000\002\025\003\000\002\025" +
+    "\003\000\002\025\003\000\002\025\003\000\002\025\003" +
+    "" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -56,94 +63,161 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\133\000\014\004\006\005\011\006\005\007\013\010" +
-    "\012\001\002\000\016\004\006\005\011\006\005\007\013" +
-    "\010\012\014\036\001\002\000\004\011\033\001\002\000" +
-    "\004\011\030\001\002\000\016\004\ufffe\005\ufffe\006\ufffe" +
-    "\007\ufffe\010\ufffe\014\ufffe\001\002\000\004\002\027\001" +
-    "\002\000\004\011\022\001\002\000\004\011\017\001\002" +
-    "\000\004\011\014\001\002\000\004\034\015\001\002\000" +
-    "\004\025\016\001\002\000\016\004\ufffa\005\ufffa\006\ufffa" +
-    "\007\ufffa\010\ufffa\014\ufffa\001\002\000\004\036\020\001" +
-    "\002\000\004\025\021\001\002\000\016\004\ufff9\005\ufff9" +
-    "\006\ufff9\007\ufff9\010\ufff9\014\ufff9\001\002\000\004\036" +
-    "\023\001\002\000\006\025\ufff7\036\ufff7\001\002\000\006" +
-    "\025\026\036\025\001\002\000\006\025\ufff8\036\ufff8\001" +
-    "\002\000\016\004\ufffc\005\ufffc\006\ufffc\007\ufffc\010\ufffc" +
-    "\014\ufffc\001\002\000\004\002\001\001\002\000\004\036" +
-    "\023\001\002\000\006\025\032\036\025\001\002\000\016" +
+    "\000\167\000\016\003\011\004\004\005\012\006\007\007" +
+    "\006\010\010\001\002\000\004\011\167\001\002\000\020" +
+    "\003\163\004\004\005\012\006\007\007\006\010\010\014" +
+    "\165\001\002\000\004\011\160\001\002\000\004\011\155" +
+    "\001\002\000\004\011\152\001\002\000\006\014\041\026" +
+    "\042\001\002\000\004\011\016\001\002\000\020\003\ufffd" +
     "\004\ufffd\005\ufffd\006\ufffd\007\ufffd\010\ufffd\014\ufffd\001" +
-    "\002\000\004\035\034\001\002\000\004\025\035\001\002" +
-    "\000\016\004\ufffb\005\ufffb\006\ufffb\007\ufffb\010\ufffb\014" +
-    "\ufffb\001\002\000\006\031\044\036\040\001\002\000\016" +
-    "\004\uffff\005\uffff\006\uffff\007\uffff\010\uffff\014\uffff\001" +
-    "\002\000\004\013\101\001\002\000\006\002\000\036\065" +
-    "\001\002\000\010\014\131\031\044\036\040\001\002\000" +
-    "\010\014\uffe1\031\uffe1\036\uffe1\001\002\000\004\013\101" +
-    "\001\002\000\010\014\046\041\047\042\051\001\002\000" +
-    "\004\036\065\001\002\000\012\036\uffea\043\uffea\044\uffea" +
-    "\045\uffea\001\002\000\010\014\uffed\041\uffed\042\uffed\001" +
-    "\002\000\004\041\064\001\002\000\012\036\uffe5\043\054" +
-    "\044\053\045\055\001\002\000\004\036\uffe7\001\002\000" +
-    "\004\036\uffe8\001\002\000\004\036\uffe6\001\002\000\004" +
-    "\036\057\001\002\000\006\025\uffe3\046\uffe3\001\002\000" +
-    "\006\025\062\046\061\001\002\000\004\036\063\001\002" +
-    "\000\010\014\uffeb\041\uffeb\042\uffeb\001\002\000\006\025" +
-    "\uffe4\046\uffe4\001\002\000\012\036\uffe9\043\uffe9\044\uffe9" +
-    "\045\uffe9\001\002\000\004\012\067\001\002\000\006\002" +
-    "\ufff5\036\ufff5\001\002\000\004\036\070\001\002\000\012" +
-    "\011\077\025\ufff0\033\ufff0\036\ufff0\001\002\000\010\025" +
-    "\uffee\033\073\036\070\001\002\000\010\025\ufff2\033\ufff2" +
-    "\036\ufff2\001\002\000\004\025\uffef\001\002\000\004\025" +
-    "\076\001\002\000\010\025\ufff3\033\ufff3\036\ufff3\001\002" +
-    "\000\006\002\ufff4\036\ufff4\001\002\000\004\036\100\001" +
-    "\002\000\010\025\ufff1\033\ufff1\036\ufff1\001\002\000\016" +
-    "\021\106\023\105\026\107\027\110\030\104\032\111\001" +
-    "\002\000\010\014\uffdf\031\uffdf\036\uffdf\001\002\000\030" +
-    "\015\123\016\122\017\121\020\120\021\106\023\105\025" +
-    "\130\026\107\027\110\030\104\032\111\001\002\000\034" +
-    "\015\uffd5\016\uffd5\017\uffd5\020\uffd5\021\uffd5\022\uffd5\023" +
-    "\uffd5\024\uffd5\025\uffd5\026\uffd5\027\uffd5\030\uffd5\032\uffd5" +
-    "\001\002\000\016\021\106\023\105\026\107\027\110\030" +
-    "\104\032\111\001\002\000\022\021\106\023\105\026\107" +
-    "\027\110\030\104\032\111\037\115\040\114\001\002\000" +
-    "\034\015\uffd7\016\uffd7\017\uffd7\020\uffd7\021\uffd7\022\uffd7" +
-    "\023\uffd7\024\uffd7\025\uffd7\026\uffd7\027\uffd7\030\uffd7\032" +
-    "\uffd7\001\002\000\034\015\uffd6\016\uffd6\017\uffd6\020\uffd6" +
-    "\021\uffd6\022\uffd6\023\uffd6\024\uffd6\025\uffd6\026\uffd6\027" +
-    "\uffd6\030\uffd6\032\uffd6\001\002\000\034\015\uffd4\016\uffd4" +
-    "\017\uffd4\020\uffd4\021\uffd4\022\uffd4\023\uffd4\024\uffd4\025" +
-    "\uffd4\026\uffd4\027\uffd4\030\uffd4\032\uffd4\001\002\000\004" +
-    "\022\125\001\002\000\030\015\123\016\122\017\121\020" +
-    "\120\021\106\022\116\023\105\026\107\027\110\030\104" +
-    "\032\111\001\002\000\004\022\uffd1\001\002\000\004\022" +
-    "\uffd0\001\002\000\034\015\uffd3\016\uffd3\017\uffd3\020\uffd3" +
-    "\021\uffd3\022\uffd3\023\uffd3\024\uffd3\025\uffd3\026\uffd3\027" +
-    "\uffd3\030\uffd3\032\uffd3\001\002\000\034\015\123\016\122" +
-    "\017\121\020\120\021\106\022\uffd9\023\105\024\uffd9\025" +
-    "\uffd9\026\107\027\110\030\104\032\111\001\002\000\016" +
-    "\021\106\023\105\026\107\027\110\030\104\032\111\001" +
-    "\002\000\034\015\uffdd\016\uffdd\017\uffdd\020\uffdd\021\uffdd" +
-    "\022\uffdd\023\uffdd\024\uffdd\025\uffdd\026\uffdd\027\uffdd\030" +
-    "\uffdd\032\uffdd\001\002\000\034\015\uffdc\016\uffdc\017\uffdc" +
-    "\020\uffdc\021\uffdc\022\uffdc\023\uffdc\024\uffdc\025\uffdc\026" +
-    "\uffdc\027\uffdc\030\uffdc\032\uffdc\001\002\000\034\015\uffdb" +
-    "\016\uffdb\017\uffdb\020\uffdb\021\uffdb\022\uffdb\023\uffdb\024" +
-    "\uffdb\025\uffdb\026\uffdb\027\uffdb\030\uffdb\032\uffdb\001\002" +
-    "\000\034\015\uffda\016\uffda\017\uffda\020\uffda\021\106\022" +
-    "\uffda\023\105\024\uffda\025\uffda\026\uffda\027\uffda\030\uffda" +
-    "\032\uffda\001\002\000\034\015\uffd8\016\uffd8\017\uffd8\020" +
-    "\uffd8\021\uffd8\022\uffd8\023\uffd8\024\uffd8\025\uffd8\026\uffd8" +
-    "\027\uffd8\030\uffd8\032\uffd8\001\002\000\030\015\123\016" +
-    "\122\017\121\020\120\021\106\023\105\024\127\026\107" +
-    "\027\110\030\104\032\111\001\002\000\034\015\uffd2\016" +
-    "\uffd2\017\uffd2\020\uffd2\021\uffd2\022\uffd2\023\uffd2\024\uffd2" +
-    "\025\uffd2\026\uffd2\027\uffd2\030\uffd2\032\uffd2\001\002\000" +
-    "\010\014\uffde\031\uffde\036\uffde\001\002\000\006\041\047" +
-    "\042\051\001\002\000\010\014\uffe2\031\uffe2\036\uffe2\001" +
-    "\002\000\010\014\uffec\041\uffec\042\uffec\001\002\000\006" +
-    "\002\ufff6\036\ufff6\001\002\000\010\014\uffe0\031\uffe0\036" +
-    "\uffe0\001\002" });
+    "\002\000\004\002\015\001\002\000\004\002\001\001\002" +
+    "\000\036\004\021\005\034\006\025\007\023\010\033\023" +
+    "\022\035\026\037\031\042\032\043\035\044\036\045\017" +
+    "\046\030\047\020\001\002\000\040\004\uffbd\005\uffbd\006" +
+    "\uffbd\007\uffbd\010\uffbd\023\uffbd\026\uffbd\035\uffbd\037\uffbd" +
+    "\042\uffbd\043\uffbd\044\uffbd\045\uffbd\046\uffbd\047\uffbd\001" +
+    "\002\000\040\004\uffbb\005\uffbb\006\uffbb\007\uffbb\010\uffbb" +
+    "\023\uffbb\026\uffbb\035\uffbb\037\uffbb\042\uffbb\043\uffbb\044" +
+    "\uffbb\045\uffbb\046\uffbb\047\uffbb\001\002\000\040\004\uffc8" +
+    "\005\uffc8\006\uffc8\007\uffc8\010\uffc8\023\uffc8\026\uffc8\035" +
+    "\uffc8\037\uffc8\042\uffc8\043\uffc8\044\uffc8\045\uffc8\046\uffc8" +
+    "\047\uffc8\001\002\000\040\004\uffc3\005\uffc3\006\uffc3\007" +
+    "\uffc3\010\uffc3\023\uffc3\026\uffc3\035\uffc3\037\uffc3\042\uffc3" +
+    "\043\uffc3\044\uffc3\045\uffc3\046\uffc3\047\uffc3\001\002\000" +
+    "\040\004\uffc5\005\uffc5\006\uffc5\007\uffc5\010\uffc5\023\uffc5" +
+    "\026\uffc5\035\uffc5\037\uffc5\042\uffc5\043\uffc5\044\uffc5\045" +
+    "\uffc5\046\uffc5\047\uffc5\001\002\000\040\004\021\005\034" +
+    "\006\025\007\023\010\033\023\022\026\040\035\026\037" +
+    "\031\042\032\043\035\044\036\045\017\046\030\047\020" +
+    "\001\002\000\040\004\uffc6\005\uffc6\006\uffc6\007\uffc6\010" +
+    "\uffc6\023\uffc6\026\uffc6\035\uffc6\037\uffc6\042\uffc6\043\uffc6" +
+    "\044\uffc6\045\uffc6\046\uffc6\047\uffc6\001\002\000\040\004" +
+    "\uffc2\005\uffc2\006\uffc2\007\uffc2\010\uffc2\023\uffc2\026\uffc2" +
+    "\035\uffc2\037\uffc2\042\uffc2\043\uffc2\044\uffc2\045\uffc2\046" +
+    "\uffc2\047\uffc2\001\002\000\040\004\ufff5\005\ufff5\006\ufff5" +
+    "\007\ufff5\010\ufff5\023\ufff5\026\ufff5\035\ufff5\037\ufff5\042" +
+    "\ufff5\043\ufff5\044\ufff5\045\ufff5\046\ufff5\047\ufff5\001\002" +
+    "\000\040\004\uffbc\005\uffbc\006\uffbc\007\uffbc\010\uffbc\023" +
+    "\uffbc\026\uffbc\035\uffbc\037\uffbc\042\uffbc\043\uffbc\044\uffbc" +
+    "\045\uffbc\046\uffbc\047\uffbc\001\002\000\040\004\uffc1\005" +
+    "\uffc1\006\uffc1\007\uffc1\010\uffc1\023\uffc1\026\uffc1\035\uffc1" +
+    "\037\uffc1\042\uffc1\043\uffc1\044\uffc1\045\uffc1\046\uffc1\047" +
+    "\uffc1\001\002\000\040\004\uffc0\005\uffc0\006\uffc0\007\uffc0" +
+    "\010\uffc0\023\uffc0\026\uffc0\035\uffc0\037\uffc0\042\uffc0\043" +
+    "\uffc0\044\uffc0\045\uffc0\046\uffc0\047\uffc0\001\002\000\040" +
+    "\004\uffc4\005\uffc4\006\uffc4\007\uffc4\010\uffc4\023\uffc4\026" +
+    "\uffc4\035\uffc4\037\uffc4\042\uffc4\043\uffc4\044\uffc4\045\uffc4" +
+    "\046\uffc4\047\uffc4\001\002\000\040\004\uffc7\005\uffc7\006" +
+    "\uffc7\007\uffc7\010\uffc7\023\uffc7\026\uffc7\035\uffc7\037\uffc7" +
+    "\042\uffc7\043\uffc7\044\uffc7\045\uffc7\046\uffc7\047\uffc7\001" +
+    "\002\000\040\004\uffbf\005\uffbf\006\uffbf\007\uffbf\010\uffbf" +
+    "\023\uffbf\026\uffbf\035\uffbf\037\uffbf\042\uffbf\043\uffbf\044" +
+    "\uffbf\045\uffbf\046\uffbf\047\uffbf\001\002\000\040\004\uffbe" +
+    "\005\uffbe\006\uffbe\007\uffbe\010\uffbe\023\uffbe\026\uffbe\035" +
+    "\uffbe\037\uffbe\042\uffbe\043\uffbe\044\uffbe\045\uffbe\046\uffbe" +
+    "\047\uffbe\001\002\000\040\004\ufff6\005\ufff6\006\ufff6\007" +
+    "\ufff6\010\ufff6\023\ufff6\026\ufff6\035\ufff6\037\ufff6\042\ufff6" +
+    "\043\ufff6\044\ufff6\045\ufff6\046\ufff6\047\ufff6\001\002\000" +
+    "\020\003\ufffb\004\ufffb\005\ufffb\006\ufffb\007\ufffb\010\ufffb" +
+    "\014\ufffb\001\002\000\010\003\046\032\050\037\043\001" +
+    "\002\000\020\003\ufff7\004\ufff7\005\ufff7\006\ufff7\007\ufff7" +
+    "\010\ufff7\014\ufff7\001\002\000\004\013\107\001\002\000" +
+    "\010\002\uffff\003\072\037\071\001\002\000\012\003\144" +
+    "\014\145\032\050\037\043\001\002\000\006\014\140\026" +
+    "\141\001\002\000\012\003\uffdc\014\uffdc\032\uffdc\037\uffdc" +
+    "\001\002\000\004\013\107\001\002\000\010\014\052\042" +
+    "\053\043\054\001\002\000\006\003\072\037\071\001\002" +
+    "\000\012\037\uffe5\044\uffe5\045\uffe5\046\uffe5\001\002\000" +
+    "\004\042\070\001\002\000\010\014\uffe9\042\uffe9\043\uffe9" +
+    "\001\002\000\012\037\uffe0\044\061\045\057\046\060\001" +
+    "\002\000\004\037\uffe2\001\002\000\004\037\uffe1\001\002" +
+    "\000\004\037\uffe3\001\002\000\004\037\063\001\002\000" +
+    "\006\026\uffde\047\uffde\001\002\000\006\026\066\047\065" +
+    "\001\002\000\004\037\067\001\002\000\010\014\uffe6\042" +
+    "\uffe6\043\uffe6\001\002\000\006\026\uffdf\047\uffdf\001\002" +
+    "\000\012\037\uffe4\044\uffe4\045\uffe4\046\uffe4\001\002\000" +
+    "\004\012\075\001\002\000\004\026\074\001\002\000\010" +
+    "\002\ufff3\003\ufff3\037\ufff3\001\002\000\010\002\ufff0\003" +
+    "\ufff0\037\ufff0\001\002\000\004\037\076\001\002\000\012" +
+    "\011\105\026\uffec\034\uffec\037\uffec\001\002\000\010\026" +
+    "\uffea\034\101\037\076\001\002\000\010\026\uffee\034\uffee" +
+    "\037\uffee\001\002\000\004\026\uffeb\001\002\000\004\026" +
+    "\104\001\002\000\010\026\uffef\034\uffef\037\uffef\001\002" +
+    "\000\010\002\ufff1\003\ufff1\037\ufff1\001\002\000\004\037" +
+    "\106\001\002\000\010\026\uffed\034\uffed\037\uffed\001\002" +
+    "\000\020\021\114\023\116\024\113\027\115\030\117\031" +
+    "\112\033\120\001\002\000\012\003\uffda\014\uffda\032\uffda" +
+    "\037\uffda\001\002\000\032\015\132\016\131\017\127\020" +
+    "\130\021\114\023\116\024\113\026\137\027\115\030\117" +
+    "\031\112\033\120\001\002\000\036\015\uffcf\016\uffcf\017" +
+    "\uffcf\020\uffcf\021\uffcf\022\uffcf\023\uffcf\024\uffcf\025\uffcf" +
+    "\026\uffcf\027\uffcf\030\uffcf\031\uffcf\033\uffcf\001\002\000" +
+    "\020\021\114\023\116\024\113\027\115\030\117\031\112" +
+    "\033\120\001\002\000\024\021\114\023\116\024\113\027" +
+    "\115\030\117\031\112\033\120\040\124\041\123\001\002" +
+    "\000\036\015\uffd1\016\uffd1\017\uffd1\020\uffd1\021\uffd1\022" +
+    "\uffd1\023\uffd1\024\uffd1\025\uffd1\026\uffd1\027\uffd1\030\uffd1" +
+    "\031\uffd1\033\uffd1\001\002\000\036\015\uffcb\016\uffcb\017" +
+    "\uffcb\020\uffcb\021\uffcb\022\uffcb\023\uffcb\024\uffcb\025\uffcb" +
+    "\026\uffcb\027\uffcb\030\uffcb\031\uffcb\033\uffcb\001\002\000" +
+    "\036\015\uffd0\016\uffd0\017\uffd0\020\uffd0\021\uffd0\022\uffd0" +
+    "\023\uffd0\024\uffd0\025\uffd0\026\uffd0\027\uffd0\030\uffd0\031" +
+    "\uffd0\033\uffd0\001\002\000\036\015\uffce\016\uffce\017\uffce" +
+    "\020\uffce\021\uffce\022\uffce\023\uffce\024\uffce\025\uffce\026" +
+    "\uffce\027\uffce\030\uffce\031\uffce\033\uffce\001\002\000\004" +
+    "\022\134\001\002\000\032\015\132\016\131\017\127\020" +
+    "\130\021\114\022\125\023\116\024\113\027\115\030\117" +
+    "\031\112\033\120\001\002\000\004\022\uffca\001\002\000" +
+    "\004\022\uffc9\001\002\000\036\015\uffcd\016\uffcd\017\uffcd" +
+    "\020\uffcd\021\uffcd\022\uffcd\023\uffcd\024\uffcd\025\uffcd\026" +
+    "\uffcd\027\uffcd\030\uffcd\031\uffcd\033\uffcd\001\002\000\036" +
+    "\015\132\016\131\017\127\020\130\021\114\022\uffd3\023" +
+    "\116\024\113\025\uffd3\026\uffd3\027\115\030\117\031\112" +
+    "\033\120\001\002\000\036\015\uffd7\016\uffd7\017\uffd7\020" +
+    "\uffd7\021\uffd7\022\uffd7\023\uffd7\024\uffd7\025\uffd7\026\uffd7" +
+    "\027\uffd7\030\uffd7\031\uffd7\033\uffd7\001\002\000\020\021" +
+    "\114\023\116\024\113\027\115\030\117\031\112\033\120" +
+    "\001\002\000\036\015\uffd6\016\uffd6\017\uffd6\020\uffd6\021" +
+    "\uffd6\022\uffd6\023\uffd6\024\uffd6\025\uffd6\026\uffd6\027\uffd6" +
+    "\030\uffd6\031\uffd6\033\uffd6\001\002\000\036\015\uffd5\016" +
+    "\uffd5\017\uffd5\020\uffd5\021\uffd5\022\uffd5\023\uffd5\024\uffd5" +
+    "\025\uffd5\026\uffd5\027\uffd5\030\uffd5\031\uffd5\033\uffd5\001" +
+    "\002\000\036\015\uffd4\016\uffd4\017\uffd4\020\uffd4\021\114" +
+    "\022\uffd4\023\116\024\113\025\uffd4\026\uffd4\027\uffd4\030" +
+    "\uffd4\031\uffd4\033\uffd4\001\002\000\036\015\uffd2\016\uffd2" +
+    "\017\uffd2\020\uffd2\021\uffd2\022\uffd2\023\uffd2\024\uffd2\025" +
+    "\uffd2\026\uffd2\027\uffd2\030\uffd2\031\uffd2\033\uffd2\001\002" +
+    "\000\032\015\132\016\131\017\127\020\130\021\114\023" +
+    "\116\024\113\025\136\027\115\030\117\031\112\033\120" +
+    "\001\002\000\036\015\uffcc\016\uffcc\017\uffcc\020\uffcc\021" +
+    "\uffcc\022\uffcc\023\uffcc\024\uffcc\025\uffcc\026\uffcc\027\uffcc" +
+    "\030\uffcc\031\uffcc\033\uffcc\001\002\000\012\003\uffd8\014" +
+    "\uffd8\032\uffd8\037\uffd8\001\002\000\012\003\072\037\071" +
+    "\042\053\043\054\001\002\000\012\003\uffd9\014\uffd9\032" +
+    "\uffd9\037\uffd9\001\002\000\010\014\uffe7\042\uffe7\043\uffe7" +
+    "\001\002\000\010\002\ufff2\003\ufff2\037\ufff2\001\002\000" +
+    "\004\026\141\001\002\000\006\042\053\043\054\001\002" +
+    "\000\012\003\uffdd\014\uffdd\032\uffdd\037\uffdd\001\002\000" +
+    "\010\014\uffe8\042\uffe8\043\uffe8\001\002\000\010\002\ufff4" +
+    "\003\ufff4\037\ufff4\001\002\000\012\003\uffdb\014\uffdb\032" +
+    "\uffdb\037\uffdb\001\002\000\004\037\153\001\002\000\004" +
+    "\026\154\001\002\000\020\003\ufff8\004\ufff8\005\ufff8\006" +
+    "\ufff8\007\ufff8\010\ufff8\014\ufff8\001\002\000\004\036\156" +
+    "\001\002\000\004\026\157\001\002\000\020\003\ufffa\004" +
+    "\ufffa\005\ufffa\006\ufffa\007\ufffa\010\ufffa\014\ufffa\001\002" +
+    "\000\004\035\161\001\002\000\004\026\162\001\002\000" +
+    "\020\003\ufff9\004\ufff9\005\ufff9\006\ufff9\007\ufff9\010\ufff9" +
+    "\014\ufff9\001\002\000\004\026\042\001\002\000\020\003" +
+    "\ufffe\004\ufffe\005\ufffe\006\ufffe\007\ufffe\010\ufffe\014\ufffe" +
+    "\001\002\000\010\003\046\032\050\037\043\001\002\000" +
+    "\010\002\000\003\072\037\071\001\002\000\036\004\021" +
+    "\005\034\006\025\007\023\010\033\023\022\035\026\037" +
+    "\031\042\032\043\035\044\036\045\017\046\030\047\020" +
+    "\001\002\000\040\004\021\005\034\006\025\007\023\010" +
+    "\033\023\022\026\171\035\026\037\031\042\032\043\035" +
+    "\044\036\045\017\046\030\047\020\001\002\000\020\003" +
+    "\ufffc\004\ufffc\005\ufffc\006\ufffc\007\ufffc\010\ufffc\014\ufffc" +
+    "\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -151,40 +225,51 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\133\000\010\002\007\003\003\004\006\001\001\000" +
-    "\004\004\036\001\001\000\002\001\001\000\002\001\001" +
+    "\000\167\000\010\002\013\003\004\004\012\001\001\000" +
+    "\002\001\001\000\004\004\163\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\006\005\023\025\026\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\004\025\036\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\012\006\043\013\050\020" +
+    "\044\021\046\001\001\000\002\001\001\000\004\024\150" +
+    "\001\001\000\004\007\147\001\001\000\004\021\145\001" +
+    "\001\000\002\001\001\000\002\001\001\000\004\024\107" +
+    "\001\001\000\006\014\054\015\055\001\001\000\004\007" +
+    "\072\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\016\061\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\017\063\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\005\023\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\004\005\030\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\012\006\040\013\044\020\041" +
-    "\021\042\001\001\000\002\001\001\000\004\024\134\001" +
-    "\001\000\004\007\133\001\001\000\004\021\131\001\001" +
-    "\000\002\001\001\000\004\024\101\001\001\000\006\014" +
-    "\047\015\051\001\001\000\004\007\065\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\016" +
-    "\055\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\004\017\057\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\006\010\070\011\071\001\001\000\002\001\001" +
-    "\000\006\011\074\012\073\001\001\000\002\001\001\000" +
+    "\001\000\006\010\076\011\077\001\001\000\002\001\001" +
+    "\000\006\011\102\012\101\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\004\022" +
-    "\102\001\001\000\002\001\001\000\004\022\116\001\001" +
-    "\000\002\001\001\000\004\022\125\001\001\000\006\022" +
-    "\112\023\111\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\004\022\116\001" +
+    "\110\001\001\000\002\001\001\000\004\022\125\001\001" +
+    "\000\002\001\001\000\004\022\134\001\001\000\006\022" +
+    "\121\023\120\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\004\022\125\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\004\022\125\001\001\000\002\001" +
+    "\001\000\004\022\132\001\001\000\002\001\001\000\002" +
+    "\001\001\000\004\022\125\001\001\000\002\001\001\000" +
+    "\004\022\125\001\001\000\002\001\001\000\002\001\001" +
+    "\000\010\007\142\014\141\015\055\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\004\022\116\001\001\000\004\022\123\001\001\000" +
-    "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
-    "\022\116\001\001\000\002\001\001\000\004\022\116\001" +
-    "\001\000\002\001\001\000\002\001\001\000\006\014\132" +
-    "\015\051\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\002\001\001" });
+    "\000\006\014\146\015\055\001\001\000\002\001\001\000" +
+    "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\012\006\165\013\050\020\044\021\046" +
+    "\001\001\000\004\007\147\001\001\000\006\005\167\025" +
+    "\026\001\001\000\004\025\036\001\001\000\002\001\001" +
+    "" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -310,7 +395,16 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // informacion ::= informacion dato 
+          case 2: // s ::= error SEPARADOR gramatica 
+            {
+              String RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 3: // informacion ::= informacion dato 
             {
               Object RESULT =null;
 
@@ -319,7 +413,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 3: // informacion ::= dato 
+          case 4: // informacion ::= dato 
             {
               Object RESULT =null;
 
@@ -328,7 +422,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // dato ::= PR_NOMBRE ASIGNACION_INF listadoIds FIN_DE_LINEA 
+          case 5: // dato ::= PR_NOMBRE ASIGNACION_INF listadoIds FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -337,7 +431,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 5: // dato ::= PR_AUTOR ASIGNACION_INF listadoIds FIN_DE_LINEA 
+          case 6: // dato ::= PR_AUTOR ASIGNACION_INF listadoIds FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -346,7 +440,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 6: // dato ::= PR_VERSION ASIGNACION_INF VERSION FIN_DE_LINEA 
+          case 7: // dato ::= PR_VERSION ASIGNACION_INF VERSION FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -355,7 +449,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 7: // dato ::= PR_LANZAMIENTO ASIGNACION_INF ENTERO FIN_DE_LINEA 
+          case 8: // dato ::= PR_LANZAMIENTO ASIGNACION_INF ENTERO FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -364,7 +458,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 8: // dato ::= PR_EXTENSION ASIGNACION_INF ID FIN_DE_LINEA 
+          case 9: // dato ::= PR_EXTENSION ASIGNACION_INF ID FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -373,7 +467,16 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 9: // listadoIds ::= listadoIds ID 
+          case 10: // dato ::= error FIN_DE_LINEA 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 11: // listadoIds ::= listadoIds anyTerminal 
             {
               Object RESULT =null;
 
@@ -382,7 +485,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 10: // listadoIds ::= ID 
+          case 12: // listadoIds ::= anyTerminal 
             {
               Object RESULT =null;
 
@@ -391,7 +494,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 11: // gramatica ::= gramatica reglaGramatical 
+          case 13: // gramatica ::= gramatica reglaGramatical 
             {
               Object RESULT =null;
 
@@ -400,7 +503,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 12: // gramatica ::= simbolos SEPARADOR reglaGramatical 
+          case 14: // gramatica ::= simbolos SEPARADOR reglaGramatical 
             {
               Object RESULT =null;
 
@@ -409,7 +512,16 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 13: // reglaGramatical ::= ID ASIGNACION_GRAMA listadoSimbolos codigoJava FIN_DE_LINEA 
+          case 15: // gramatica ::= error SEPARADOR reglaGramatical 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("gramatica",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 16: // reglaGramatical ::= ID ASIGNACION_GRAMA listadoSimbolos codigoJava FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -418,7 +530,16 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 14: // listadoSimbolos ::= listadoSimbolos simbolo 
+          case 17: // reglaGramatical ::= error FIN_DE_LINEA 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("reglaGramatical",5, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 18: // listadoSimbolos ::= listadoSimbolos simbolo 
             {
               Object RESULT =null;
 
@@ -427,7 +548,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 15: // listadoSimbolos ::= simbolo 
+          case 19: // listadoSimbolos ::= simbolo 
             {
               Object RESULT =null;
 
@@ -436,7 +557,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 16: // simbolo ::= ID ASIGNACION_INF ID 
+          case 20: // simbolo ::= ID ASIGNACION_INF ID 
             {
               Object RESULT =null;
 
@@ -445,7 +566,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 17: // simbolo ::= ID 
+          case 21: // simbolo ::= ID 
             {
               Object RESULT =null;
 
@@ -454,7 +575,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 18: // codigoJava ::= JAVA_CODE 
+          case 22: // codigoJava ::= JAVA_CODE 
             {
               Object RESULT =null;
 
@@ -463,7 +584,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 19: // codigoJava ::= 
+          case 23: // codigoJava ::= 
             {
               Object RESULT =null;
 
@@ -472,7 +593,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 20: // simbolos ::= simbolos declaracionSimbolos 
+          case 24: // simbolos ::= simbolos declaracionSimbolos 
             {
               Object RESULT =null;
 
@@ -481,7 +602,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 21: // simbolos ::= expresiones SEPARADOR declaracionSimbolos 
+          case 25: // simbolos ::= expresiones SEPARADOR declaracionSimbolos 
             {
               Object RESULT =null;
 
@@ -490,7 +611,16 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 22: // declaracionSimbolos ::= tipoSimbolo tipoDato listadoIdsConComa FIN_DE_LINEA 
+          case 26: // simbolos ::= error SEPARADOR declaracionSimbolos 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("simbolos",9, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 27: // declaracionSimbolos ::= tipoSimbolo tipoDato listadoIdsConComa FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -499,7 +629,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 23: // tipoSimbolo ::= PR_TERMINAL 
+          case 28: // tipoSimbolo ::= PR_TERMINAL 
             {
               Object RESULT =null;
 
@@ -508,7 +638,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 24: // tipoSimbolo ::= PR_NO PR_TERMINAL 
+          case 29: // tipoSimbolo ::= PR_NO PR_TERMINAL 
             {
               Object RESULT =null;
 
@@ -517,7 +647,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 25: // tipoDato ::= PR_ENTERO 
+          case 30: // tipoDato ::= PR_ENTERO 
             {
               Object RESULT =null;
 
@@ -526,7 +656,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 26: // tipoDato ::= PR_REAL 
+          case 31: // tipoDato ::= PR_REAL 
             {
               Object RESULT =null;
 
@@ -535,7 +665,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 27: // tipoDato ::= PR_CADENA 
+          case 32: // tipoDato ::= PR_CADENA 
             {
               Object RESULT =null;
 
@@ -544,7 +674,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 28: // tipoDato ::= 
+          case 33: // tipoDato ::= 
             {
               Object RESULT =null;
 
@@ -553,7 +683,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 29: // listadoIdsConComa ::= listadoIdsConComa COMA ID 
+          case 34: // listadoIdsConComa ::= listadoIdsConComa COMA ID 
             {
               Object RESULT =null;
 
@@ -562,7 +692,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 30: // listadoIdsConComa ::= ID 
+          case 35: // listadoIdsConComa ::= ID 
             {
               Object RESULT =null;
 
@@ -571,7 +701,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 31: // expresiones ::= expresiones declaracionExpresion 
+          case 36: // expresiones ::= expresiones declaracionExpresion 
             {
               Object RESULT =null;
 
@@ -580,7 +710,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 32: // expresiones ::= declaracionExpresion 
+          case 37: // expresiones ::= declaracionExpresion 
             {
               Object RESULT =null;
 
@@ -589,7 +719,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 33: // declaracionExpresion ::= ID restoDeclaracionExpresion 
+          case 38: // declaracionExpresion ::= ID restoDeclaracionExpresion 
             {
               Object RESULT =null;
 
@@ -598,7 +728,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 34: // declaracionExpresion ::= IGNORAR restoDeclaracionExpresion 
+          case 39: // declaracionExpresion ::= IGNORAR restoDeclaracionExpresion 
             {
               Object RESULT =null;
 
@@ -607,7 +737,16 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 35: // restoDeclaracionExpresion ::= ASIGNACION_ER expresionRegular FIN_DE_LINEA 
+          case 40: // declaracionExpresion ::= error FIN_DE_LINEA 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionExpresion",15, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 41: // restoDeclaracionExpresion ::= ASIGNACION_ER expresionRegular FIN_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -616,7 +755,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 36: // expresionRegular ::= expresionRegular PUEDE_O_NO_PUEDE 
+          case 42: // expresionRegular ::= expresionRegular PUEDE_O_NO_PUEDE 
             {
               Object RESULT =null;
 
@@ -625,7 +764,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 37: // expresionRegular ::= expresionRegular CERO_O_MAS_VECES 
+          case 43: // expresionRegular ::= expresionRegular CERO_O_MAS_VECES 
             {
               Object RESULT =null;
 
@@ -634,7 +773,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 38: // expresionRegular ::= expresionRegular UNA_O_MAS_VECES 
+          case 44: // expresionRegular ::= expresionRegular UNA_O_MAS_VECES 
             {
               Object RESULT =null;
 
@@ -643,7 +782,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 39: // expresionRegular ::= expresionRegular O expresionRegular 
+          case 45: // expresionRegular ::= expresionRegular O expresionRegular 
             {
               Object RESULT =null;
 
@@ -652,7 +791,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 40: // expresionRegular ::= expresionRegular expresionRegular 
+          case 46: // expresionRegular ::= expresionRegular expresionRegular 
             {
               Object RESULT =null;
 
@@ -661,7 +800,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 41: // expresionRegular ::= COR_A rango COR_C 
+          case 47: // expresionRegular ::= COR_A rango COR_C 
             {
               Object RESULT =null;
 
@@ -670,7 +809,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 42: // expresionRegular ::= SALTO_DE_LINEA 
+          case 48: // expresionRegular ::= SALTO_DE_LINEA 
             {
               Object RESULT =null;
 
@@ -679,7 +818,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 43: // expresionRegular ::= TABULACION 
+          case 49: // expresionRegular ::= TABULACION 
             {
               Object RESULT =null;
 
@@ -688,7 +827,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 44: // expresionRegular ::= RETORNO 
+          case 50: // expresionRegular ::= RETORNO 
             {
               Object RESULT =null;
 
@@ -697,7 +836,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 45: // expresionRegular ::= CADENA 
+          case 51: // expresionRegular ::= CADENA 
             {
               Object RESULT =null;
 
@@ -706,7 +845,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 46: // expresionRegular ::= COR_A expresionRegular COR_C 
+          case 52: // expresionRegular ::= COR_A expresionRegular COR_C 
             {
               Object RESULT =null;
 
@@ -715,7 +854,7 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 47: // expresionRegular ::= PAR_A expresionRegular PAR_C 
+          case 53: // expresionRegular ::= PAR_A expresionRegular PAR_C 
             {
               Object RESULT =null;
 
@@ -724,7 +863,16 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 48: // rango ::= RANGO_LETRAS_MIN 
+          case 54: // expresionRegular ::= CARACTER_EXPLICITO 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",16, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 55: // rango ::= RANGO_LETRAS_MIN 
             {
               Object RESULT =null;
 
@@ -733,11 +881,137 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 49: // rango ::= RANGO_NUMEROS 
+          case 56: // rango ::= RANGO_NUMEROS 
             {
               Object RESULT =null;
 
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("rango",17, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 57: // anyTerminal ::= PR_NOMBRE 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 58: // anyTerminal ::= PR_AUTOR 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 59: // anyTerminal ::= PR_VERSION 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 60: // anyTerminal ::= PR_LANZAMIENTO 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 61: // anyTerminal ::= PR_EXTENSION 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 62: // anyTerminal ::= CARACTER_EXPLICITO 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 63: // anyTerminal ::= ENTERO 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 64: // anyTerminal ::= ID 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 65: // anyTerminal ::= PR_TERMINAL 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 66: // anyTerminal ::= PR_NO 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 67: // anyTerminal ::= PR_ENTERO 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 68: // anyTerminal ::= PR_REAL 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 69: // anyTerminal ::= PR_CADENA 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+            }
+          return CUP$ParserGramatica$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 70: // anyTerminal ::= COMA 
+            {
+              Object RESULT =null;
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("anyTerminal",19, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 

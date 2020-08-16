@@ -691,7 +691,7 @@ public class LexerSecciones implements java_cup.runtime.Scanner {
             // fall through
           case 4: break;
           case 2:
-            { throw new Error("Illegal character <"+yytext()+"> at (Line,Column): <"+yyline+","+yycolumn+">");
+            { return symbol(sym.SEPARADOR_UNITARIO, yyline+1, yycolumn+1, yytext());
             }
             // fall through
           case 5: break;

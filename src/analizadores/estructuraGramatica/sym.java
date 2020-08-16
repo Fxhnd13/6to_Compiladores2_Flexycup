@@ -9,38 +9,39 @@ package analizadores.estructuraGramatica;
 public class sym {
   /* terminals */
   public static final int ASIGNACION_INF = 7;
-  public static final int SALTO_DE_LINEA = 20;
+  public static final int SALTO_DE_LINEA = 21;
   public static final int ASIGNACION_ER = 9;
-  public static final int ENTERO = 26;
+  public static final int ENTERO = 27;
+  public static final int CARACTER_EXPLICITO = 17;
   public static final int O = 14;
-  public static final int PR_REAL = 34;
+  public static final int PR_REAL = 35;
   public static final int SEPARADOR = 10;
   public static final int PR_AUTOR = 3;
-  public static final int PR_CADENA = 35;
-  public static final int IGNORAR = 23;
-  public static final int PR_TERMINAL = 31;
+  public static final int PR_CADENA = 36;
+  public static final int IGNORAR = 24;
+  public static final int PR_TERMINAL = 32;
   public static final int PR_VERSION = 4;
-  public static final int VERSION = 27;
-  public static final int TABULACION = 21;
+  public static final int VERSION = 28;
+  public static final int TABULACION = 22;
   public static final int PR_EXTENSION = 6;
-  public static final int ID = 28;
-  public static final int RETORNO = 22;
-  public static final int PR_NO = 32;
-  public static final int RANGO_LETRAS_MIN = 30;
+  public static final int ID = 29;
+  public static final int RETORNO = 23;
+  public static final int PR_NO = 33;
+  public static final int RANGO_LETRAS_MIN = 31;
   public static final int EOF = 0;
   public static final int error = 1;
-  public static final int COMA = 36;
-  public static final int RANGO_NUMEROS = 29;
-  public static final int CADENA = 24;
-  public static final int PAR_C = 18;
-  public static final int PAR_A = 17;
+  public static final int COMA = 37;
+  public static final int RANGO_NUMEROS = 30;
+  public static final int CADENA = 25;
+  public static final int PAR_C = 19;
+  public static final int PAR_A = 18;
   public static final int UNA_O_MAS_VECES = 11;
-  public static final int FIN_DE_LINEA = 19;
-  public static final int JAVA_CODE = 25;
+  public static final int FIN_DE_LINEA = 20;
+  public static final int JAVA_CODE = 26;
   public static final int PUEDE_O_NO_PUEDE = 13;
   public static final int PR_NOMBRE = 2;
   public static final int COR_C = 16;
-  public static final int PR_ENTERO = 33;
+  public static final int PR_ENTERO = 34;
   public static final int COR_A = 15;
   public static final int CERO_O_MAS_VECES = 12;
   public static final int PR_LANZAMIENTO = 5;
@@ -63,6 +64,7 @@ public class sym {
   "O",
   "COR_A",
   "COR_C",
+  "CARACTER_EXPLICITO",
   "PAR_A",
   "PAR_C",
   "FIN_DE_LINEA",

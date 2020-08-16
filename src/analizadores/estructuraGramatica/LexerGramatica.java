@@ -376,13 +376,13 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
 
     private Symbol symbol(int linea, int columna, String lexema, int type){
         Symbol simbolo = new Symbol(type, linea, columna, lexema);
-        System.out.println(type+"|"+lexema+"|<"+linea+","+columna+">");
+        //System.out.println(type+"|"+lexema+"|<"+linea+","+columna+">");
         return simbolo;
     }
 
     private Symbol symbol(int linea, int columna, int type){
         Symbol simbolo = new Symbol(type,linea,columna);
-        System.out.println(type+"|"+yytext()+"|<"+linea+","+columna+">");
+        //System.out.println(type+"|"+yytext()+"|<"+linea+","+columna+">");
         return simbolo;
     }
 
@@ -808,7 +808,7 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
       else {
         switch (zzAction < 0 ? zzAction : ZZ_ACTION[zzAction]) {
           case 1:
-            { error(yytext());
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.CARACTER_EXPLICITO);
             }
             // fall through
           case 40: break;

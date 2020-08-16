@@ -110,40 +110,40 @@ public class EditorManager {
             LexerSecciones lexer = new LexerSecciones(new StringReader(texto));
             ParserSecciones parser = new ParserSecciones(lexer);
             List<String> secciones = (List<String>) parser.parse().value;
-            for (int i = 0; i < secciones.size(); i++) {
-                switch(i){
-                    case 0:{
-                        System.out.println("---------------------------------------------------------------------------------------");
-                        System.out.println("Seccion de informacion:   ");
-                        System.out.println(secciones.get(0));
-                        break;
-                    }
-                    case 1:{
-                        System.out.println("---------------------------------------------------------------------------------------");
-                        System.out.println("Seccion de Codigo:   ");
-                        System.out.println(secciones.get(1));
-                        break;
-                    }
-                    case 2:{
-                        System.out.println("---------------------------------------------------------------------------------------");
-                        System.out.println("Seccion de Expresiones Regulares:   ");
-                        System.out.println(secciones.get(2));
-                        break;
-                    }
-                    case 3:{
-                        System.out.println("---------------------------------------------------------------------------------------");
-                        System.out.println("Seccion de Simbolos:   ");
-                        System.out.println(secciones.get(3));
-                        break;
-                    }
-                    case 4:{
-                        System.out.println("---------------------------------------------------------------------------------------");
-                        System.out.println("Seccion de reglas gramaticales:   ");
-                        System.out.println(secciones.get(4));
-                        break;
-                    }
-                }
-            }
+//            for (int i = 0; i < secciones.size(); i++) {
+//                switch(i){
+//                    case 0:{
+//                        System.out.println("---------------------------------------------------------------------------------------");
+//                        System.out.println("Seccion de informacion:   ");
+//                        System.out.println(secciones.get(0));
+//                        break;
+//                    }
+//                    case 1:{
+//                        System.out.println("---------------------------------------------------------------------------------------");
+//                        System.out.println("Seccion de Codigo:   ");
+//                        System.out.println(secciones.get(1));
+//                        break;
+//                    }
+//                    case 2:{
+//                        System.out.println("---------------------------------------------------------------------------------------");
+//                        System.out.println("Seccion de Expresiones Regulares:   ");
+//                        System.out.println(secciones.get(2));
+//                        break;
+//                    }
+//                    case 3:{
+//                        System.out.println("---------------------------------------------------------------------------------------");
+//                        System.out.println("Seccion de Simbolos:   ");
+//                        System.out.println(secciones.get(3));
+//                        break;
+//                    }
+//                    case 4:{
+//                        System.out.println("---------------------------------------------------------------------------------------");
+//                        System.out.println("Seccion de reglas gramaticales:   ");
+//                        System.out.println(secciones.get(4));
+//                        break;
+//                    }
+//                }
+//            }
             String cadena = "";
             for (int i = 0; i < secciones.size(); i++) {
                 if(i!=1) {
@@ -151,10 +151,10 @@ public class EditorManager {
                     cadena+=secciones.get(i);
                 }
             }
-            System.out.println(cadena);
+//            System.out.println(cadena);
             LexerGramatica lexer2 = new LexerGramatica(new StringReader(cadena));
             ParserGramatica parser2 = new ParserGramatica(lexer2);
-            System.out.println((String)parser2.parse().value);
+            parser2.debug_parse();
         } catch (Exception ex) {
             Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }
