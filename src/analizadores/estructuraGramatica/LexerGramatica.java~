@@ -376,13 +376,13 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
 
     private Symbol symbol(int linea, int columna, String lexema, int type){
         Symbol simbolo = new Symbol(type, linea, columna, lexema);
-        System.out.println(type+"|"+lexema+"|<"+linea+","+columna+">");
+        //System.out.println(type+"|"+lexema+"|<"+linea+","+columna+">");
         return simbolo;
     }
 
     private Symbol symbol(int linea, int columna, int type){
         Symbol simbolo = new Symbol(type,linea,columna);
-        System.out.println(type+"|"+yytext()+"|<"+linea+","+columna+">");
+        //System.out.println(type+"|"+yytext()+"|<"+linea+","+columna+">");
         return simbolo;
     }
 
@@ -823,32 +823,32 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 42: break;
           case 4:
-            { return symbol(yyline+1, yycolumn+1, sym.IGNORAR);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.IGNORAR);
             }
             // fall through
           case 43: break;
           case 5:
-            { return symbol(yyline+1, yycolumn+1, sym.PAR_A);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.PAR_A);
             }
             // fall through
           case 44: break;
           case 6:
-            { return symbol(yyline+1, yycolumn+1, sym.PAR_C);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.PAR_C);
             }
             // fall through
           case 45: break;
           case 7:
-            { return symbol(yyline+1, yycolumn+1, sym.CERO_O_MAS_VECES);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.CERO_O_MAS_VECES);
             }
             // fall through
           case 46: break;
           case 8:
-            { return symbol(yyline+1, yycolumn+1, sym.UNA_O_MAS_VECES);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.UNA_O_MAS_VECES);
             }
             // fall through
           case 47: break;
           case 9:
-            { return symbol(yyline+1, yycolumn+1, sym.COMA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.COMA);
             }
             // fall through
           case 48: break;
@@ -858,22 +858,22 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 49: break;
           case 11:
-            { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_INF);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_INF);
             }
             // fall through
           case 50: break;
           case 12:
-            { return symbol(yyline+1, yycolumn+1, sym.FIN_DE_LINEA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);
             }
             // fall through
           case 51: break;
           case 13:
-            { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_ER);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_ER);
             }
             // fall through
           case 52: break;
           case 14:
-            { return symbol(yyline+1, yycolumn+1, sym.PUEDE_O_NO_PUEDE);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.PUEDE_O_NO_PUEDE);
             }
             // fall through
           case 53: break;
@@ -883,22 +883,22 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 54: break;
           case 16:
-            { return symbol(yyline+1, yycolumn+1, sym.COR_A);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.COR_A);
             }
             // fall through
           case 55: break;
           case 17:
-            { return symbol(yyline+1, yycolumn+1, sym.COR_C);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.COR_C);
             }
             // fall through
           case 56: break;
           case 18:
-            { return symbol(yyline+1, yycolumn+1, sym.O);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.O);
             }
             // fall through
           case 57: break;
           case 19:
-            { return symbol(yyline+1, yycolumn+1, sym.SEPARADOR);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.SEPARADOR);
             }
             // fall through
           case 58: break;
@@ -908,22 +908,22 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 59: break;
           case 21:
-            { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_GRAMA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_GRAMA);
             }
             // fall through
           case 60: break;
           case 22:
-            { return symbol(yyline+1, yycolumn+1, sym.RETORNO);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.RETORNO);
             }
             // fall through
           case 61: break;
           case 23:
-            { return symbol(yyline+1, yycolumn+1, sym.SALTO_DE_LINEA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.SALTO_DE_LINEA);
             }
             // fall through
           case 62: break;
           case 24:
-            { return symbol(yyline+1, yycolumn+1, sym.TABULACION);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.TABULACION);
             }
             // fall through
           case 63: break;
@@ -938,7 +938,7 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 65: break;
           case 27:
-            { return symbol(yyline+1, yycolumn+1, sym.RANGO_NUMEROS);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);
             }
             // fall through
           case 66: break;
@@ -948,7 +948,7 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 67: break;
           case 29:
-            { return symbol(yyline+1, yycolumn+1, sym.RANGO_LETRAS_MIN);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);
             }
             // fall through
           case 68: break;

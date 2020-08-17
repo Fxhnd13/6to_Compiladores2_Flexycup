@@ -104,14 +104,14 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
     "\1\0\1\1\1\2\2\3\2\1\1\4\1\5\1\6"+
     "\1\7\1\10\1\11\1\1\2\12\1\13\1\14\1\15"+
     "\1\16\1\17\1\20\1\1\1\21\10\17\1\1\1\22"+
-    "\1\0\1\23\1\0\1\24\2\0\1\25\1\26\1\27"+
-    "\1\30\1\0\5\17\1\31\3\17\1\0\1\32\1\0"+
-    "\2\24\1\33\1\34\1\35\11\17\1\36\1\0\6\17"+
-    "\1\37\2\17\1\40\7\17\1\41\1\42\2\17\1\43"+
-    "\5\17\1\44\2\17\1\45\1\46\2\17\1\47";
+    "\1\0\1\23\1\0\1\24\1\0\1\25\2\0\1\26"+
+    "\1\27\1\30\5\17\1\31\3\17\1\0\1\32\1\0"+
+    "\2\24\1\33\2\0\11\17\1\34\3\0\6\17\1\35"+
+    "\2\17\1\36\1\37\1\40\7\17\1\41\1\42\2\17"+
+    "\1\43\5\17\1\44\2\17\1\45\1\46\2\17\1\47";
 
   private static int [] zzUnpackAction() {
-    int [] result = new int[108];
+    int [] result = new int[112];
     int offset = 0;
     offset = zzUnpackAction(ZZ_ACTION_PACKED_0, offset, result);
     return result;
@@ -138,21 +138,21 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
   private static final String ZZ_ROWMAP_PACKED_0 =
     "\0\0\0\56\0\134\0\56\0\212\0\270\0\346\0\56"+
     "\0\56\0\56\0\56\0\56\0\56\0\u0114\0\u0142\0\u0170"+
-    "\0\u019e\0\56\0\56\0\56\0\u01cc\0\56\0\u01fa\0\56"+
-    "\0\u0228\0\u0256\0\u0284\0\u02b2\0\u02e0\0\u030e\0\u033c\0\u036a"+
-    "\0\u0398\0\56\0\u03c6\0\56\0\u03f4\0\u0422\0\u0450\0\u047e"+
-    "\0\56\0\56\0\56\0\56\0\u04ac\0\u04da\0\u0508\0\u0536"+
-    "\0\u0564\0\u0592\0\u05c0\0\u05ee\0\u061c\0\u064a\0\u0678\0\56"+
-    "\0\u06a6\0\56\0\u06d4\0\56\0\u0702\0\56\0\u0730\0\u075e"+
-    "\0\u078c\0\u07ba\0\u07e8\0\u0816\0\u0844\0\u0872\0\u08a0\0\56"+
-    "\0\u08ce\0\u08fc\0\u092a\0\u0958\0\u0986\0\u09b4\0\u09e2\0\u01cc"+
-    "\0\u0a10\0\u0a3e\0\u01cc\0\u0a6c\0\u0a9a\0\u0ac8\0\u0af6\0\u0b24"+
-    "\0\u0b52\0\u0b80\0\u01cc\0\u01cc\0\u0bae\0\u0bdc\0\u01cc\0\u0c0a"+
-    "\0\u0c38\0\u0c66\0\u0c94\0\u0cc2\0\u01cc\0\u0cf0\0\u0d1e\0\u01cc"+
-    "\0\u01cc\0\u0d4c\0\u0d7a\0\u01cc";
+    "\0\u019e\0\56\0\56\0\56\0\u01cc\0\u01fa\0\u0228\0\56"+
+    "\0\u0256\0\u0284\0\u02b2\0\u02e0\0\u030e\0\u033c\0\u036a\0\u0398"+
+    "\0\u03c6\0\56\0\u03f4\0\56\0\u0422\0\u0450\0\u047e\0\56"+
+    "\0\u04ac\0\u04da\0\56\0\56\0\56\0\u0508\0\u0536\0\u0564"+
+    "\0\u0592\0\u05c0\0\u05ee\0\u061c\0\u064a\0\u0678\0\u06a6\0\56"+
+    "\0\u06d4\0\56\0\u0702\0\u0142\0\u0730\0\u075e\0\u078c\0\u07ba"+
+    "\0\u07e8\0\u0816\0\u0844\0\u0872\0\u08a0\0\u08ce\0\u08fc\0\56"+
+    "\0\u092a\0\u0958\0\u0986\0\u09b4\0\u09e2\0\u0a10\0\u0a3e\0\u0a6c"+
+    "\0\u0a9a\0\u01cc\0\u0ac8\0\u0af6\0\56\0\56\0\u01cc\0\u0b24"+
+    "\0\u0b52\0\u0b80\0\u0bae\0\u0bdc\0\u0c0a\0\u0c38\0\u01cc\0\u01cc"+
+    "\0\u0c66\0\u0c94\0\u01cc\0\u0cc2\0\u0cf0\0\u0d1e\0\u0d4c\0\u0d7a"+
+    "\0\u01cc\0\u0da8\0\u0dd6\0\u01cc\0\u01cc\0\u0e04\0\u0e32\0\u01cc";
 
   private static int [] zzUnpackRowMap() {
-    int [] result = new int[108];
+    int [] result = new int[112];
     int offset = 0;
     offset = zzUnpackRowMap(ZZ_ROWMAP_PACKED_0, offset, result);
     return result;
@@ -182,68 +182,69 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
     "\1\35\1\25\1\36\1\25\1\37\1\25\1\40\2\25"+
     "\1\41\1\42\1\2\57\0\1\3\56\0\1\4\53\0"+
     "\11\43\1\0\44\43\5\0\1\44\61\0\1\45\4\0"+
-    "\1\46\53\0\1\47\1\50\55\0\1\50\1\0\3\20"+
-    "\56\0\1\51\52\0\3\25\4\0\1\25\3\0\21\25"+
-    "\36\0\1\52\6\0\1\53\3\0\1\54\23\0\1\55"+
-    "\2\0\3\25\4\0\1\25\3\0\15\25\1\56\3\25"+
-    "\22\0\3\25\4\0\1\25\3\0\1\57\20\25\22\0"+
-    "\3\25\4\0\1\25\3\0\10\25\1\60\6\25\1\61"+
-    "\1\25\22\0\3\25\4\0\1\25\3\0\1\62\20\25"+
-    "\22\0\3\25\4\0\1\25\3\0\11\25\1\63\7\25"+
-    "\22\0\3\25\4\0\1\25\3\0\4\25\1\64\14\25"+
-    "\22\0\3\25\4\0\1\25\3\0\4\25\1\65\14\25"+
-    "\22\0\3\25\4\0\1\25\3\0\4\25\1\66\14\25"+
-    "\3\0\11\67\1\0\44\67\4\43\1\70\51\43\11\71"+
-    "\1\0\44\71\2\46\1\72\1\73\52\46\21\0\1\74"+
-    "\53\0\3\75\106\0\1\76\22\0\3\25\4\0\1\25"+
-    "\3\0\14\25\1\77\4\25\22\0\3\25\4\0\1\25"+
-    "\3\0\3\25\1\100\15\25\22\0\3\25\4\0\1\25"+
-    "\3\0\14\25\1\101\4\25\22\0\3\25\4\0\1\25"+
-    "\3\0\14\25\1\102\4\25\22\0\3\25\4\0\1\25"+
-    "\3\0\10\25\1\103\10\25\22\0\3\25\4\0\1\25"+
-    "\3\0\7\25\1\104\11\25\22\0\3\25\4\0\1\25"+
-    "\3\0\1\105\20\25\22\0\3\25\4\0\1\25\3\0"+
-    "\12\25\1\106\6\25\22\0\3\25\4\0\1\25\3\0"+
-    "\12\25\1\107\6\25\3\0\55\67\1\110\11\71\1\111"+
-    "\44\71\2\0\1\72\70\0\1\50\57\0\3\25\4\0"+
-    "\1\25\3\0\11\25\1\112\7\25\22\0\3\25\4\0"+
-    "\1\25\3\0\4\25\1\113\14\25\22\0\3\25\4\0"+
-    "\1\25\3\0\4\25\1\114\14\25\22\0\3\25\4\0"+
-    "\1\25\3\0\4\25\1\115\14\25\22\0\3\25\4\0"+
-    "\1\25\3\0\20\25\1\116\22\0\3\25\4\0\1\25"+
-    "\3\0\1\25\1\117\17\25\22\0\3\25\4\0\1\25"+
-    "\3\0\6\25\1\120\12\25\22\0\3\25\4\0\1\25"+
-    "\3\0\7\25\1\121\11\25\22\0\3\25\4\0\1\25"+
-    "\3\0\13\25\1\122\5\25\3\0\11\71\1\111\4\71"+
-    "\1\72\37\71\17\0\3\25\4\0\1\25\3\0\12\25"+
-    "\1\123\6\25\22\0\3\25\4\0\1\25\3\0\10\25"+
-    "\1\124\10\25\22\0\3\25\4\0\1\25\3\0\12\25"+
-    "\1\125\6\25\22\0\3\25\4\0\1\25\3\0\10\25"+
-    "\1\126\10\25\22\0\3\25\4\0\1\25\3\0\1\127"+
-    "\20\25\22\0\3\25\4\0\1\25\3\0\12\25\1\130"+
-    "\6\25\22\0\3\25\4\0\1\25\3\0\5\25\1\131"+
-    "\13\25\22\0\3\25\4\0\1\25\3\0\5\25\1\132"+
-    "\13\25\22\0\3\25\4\0\1\25\3\0\1\133\20\25"+
-    "\22\0\3\25\4\0\1\25\3\0\11\25\1\134\7\25"+
-    "\22\0\3\25\4\0\1\25\3\0\13\25\1\135\5\25"+
-    "\22\0\3\25\4\0\1\25\3\0\7\25\1\136\11\25"+
-    "\22\0\3\25\4\0\1\25\3\0\4\25\1\137\14\25"+
-    "\22\0\3\25\4\0\1\25\3\0\10\25\1\140\10\25"+
-    "\22\0\3\25\4\0\1\25\3\0\11\25\1\141\7\25"+
-    "\22\0\3\25\4\0\1\25\3\0\5\25\1\142\13\25"+
-    "\22\0\3\25\4\0\1\25\3\0\5\25\1\143\13\25"+
-    "\22\0\3\25\4\0\1\25\3\0\1\144\20\25\22\0"+
-    "\3\25\4\0\1\25\3\0\10\25\1\145\10\25\22\0"+
-    "\3\25\4\0\1\25\3\0\11\25\1\146\7\25\22\0"+
-    "\3\25\4\0\1\25\3\0\4\25\1\147\14\25\22\0"+
-    "\3\25\4\0\1\25\3\0\6\25\1\150\12\25\22\0"+
-    "\3\25\4\0\1\25\3\0\10\25\1\151\10\25\22\0"+
-    "\3\25\4\0\1\25\3\0\10\25\1\152\10\25\22\0"+
-    "\3\25\4\0\1\25\3\0\14\25\1\153\4\25\22\0"+
-    "\3\25\4\0\1\25\3\0\11\25\1\154\7\25\3\0";
+    "\1\46\54\0\1\47\55\0\1\47\1\0\3\20\56\0"+
+    "\1\50\52\0\3\25\4\0\1\25\3\0\21\25\22\0"+
+    "\1\51\12\0\1\52\56\0\1\53\6\0\1\54\3\0"+
+    "\1\55\26\0\3\25\4\0\1\25\3\0\15\25\1\56"+
+    "\3\25\22\0\3\25\4\0\1\25\3\0\1\57\20\25"+
+    "\22\0\3\25\4\0\1\25\3\0\10\25\1\60\6\25"+
+    "\1\61\1\25\22\0\3\25\4\0\1\25\3\0\1\62"+
+    "\20\25\22\0\3\25\4\0\1\25\3\0\11\25\1\63"+
+    "\7\25\22\0\3\25\4\0\1\25\3\0\4\25\1\64"+
+    "\14\25\22\0\3\25\4\0\1\25\3\0\4\25\1\65"+
+    "\14\25\22\0\3\25\4\0\1\25\3\0\4\25\1\66"+
+    "\14\25\3\0\11\67\1\0\44\67\4\43\1\70\51\43"+
+    "\11\71\1\0\44\71\2\46\1\72\1\73\52\46\17\0"+
+    "\3\74\50\0\1\75\55\0\1\76\60\0\3\25\4\0"+
+    "\1\25\3\0\14\25\1\77\4\25\22\0\3\25\4\0"+
+    "\1\25\3\0\3\25\1\100\15\25\22\0\3\25\4\0"+
+    "\1\25\3\0\14\25\1\101\4\25\22\0\3\25\4\0"+
+    "\1\25\3\0\14\25\1\102\4\25\22\0\3\25\4\0"+
+    "\1\25\3\0\10\25\1\103\10\25\22\0\3\25\4\0"+
+    "\1\25\3\0\7\25\1\104\11\25\22\0\3\25\4\0"+
+    "\1\25\3\0\1\105\20\25\22\0\3\25\4\0\1\25"+
+    "\3\0\12\25\1\106\6\25\22\0\3\25\4\0\1\25"+
+    "\3\0\12\25\1\107\6\25\3\0\55\67\1\110\11\71"+
+    "\1\111\44\71\2\0\1\72\74\0\1\112\106\0\1\113"+
+    "\22\0\3\25\4\0\1\25\3\0\11\25\1\114\7\25"+
+    "\22\0\3\25\4\0\1\25\3\0\4\25\1\115\14\25"+
+    "\22\0\3\25\4\0\1\25\3\0\4\25\1\116\14\25"+
+    "\22\0\3\25\4\0\1\25\3\0\4\25\1\117\14\25"+
+    "\22\0\3\25\4\0\1\25\3\0\20\25\1\120\22\0"+
+    "\3\25\4\0\1\25\3\0\1\25\1\121\17\25\22\0"+
+    "\3\25\4\0\1\25\3\0\6\25\1\122\12\25\22\0"+
+    "\3\25\4\0\1\25\3\0\7\25\1\123\11\25\22\0"+
+    "\3\25\4\0\1\25\3\0\13\25\1\124\5\25\3\0"+
+    "\11\71\1\111\4\71\1\72\37\71\31\0\1\125\55\0"+
+    "\1\126\43\0\3\25\4\0\1\25\3\0\12\25\1\127"+
+    "\6\25\22\0\3\25\4\0\1\25\3\0\10\25\1\130"+
+    "\10\25\22\0\3\25\4\0\1\25\3\0\12\25\1\131"+
+    "\6\25\22\0\3\25\4\0\1\25\3\0\10\25\1\132"+
+    "\10\25\22\0\3\25\4\0\1\25\3\0\1\133\20\25"+
+    "\22\0\3\25\4\0\1\25\3\0\12\25\1\134\6\25"+
+    "\22\0\3\25\4\0\1\25\3\0\5\25\1\135\13\25"+
+    "\22\0\3\25\4\0\1\25\3\0\5\25\1\136\13\25"+
+    "\22\0\3\25\4\0\1\25\3\0\1\137\20\25\22\0"+
+    "\3\25\4\0\1\25\3\0\11\25\1\140\7\25\22\0"+
+    "\3\25\4\0\1\25\3\0\13\25\1\141\5\25\22\0"+
+    "\3\25\4\0\1\25\3\0\7\25\1\142\11\25\22\0"+
+    "\3\25\4\0\1\25\3\0\4\25\1\143\14\25\22\0"+
+    "\3\25\4\0\1\25\3\0\10\25\1\144\10\25\22\0"+
+    "\3\25\4\0\1\25\3\0\11\25\1\145\7\25\22\0"+
+    "\3\25\4\0\1\25\3\0\5\25\1\146\13\25\22\0"+
+    "\3\25\4\0\1\25\3\0\5\25\1\147\13\25\22\0"+
+    "\3\25\4\0\1\25\3\0\1\150\20\25\22\0\3\25"+
+    "\4\0\1\25\3\0\10\25\1\151\10\25\22\0\3\25"+
+    "\4\0\1\25\3\0\11\25\1\152\7\25\22\0\3\25"+
+    "\4\0\1\25\3\0\4\25\1\153\14\25\22\0\3\25"+
+    "\4\0\1\25\3\0\6\25\1\154\12\25\22\0\3\25"+
+    "\4\0\1\25\3\0\10\25\1\155\10\25\22\0\3\25"+
+    "\4\0\1\25\3\0\10\25\1\156\10\25\22\0\3\25"+
+    "\4\0\1\25\3\0\14\25\1\157\4\25\22\0\3\25"+
+    "\4\0\1\25\3\0\11\25\1\160\7\25\3\0";
 
   private static int [] zzUnpackTrans() {
-    int [] result = new int[3496];
+    int [] result = new int[3680];
     int offset = 0;
     offset = zzUnpackTrans(ZZ_TRANS_PACKED_0, offset, result);
     return result;
@@ -287,13 +288,13 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
 
   private static final String ZZ_ATTRIBUTE_PACKED_0 =
     "\1\0\1\11\1\1\1\11\3\1\6\11\4\1\3\11"+
-    "\1\1\1\11\1\1\1\11\11\1\1\11\1\0\1\11"+
-    "\1\0\1\1\2\0\4\11\1\0\11\1\1\0\1\11"+
-    "\1\0\1\11\1\1\1\11\1\1\1\11\11\1\1\11"+
-    "\1\0\43\1";
+    "\3\1\1\11\11\1\1\11\1\0\1\11\1\0\1\1"+
+    "\1\0\1\11\2\0\3\11\11\1\1\0\1\11\1\0"+
+    "\1\11\2\1\2\0\11\1\1\11\3\0\11\1\2\11"+
+    "\32\1";
 
   private static int [] zzUnpackAttribute() {
-    int [] result = new int[108];
+    int [] result = new int[112];
     int offset = 0;
     offset = zzUnpackAttribute(ZZ_ATTRIBUTE_PACKED_0, offset, result);
     return result;
@@ -823,32 +824,32 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 42: break;
           case 4:
-            { return symbol(yyline+1, yycolumn+1, sym.IGNORAR);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.IGNORAR);
             }
             // fall through
           case 43: break;
           case 5:
-            { return symbol(yyline+1, yycolumn+1, sym.PAR_A);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.PAR_A);
             }
             // fall through
           case 44: break;
           case 6:
-            { return symbol(yyline+1, yycolumn+1, sym.PAR_C);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.PAR_C);
             }
             // fall through
           case 45: break;
           case 7:
-            { return symbol(yyline+1, yycolumn+1, sym.CERO_O_MAS_VECES);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.CERO_O_MAS_VECES);
             }
             // fall through
           case 46: break;
           case 8:
-            { return symbol(yyline+1, yycolumn+1, sym.UNA_O_MAS_VECES);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.UNA_O_MAS_VECES);
             }
             // fall through
           case 47: break;
           case 9:
-            { return symbol(yyline+1, yycolumn+1, sym.COMA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.COMA);
             }
             // fall through
           case 48: break;
@@ -858,22 +859,22 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 49: break;
           case 11:
-            { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_INF);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_INF);
             }
             // fall through
           case 50: break;
           case 12:
-            { return symbol(yyline+1, yycolumn+1, sym.FIN_DE_LINEA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);
             }
             // fall through
           case 51: break;
           case 13:
-            { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_ER);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_ER);
             }
             // fall through
           case 52: break;
           case 14:
-            { return symbol(yyline+1, yycolumn+1, sym.PUEDE_O_NO_PUEDE);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.PUEDE_O_NO_PUEDE);
             }
             // fall through
           case 53: break;
@@ -883,22 +884,22 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 54: break;
           case 16:
-            { return symbol(yyline+1, yycolumn+1, sym.COR_A);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.COR_A);
             }
             // fall through
           case 55: break;
           case 17:
-            { return symbol(yyline+1, yycolumn+1, sym.COR_C);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.COR_C);
             }
             // fall through
           case 56: break;
           case 18:
-            { return symbol(yyline+1, yycolumn+1, sym.O);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.O);
             }
             // fall through
           case 57: break;
           case 19:
-            { return symbol(yyline+1, yycolumn+1, sym.SEPARADOR);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.SEPARADOR);
             }
             // fall through
           case 58: break;
@@ -908,22 +909,22 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 59: break;
           case 21:
-            { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_GRAMA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_GRAMA);
             }
             // fall through
           case 60: break;
           case 22:
-            { return symbol(yyline+1, yycolumn+1, sym.RETORNO);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.RETORNO);
             }
             // fall through
           case 61: break;
           case 23:
-            { return symbol(yyline+1, yycolumn+1, sym.SALTO_DE_LINEA);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.SALTO_DE_LINEA);
             }
             // fall through
           case 62: break;
           case 24:
-            { return symbol(yyline+1, yycolumn+1, sym.TABULACION);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.TABULACION);
             }
             // fall through
           case 63: break;
@@ -938,27 +939,27 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
             // fall through
           case 65: break;
           case 27:
-            { return symbol(yyline+1, yycolumn+1, sym.RANGO_NUMEROS);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.VERSION);
             }
             // fall through
           case 66: break;
           case 28:
-            { return symbol(yyline+1, yycolumn+1, yytext(), sym.VERSION);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.JAVA_CODE);
             }
             // fall through
           case 67: break;
           case 29:
-            { return symbol(yyline+1, yycolumn+1, sym.RANGO_LETRAS_MIN);
+            { return symbol(yyline+1, yycolumn+1, "real", sym.PR_REAL);
             }
             // fall through
           case 68: break;
           case 30:
-            { return symbol(yyline+1, yycolumn+1, yytext(), sym.JAVA_CODE);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);
             }
             // fall through
           case 69: break;
           case 31:
-            { return symbol(yyline+1, yycolumn+1, "real", sym.PR_REAL);
+            { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);
             }
             // fall through
           case 70: break;

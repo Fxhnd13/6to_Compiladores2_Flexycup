@@ -110,6 +110,10 @@ public class EditorManager {
             LexerSecciones lexer = new LexerSecciones(new StringReader(texto));
             ParserSecciones parser = new ParserSecciones(lexer);
             List<String> secciones = (List<String>) parser.parse().value;
+            String espacios = "";
+            for (int i = 0; i < secciones.get(1).split("\n").length; i++) {
+                espacios+="\n";
+            }
 //            for (int i = 0; i < secciones.size(); i++) {
 //                switch(i){
 //                    case 0:{
@@ -146,8 +150,10 @@ public class EditorManager {
 //            }
             String cadena = "";
             for (int i = 0; i < secciones.size(); i++) {
-                if(i!=1) {
-                    if(i>1 && i<secciones.size()) cadena+="%%";
+                if(i>1 && i<secciones.size()) cadena+="%%";
+                if(i==1){
+                    cadena+=espacios;
+                }else{
                     cadena+=secciones.get(i);
                 }
             }

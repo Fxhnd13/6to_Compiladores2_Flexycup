@@ -88,26 +88,26 @@ JavaCode             = "{" [^*] ~"}"
     "real"                                  { return symbol(yyline+1, yycolumn+1, "real", sym.PR_REAL);}
     "cadena"                                { return symbol(yyline+1, yycolumn+1, "cadena", sym.PR_CADENA);}
     "no"                                    { return symbol(yyline+1, yycolumn+1, "no", sym.PR_NO);}
-    "a-z"                                   { return symbol(yyline+1, yycolumn+1, sym.RANGO_LETRAS_MIN);}
-    "0-9"                                   { return symbol(yyline+1, yycolumn+1, sym.RANGO_NUMEROS);}
-    ":"                                     { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_INF);}
-    "::"                                    { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_GRAMA);}
-    "="                                     { return symbol(yyline+1, yycolumn+1, sym.ASIGNACION_ER); }
-    "%%"                                    { return symbol(yyline+1, yycolumn+1, sym.SEPARADOR);}
-    "+"                                     { return symbol(yyline+1, yycolumn+1, sym.UNA_O_MAS_VECES);}
-    "*"                                     { return symbol(yyline+1, yycolumn+1, sym.CERO_O_MAS_VECES);}
-    "?"                                     { return symbol(yyline+1, yycolumn+1, sym.PUEDE_O_NO_PUEDE);}
-    "|"                                     { return symbol(yyline+1, yycolumn+1, sym.O);}
-    "["                                     { return symbol(yyline+1, yycolumn+1, sym.COR_A);}
-    "]"                                     { return symbol(yyline+1, yycolumn+1, sym.COR_C);}
-    "("                                     { return symbol(yyline+1, yycolumn+1, sym.PAR_A);}
-    ")"                                     { return symbol(yyline+1, yycolumn+1, sym.PAR_C);}
-    ","                                     { return symbol(yyline+1, yycolumn+1, sym.COMA);}
-    ";"                                     { return symbol(yyline+1, yycolumn+1, sym.FIN_DE_LINEA);}
-    "\\n"                                   { return symbol(yyline+1, yycolumn+1, sym.SALTO_DE_LINEA);}
-    "\\t"                                   { return symbol(yyline+1, yycolumn+1, sym.TABULACION);}
-    "\\b"                                   { return symbol(yyline+1, yycolumn+1, sym.RETORNO);}
-    "&"                                     { return symbol(yyline+1, yycolumn+1, sym.IGNORAR);}
+    "[a-z]"                                   { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);}
+    "[0-9]"                                   { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);}
+    ":"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_INF);}
+    "::"                                    { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_GRAMA);}
+    "="                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_ER); }
+    "%%"                                    { return symbol(yyline+1, yycolumn+1, yytext(), sym.SEPARADOR);}
+    "+"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.UNA_O_MAS_VECES);}
+    "*"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.CERO_O_MAS_VECES);}
+    "?"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.PUEDE_O_NO_PUEDE);}
+    "|"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.O);}
+    "["                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.COR_A);}
+    "]"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.COR_C);}
+    "("                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.PAR_A);}
+    ")"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.PAR_C);}
+    ","                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.COMA);}
+    ";"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);}
+    "\\n"                                   { return symbol(yyline+1, yycolumn+1, yytext(), sym.SALTO_DE_LINEA);}
+    "\\t"                                   { return symbol(yyline+1, yycolumn+1, yytext(), sym.TABULACION);}
+    "\\b"                                   { return symbol(yyline+1, yycolumn+1, yytext(), sym.RETORNO);}
+    "&"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.IGNORAR);}
     {Cadena}                                { return symbol(yyline+1, yycolumn+1, yytext(), sym.CADENA);}
     {JavaCode}                              { return symbol(yyline+1, yycolumn+1, yytext(), sym.JAVA_CODE);}
     {IntegerLiteral}                        { return symbol(yyline+1, yycolumn+1, yytext(), sym.ENTERO);}
