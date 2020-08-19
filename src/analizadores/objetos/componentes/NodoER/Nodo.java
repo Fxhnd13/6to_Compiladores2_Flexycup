@@ -20,5 +20,4 @@ public interface Nodo {
     public void agregarSiguientes(int id, int[] ids);
     
     public boolean isAnulable();
-    
 }

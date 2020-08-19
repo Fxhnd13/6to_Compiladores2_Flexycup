@@ -15,8 +15,29 @@ public class NodoConcat implements Nodo {
 
     private Nodo izquierdo, derecho;
     
+    public NodoConcat() {}
+    public NodoConcat(Nodo izquierdo){
+        this.izquierdo = izquierdo;
+    }
     public NodoConcat(Nodo izquierdo, Nodo derecho){
         this.izquierdo = izquierdo;
+        this.derecho = derecho;
+    }
+
+
+    public Nodo getIzquierdo() {
+        return izquierdo;
+    }
+
+    public void setIzquierdo(Nodo izquierdo) {
+        this.izquierdo = izquierdo;
+    }
+
+    public Nodo getDerecho() {
+        return derecho;
+    }
+
+    public void setDerecho(Nodo derecho) {
         this.derecho = derecho;
     }
     

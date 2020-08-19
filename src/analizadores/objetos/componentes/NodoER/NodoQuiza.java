@@ -16,6 +16,14 @@ public class NodoQuiza implements Nodo{
     public NodoQuiza(Nodo hijo){
         this.hijo = hijo;
     }
+
+    public Nodo getHijo() {
+        return hijo;
+    }
+
+    public void setHijo(Nodo hijo) {
+        this.hijo = hijo;
+    }
     
     @Override
     public int[] primeros() {

@@ -15,9 +15,38 @@ import java.util.List;
  */
 public class NodoHoja implements Nodo{
 
-    private String valor;
+    private char valor;
     private int id;
     private int[] siguientes;
+    
+    public NodoHoja(int id, char valor){
+        this.id = id;
+        this.valor = valor;
+    }
+
+    public char getValor() {
+        return valor;
+    }
+
+    public void setValor(char valor) {
+        this.valor = valor;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int[] getSiguientes() {
+        return siguientes;
+    }
+
+    public void setSiguientes(int[] siguientes) {
+        this.siguientes = siguientes;
+    }
     
     @Override
     public int[] primeros() {

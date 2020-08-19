@@ -16,8 +16,30 @@ public class NodoDis implements Nodo{
 
     private Nodo izquierdo, derecho;
     
+    NodoDis() {}
+    NodoDis(Nodo izquierdo) {
+        this.izquierdo = izquierdo;
+    }
     public NodoDis(Nodo izquierdo, Nodo derecho){
         this.izquierdo = izquierdo;
+        this.derecho = derecho;
+    }
+
+
+
+    public Nodo getIzquierdo() {
+        return izquierdo;
+    }
+
+    public void setIzquierdo(Nodo izquierdo) {
+        this.izquierdo = izquierdo;
+    }
+
+    public Nodo getDerecho() {
+        return derecho;
+    }
+
+    public void setDerecho(Nodo derecho) {
         this.derecho = derecho;
     }
     
