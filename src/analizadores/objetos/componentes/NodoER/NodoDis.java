@@ -17,15 +17,15 @@ public class NodoDis implements Nodo{
     private Nodo izquierdo, derecho;
     
     NodoDis() {}
+    
     NodoDis(Nodo izquierdo) {
         this.izquierdo = izquierdo;
     }
+    
     public NodoDis(Nodo izquierdo, Nodo derecho){
         this.izquierdo = izquierdo;
         this.derecho = derecho;
     }
-
-
 
     public Nodo getIzquierdo() {
         return izquierdo;

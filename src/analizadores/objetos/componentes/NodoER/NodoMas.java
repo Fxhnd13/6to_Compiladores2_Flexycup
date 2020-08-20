@@ -17,6 +17,8 @@ public class NodoMas implements Nodo{
         this.hijo = hijo;
     }
 
+    public NodoMas() {}
+
     public Nodo getHijo() {
         return hijo;
     }

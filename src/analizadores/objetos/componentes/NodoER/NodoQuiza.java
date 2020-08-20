@@ -17,6 +17,8 @@ public class NodoQuiza implements Nodo{
         this.hijo = hijo;
     }
 
+    public NodoQuiza() {}
+
     public Nodo getHijo() {
         return hijo;
     }

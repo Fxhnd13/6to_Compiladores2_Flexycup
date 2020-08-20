@@ -1,7 +1,11 @@
 package analizadores.estructuraGramatica;
 
+import analizadores.analizadorFinal.Lexer;
+import analizadores.objetos.componentes.NodoER.*;
 import java.util.List;
 import java_cup.runtime.Symbol;
+import java_cup.runtime.XMLElement;
+import java_cup.runtime.XMLElement;
 import java_cup.runtime.XMLElement;
 
 action code {::}
@@ -9,6 +13,9 @@ action code {::}
 parser code {:
     
         private List<String> listErrores;
+        private Lexer lexer = new Lexer();
+        private int idNodos = 1;
+        //private Parser parser = new Parser();
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
@@ -39,31 +46,32 @@ parser code {:
             System.out.println("Se ha encontrado un error en la linea: "+linea+", columna: "+columna+" con la cadena "+cadena+"|Descripcion: "+message);
         }
 
-        public List<String> getErrores(){
-            return listErrores;
-        }
+        public List<String> getErrores(){return listErrores;}
 
-        public void setErrores(List<String> e){
-            listErrores = e;
-        }
+        public void setErrores(List<String> e){listErrores = e;}
+
+        public Lexer getLexer(){return lexer;}
+
+        //public Parser getParser(){return parser;}
 :}
 
 /* terminales y no terminales */
 
-terminal                                    PR_NOMBRE, PR_AUTOR, PR_VERSION, PR_LANZAMIENTO, PR_EXTENSION, ASIGNACION_INF, ASIGNACION_GRAMA;
-terminal                                    ASIGNACION_ER, SEPARADOR, UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE, O, COR_A, COR_C, CARACTER_EXPLICITO;
-terminal                                    PAR_A, PAR_C, FIN_DE_LINEA, SALTO_DE_LINEA, TABULACION, RETORNO, IGNORAR, CADENA, JAVA_CODE, ENTERO;
-terminal                                    VERSION, ID, RANGO_NUMEROS, RANGO_LETRAS_MIN, PR_TERMINAL, PR_NO, PR_ENTERO, PR_REAL, PR_CADENA, COMA;
+terminal Symbol                                    PR_NOMBRE, PR_AUTOR, PR_VERSION, PR_LANZAMIENTO, PR_EXTENSION, ASIGNACION_INF, ASIGNACION_GRAMA;
+terminal Symbol                                    ASIGNACION_ER, SEPARADOR, UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE, O, COR_A, COR_C, CARACTER_EXPLICITO;
+terminal Symbol                                    PAR_A, PAR_C, FIN_DE_LINEA, SALTO_DE_LINEA, TABULACION, RETORNO, IGNORAR, CADENA, JAVA_CODE, ENTERO;
+terminal Symbol                                    VERSION, ID, RANGO_NUMEROS, RANGO_LETRAS_MIN, PR_TERMINAL, PR_NO, PR_ENTERO, PR_REAL, PR_CADENA, COMA;
 
 non terminal                                s, seccionInformacion, dato, seccionER, expresionesRegulares, declaracionExpresionRegular;
-non terminal                                expresionRegular, seccionSimbolos, declaracionesSimbolos, declaracionSimbolo, seccionGramatica;
+non terminal                                seccionSimbolos, declaracionesSimbolos, declaracionSimbolo, seccionGramatica;
 non terminal                                produccion, listadoSimbolos, simboloProduccion, idCompuesto, tipoSimbolo, listadoIds, codigoJava;
+non terminal Nodo                           expresionRegular;
 
 /* precedencia */
 
 precedence left     SALTO_DE_LINEA, TABULACION, RETORNO, CADENA;
 precedence left     UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE;
-precedence left     O, RANGO_LETRAS_MIN, RANGO_NUMEROS;
+precedence left     O, RANGO_LETRAS_MIN, RANGO_NUMEROS, ENTERO, VERSION;
 precedence left     PAR_A, COR_A;
 precedence left     CARACTER_EXPLICITO;
 
@@ -95,25 +103,95 @@ expresionesRegulares::=                     expresionesRegulares declaracionExpr
                                             |declaracionExpresionRegular
                                             ;
 
-declaracionExpresionRegular::=              ID ASIGNACION_ER expresionRegular FIN_DE_LINEA
-                                            |IGNORAR ASIGNACION_ER expresionRegular FIN_DE_LINEA
+declaracionExpresionRegular::=              ID:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
+                                                TokenPrimitivo token = new TokenPrimitivo(identificador.value.toString(), expresion);
+                                                lexer.getGeneradorAutomata().getTokens().add(token);
+                                            :}
+                                            |IGNORAR:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
+                                                TokenPrimitivo token = new TokenPrimitivo(identificador.value.toString(), expresion);
+                                                lexer.getGeneradorAutomata().getTokens().add(token);
+                                            :}
                                             |error FIN_DE_LINEA
                                             ;
 
-expresionRegular::=                         expresionRegular PUEDE_O_NO_PUEDE
-                                            |expresionRegular CERO_O_MAS_VECES
-                                            |expresionRegular UNA_O_MAS_VECES
-                                            |expresionRegular O expresionRegular
-                                            |expresionRegular expresionRegular
-                                            |RANGO_LETRAS_MIN
-                                            |RANGO_NUMEROS
-                                            |SALTO_DE_LINEA 
-                                            |TABULACION
-                                            |RETORNO
-                                            |CADENA
-                                            |COR_A expresionRegular COR_C
-                                            |PAR_A expresionRegular PAR_C
-                                            |CARACTER_EXPLICITO
+expresionRegular::=                         expresionRegular:expresion PUEDE_O_NO_PUEDE {:
+                                                Nodo nodo = (expresion != null)? new NodoQuiza(expresion) : new NodoQuiza();
+                                                RESULT = nodo;
+                                            :}
+                                            |expresionRegular:expresion CERO_O_MAS_VECES {:
+                                                Nodo nodo = (expresion != null)? new NodoAst(expresion) : new NodoAst();
+                                                RESULT = nodo;
+                                            :}
+                                            |expresionRegular:expresion UNA_O_MAS_VECES {:
+                                                Nodo nodo = (expresion != null)? new NodoMas(expresion) : new NodoMas();
+                                                RESULT = nodo;
+                                            :}
+                                            |expresionRegular:expresionIzquierda O expresionRegular:expresionDerecha {:
+                                                Nodo nodo = new NodoDis();
+                                                if(expresionIzquierda != null && expresionDerecha != null){
+                                                    nodo = new NodoDis(expresionIzquierda, expresionDerecha);
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |expresionRegular:expresionIzquierda expresionRegular:expresionDerecha {:
+                                                Nodo nodo = new NodoConcat();
+                                                if(expresionIzquierda != null && expresionDerecha != null){
+                                                    nodo = new NodoConcat(expresionIzquierda, expresionDerecha);
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |RANGO_LETRAS_MIN {:
+                                                Nodo nodo = new NodoDis();
+                                                this.idNodos = Utilidades.agregarRango(idNodos, nodo, 0);
+                                                RESULT = nodo;
+                                            :}
+                                            |RANGO_NUMEROS {:
+                                                Nodo nodo = new NodoDis();
+                                                this.idNodos = Utilidades.agregarRango(idNodos, nodo, 1);
+                                                RESULT = nodo;
+                                            :}
+                                            |SALTO_DE_LINEA {:
+                                                Nodo nodo = new NodoHoja(idNodos++, '\n');
+                                                RESULT = nodo;
+                                            :}
+                                            |TABULACION {:
+                                                Nodo nodo = new NodoHoja(idNodos++, '\t');
+                                                RESULT = nodo;
+                                            :}
+                                            |RETORNO {:
+                                                Nodo nodo = new NodoHoja(idNodos++, '\b');
+                                                RESULT = nodo;
+                                            :}
+                                            |CADENA:cadena {:
+                                                Nodo nodo = new NodoConcat();
+                                                this.idNodos = Utilidades.agregarCadena(idNodos, nodo, cadena.value.toString().substring(1, cadena.value.toString().length-1);
+                                                RESULT = nodo;
+                                            :}
+                                            |COR_A expresionRegular:expresion COR_C {:
+                                                Nodo nodo = new Nodo();
+                                                if(expresion != null) nodo = expresion;
+                                                RESULT = nodo;
+                                            :}
+                                            |PAR_A expresionRegular:expresion PAR_C {:
+                                                Nodo nodo = new Nodo();
+                                                if(expresion != null) nodo = expresion;
+                                                RESULT = expresion;
+                                            :}
+                                            |CARACTER_EXPLICITO:caracter {:
+                                                Nodo nodo = new Nodo();
+                                                if(caracter != null) nodo = new NodoHoja(idNodos++, caracter.value.toString());
+                                                RESULT = nodo;
+                                            :}
+                                            |ENTERO:valor {:
+                                                Nodo nodo = new Nodo();
+                                                if(caracter != null) nodo = new NodoHoja(idNodos++, valor.value.toString());
+                                                RESULT = nodo;
+                                            :}
+                                            |VERSION:valor {:
+                                                Nodo nodo = new Nodo();
+                                                if(caracter != null) nodo = new NodoHoja(idNodos++, valor.value.toString());
+                                                RESULT = nodo;
+                                            :}
                                             ;
 
 

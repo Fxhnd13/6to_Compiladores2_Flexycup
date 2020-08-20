@@ -17,6 +17,8 @@ public class NodoAst implements Nodo{
         this.hijo = hijo;
     }
 
+    public NodoAst() {}
+
     public Nodo getHijo() {
         return hijo;
     }

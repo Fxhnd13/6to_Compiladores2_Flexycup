@@ -14,24 +14,52 @@ import java.util.List;
  */
 public class GeneradorAutomata {
     
-    List<Nodo> expresionesRegulares;
+    private List<TokenPrimitivo> tokens;
+    
+    public List<TokenPrimitivo> getTokens(){return tokens; }
+    
+    public void calcularTodosLosSiguientes(){
+        for (TokenPrimitivo token : tokens) {
+            calcularSiguientes(token.getExpresionRegular());
+        }
+    }
+    
+    public void calcularSiguientes(Nodo expresion){
+        if(expresion instanceof NodoConcat){
+            calcularSiguientes(((NodoConcat) expresion).getIzquierdo());
+            calcularSiguientes(((NodoConcat) expresion).getDerecho());
+            for (int ultimo : ((NodoConcat) expresion).getIzquierdo().ultimos()) {
+                expresion.agregarSiguientes(ultimo, ((NodoConcat) expresion).getDerecho().primeros());
+            }
+        }else if(expresion instanceof NodoDis){
+            calcularSiguientes(((NodoConcat) expresion).getIzquierdo());
+            calcularSiguientes(((NodoConcat) expresion).getDerecho());
+        }else if(expresion instanceof NodoQuiza){
+            calcularSiguientes(((NodoQuiza) expresion).getHijo());
+        }else if(expresion instanceof NodoAst){
+            calcularSiguientes(((NodoAst) expresion).getHijo());
+            for (int ultimo : ((NodoAst) expresion).getHijo().ultimos()) {
+                expresion.agregarSiguientes(ultimo, ((NodoAst) expresion).getHijo().primeros());
+            }
+        }else if(expresion instanceof NodoMas){
+            calcularSiguientes(((NodoMas) expresion).getHijo());
+            for (int ultimo : ((NodoMas) expresion).getHijo().ultimos()) {
+                expresion.agregarSiguientes(ultimo, ((NodoMas) expresion).getHijo().primeros());
+            }
+        }
+    }
     
     public int agregarRango(int id, Nodo raiz, int opcion){
         char[] caracteres = (opcion == 0)? Utilidades.ARREGLO_LETRAS : Utilidades.ARREGLO_NUMEROS;
-        Nodo nodoActual = new NodoDis();
-        raiz = nodoActual;
         for (int i = 0; i < caracteres.length; i++) {
-            if((i+2) < caracteres.length){ //si no estamos en la ultima letra
-                Nodo izquierdo = new NodoHoja(id++, caracteres[i]); //creamos el nodo que guardara el caracter a la izquierda
-                ((NodoDis)nodoActual).setIzquierdo(izquierdo); //asignamos al hijo izquierdo del nodo que estamos evaluando el nodo hoja recién creado
-                Nodo nuevo = new NodoDis(); //creamos el nuevo nodo disyuncion que tendrá el hijo derecho del nodo que estamos evaluando
-                ((NodoDis)nodoActual).setDerecho(nuevo); //asignamos al hijo derecho del nodo que estamos evaluando el nodo disyuncion recien creado
-                nodoActual = nuevo; //el nuevo nodo que vamos a evaluar, va a ser el nodo disyuncion que recien creamos
+            if(i == 0){
+                Nodo izquierdo = new NodoHoja(id++, caracteres[i++]);
+                Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                raiz = new NodoDis(izquierdo, derecho);
             }else{
-                Nodo izquierdo = new NodoHoja(id++, caracteres[i++]); //creamos el nodo que guardara el caracter a la izquierda y adelantamos uno
-                Nodo derecho = new NodoHoja(id++, caracteres[i]); //creamos el nodo que guardará el último caracter
-                Nodo nuevo = new NodoDis(izquierdo, derecho); //creamos el nuevo nodo disyuncion que tendrá el hijo derecho del nodo que estamos evaluando
-                ((NodoDis)nodoActual).setDerecho(nuevo);
+                Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                Nodo nuevo = new NodoDis(raiz, derecho);
+                raiz = nuevo;
             }
         }
         return id;
@@ -39,20 +67,25 @@ public class GeneradorAutomata {
     
     public int agregarcadena(int id, Nodo raiz, String cadena){
         char[] caracteres = cadena.toCharArray();
-        Nodo nodoActual = new NodoConcat();
-        raiz = nodoActual;
         for (int i = 0; i < caracteres.length; i++) {
-            if((i+2) < caracteres.length){ //si no estamos en la ultima letra
-                Nodo izquierdo = new NodoHoja(id++, caracteres[i]); //creamos el nodo que guardara el caracter a la izquierda
-                ((NodoConcat)nodoActual).setIzquierdo(izquierdo); //asignamos al hijo izquierdo del nodo que estamos evaluando el nodo hoja recién creado
-                Nodo nuevo = new NodoConcat(); //creamos el nuevo nodo disyuncion que tendrá el hijo derecho del nodo que estamos evaluando
-                ((NodoConcat)nodoActual).setDerecho(nuevo); //asignamos al hijo derecho del nodo que estamos evaluando el nodo disyuncion recien creado
-                nodoActual = nuevo; //el nuevo nodo que vamos a evaluar, va a ser el nodo disyuncion que recien creamos
+            if(caracteres.length > 2){
+                if(i == 0){
+                    Nodo izquierdo = new NodoHoja(id++, caracteres[i++]);
+                    Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                    raiz = new NodoConcat(izquierdo, derecho);
+                }else{
+                    Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                    Nodo nuevo = new NodoConcat(raiz, derecho);
+                    raiz = nuevo;
+                }
             }else{
-                Nodo izquierdo = new NodoHoja(id++, caracteres[i++]); //creamos el nodo que guardara el caracter a la izquierda y adelantamos uno
-                Nodo derecho = new NodoHoja(id++, caracteres[i]); //creamos el nodo que guardará el último caracter
-                Nodo nuevo = new NodoConcat(izquierdo, derecho); //creamos el nuevo nodo disyuncion que tendrá el hijo derecho del nodo que estamos evaluando
-                ((NodoConcat)nodoActual).setDerecho(nuevo);
+                if(caracteres.length == 2){
+                    Nodo izquierdo = new NodoHoja(id++, caracteres[i++]);
+                    Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                    raiz = new NodoConcat(izquierdo, derecho);
+                }else{
+                    raiz = new NodoHoja(id++, caracteres[i]);
+                }
             }
         }
         return id;

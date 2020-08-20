@@ -88,8 +88,8 @@ JavaCode             = "{" [^*] ~"}"
     "real"                                  { return symbol(yyline+1, yycolumn+1, "real", sym.PR_REAL);}
     "cadena"                                { return symbol(yyline+1, yycolumn+1, "cadena", sym.PR_CADENA);}
     "no"                                    { return symbol(yyline+1, yycolumn+1, "no", sym.PR_NO);}
-    "[a-z]"                                   { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);}
-    "[0-9]"                                   { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);}
+    "[a-z]"                                 { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);}
+    "[0-9]"                                 { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);}
     ":"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_INF);}
     "::"                                    { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_GRAMA);}
     "="                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_ER); }
