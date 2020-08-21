@@ -107,13 +107,19 @@ public class EditorManager {
 
     void parsearSecciones(String texto){
         try {
-            LexerSecciones lexer = new LexerSecciones(new StringReader(texto));
-            ParserSecciones parser = new ParserSecciones(lexer);
-            List<String> secciones = (List<String>) parser.parse().value;
-            String espacios = "";
-            for (int i = 0; i < secciones.get(1).split("\n").length; i++) {
-                espacios+="\n";
-            }
+            LexerGramatica lexer2 = new LexerGramatica(new StringReader(texto));
+//            while(lexer2.isAnalizando()){
+//                lexer2.next_token();
+//            }
+            ParserGramatica parser2 = new ParserGramatica(lexer2);
+            parser2.debug_parse();
+//            LexerSecciones lexer = new LexerSecciones(new StringReader(texto));
+//            ParserSecciones parser = new ParserSecciones(lexer);
+//            List<String> secciones = (List<String>) parser.parse().value;
+//            String espacios = "";
+//            for (int i = 0; i < secciones.get(1).split("\n").length; i++) {
+//                espacios+="\n";
+//            }
 //            for (int i = 0; i < secciones.size(); i++) {
 //                switch(i){
 //                    case 0:{
@@ -148,19 +154,16 @@ public class EditorManager {
 //                    }
 //                }
 //            }
-            String cadena = "";
-            for (int i = 0; i < secciones.size(); i++) {
-                if(i>1 && i<secciones.size()) cadena+="%%";
-                if(i==1){
-                    cadena+=espacios;
-                }else{
-                    cadena+=secciones.get(i);
-                }
-            }
+//            String cadena = "";
+//            for (int i = 0; i < secciones.size(); i++) {
+//                if(i>1 && i<secciones.size()) cadena+="%%";
+//                if(i==1){
+//                    cadena+=espacios;
+//                }else{
+//                    cadena+=secciones.get(i);
+//                }
+//            }
 //            System.out.println(cadena);
-            LexerGramatica lexer2 = new LexerGramatica(new StringReader(cadena));
-            ParserGramatica parser2 = new ParserGramatica(lexer2);
-            parser2.debug_parse();
         } catch (Exception ex) {
             Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }

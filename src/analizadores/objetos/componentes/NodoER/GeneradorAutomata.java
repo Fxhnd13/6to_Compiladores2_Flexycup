@@ -6,6 +6,7 @@
 package analizadores.objetos.componentes.NodoER;
 
 import analizadores.objetos.componentes.Utilidades;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,10 @@ import java.util.List;
 public class GeneradorAutomata {
     
     private List<TokenPrimitivo> tokens;
+    
+    public GeneradorAutomata(){
+        tokens = new ArrayList<TokenPrimitivo>();
+    }
     
     public List<TokenPrimitivo> getTokens(){return tokens; }
     
@@ -65,7 +70,7 @@ public class GeneradorAutomata {
         return id;
     }
     
-    public int agregarcadena(int id, Nodo raiz, String cadena){
+    public int agregarCadena(int id, Nodo raiz, String cadena){
         char[] caracteres = cadena.toCharArray();
         for (int i = 0; i < caracteres.length; i++) {
             if(caracteres.length > 2){

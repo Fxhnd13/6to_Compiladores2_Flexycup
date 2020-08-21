@@ -24,6 +24,8 @@ public class NodoHoja implements Nodo{
         this.valor = valor;
     }
 
+    public NodoHoja() {}
+
     public char getValor() {
         return valor;
     }

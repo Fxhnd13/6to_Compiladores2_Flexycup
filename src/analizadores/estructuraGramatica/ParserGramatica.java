@@ -7,7 +7,6 @@ package analizadores.estructuraGramatica;
 
 import analizadores.analizadorFinal.Lexer;
 import analizadores.objetos.componentes.NodoER.*;
-import analizadores.objetos.componentes.Utilidades;
 import java.util.List;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.XMLElement;
@@ -38,7 +37,7 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\073\000\002\002\004\000\002\002\005\000\002\002" +
+    "\000\073\000\002\002\004\000\002\002\006\000\002\002" +
     "\005\000\002\003\004\000\002\003\003\000\002\004\006" +
     "\000\002\004\006\000\002\004\006\000\002\004\006\000" +
     "\002\004\006\000\002\004\004\000\002\005\005\000\002" +
@@ -64,9 +63,9 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\162\000\016\003\011\004\004\005\012\006\007\007" +
-    "\005\010\010\001\002\000\004\011\162\001\002\000\004" +
-    "\011\157\001\002\000\020\003\153\004\004\005\012\006" +
+    "\000\163\000\016\003\011\004\004\005\012\006\007\007" +
+    "\005\010\010\001\002\000\004\011\163\001\002\000\004" +
+    "\011\160\001\002\000\020\003\153\004\004\005\012\006" +
     "\007\007\005\010\010\014\155\001\002\000\004\011\150" +
     "\001\002\000\004\011\145\001\002\000\006\014\023\026" +
     "\024\001\002\000\004\011\016\001\002\000\020\003\ufffd" +
@@ -191,13 +190,14 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\001\002\000\004\026\152\001\002\000\020\003\ufffa\004" +
     "\ufffa\005\ufffa\006\ufffa\007\ufffa\010\ufffa\014\ufffa\001\002" +
     "\000\004\026\024\001\002\000\020\003\ufffe\004\ufffe\005" +
-    "\ufffe\006\ufffe\007\ufffe\010\ufffe\014\ufffe\001\002\000\010" +
-    "\003\027\032\032\037\025\001\002\000\004\002\000\001" +
-    "\002\000\004\035\160\001\002\000\004\026\161\001\002" +
-    "\000\020\003\ufffb\004\ufffb\005\ufffb\006\ufffb\007\ufffb\010" +
-    "\ufffb\014\ufffb\001\002\000\004\037\017\001\002\000\006" +
-    "\026\164\037\021\001\002\000\020\003\ufffc\004\ufffc\005" +
-    "\ufffc\006\ufffc\007\ufffc\010\ufffc\014\ufffc\001\002" });
+    "\ufffe\006\ufffe\007\ufffe\010\ufffe\014\ufffe\001\002\000\004" +
+    "\014\156\001\002\000\010\003\027\032\032\037\025\001" +
+    "\002\000\004\002\000\001\002\000\004\035\161\001\002" +
+    "\000\004\026\162\001\002\000\020\003\ufffb\004\ufffb\005" +
+    "\ufffb\006\ufffb\007\ufffb\010\ufffb\014\ufffb\001\002\000\004" +
+    "\037\017\001\002\000\006\026\165\037\021\001\002\000" +
+    "\020\003\ufffc\004\ufffc\005\ufffc\006\ufffc\007\ufffc\010\ufffc" +
+    "\014\ufffc\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -205,7 +205,7 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\162\000\010\002\013\003\005\004\012\001\001\000" +
+    "\000\163\000\010\002\013\003\005\004\012\001\001\000" +
     "\002\001\001\000\002\001\001\000\004\004\153\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
@@ -244,10 +244,10 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\023\051\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\010\005\155\006\030\007\027\001\001\000\002" +
+    "\001\000\002\001\001\000\010\005\156\006\030\007\027" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\004\017\162\001\001\000\002\001\001\000\002" +
-    "\001\001" });
+    "\001\000\002\001\001\000\004\017\163\001\001\000\002" +
+    "\001\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -371,11 +371,11 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 1: // s ::= seccionInformacion SEPARADOR seccionER 
+          case 1: // s ::= seccionInformacion SEPARADOR SEPARADOR seccionER 
             {
               Object RESULT =null;
-
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+		 System.out.println("Termino exitosamente"); 
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -502,12 +502,12 @@ class CUP$ParserGramatica$actions {
               Object RESULT =null;
 		int identificadorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).left;
 		int identificadorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).right;
-		Symbol identificador = (Symbol)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
+		String identificador = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
 		int expresionleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
 		int expresionright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
 		Nodo expresion = (Nodo)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
 		
-                                                TokenPrimitivo token = new TokenPrimitivo(identificador.value.toString(), expresion);
+                                                TokenPrimitivo token = new TokenPrimitivo(identificador, expresion);
                                                 lexer.getGeneradorAutomata().getTokens().add(token);
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionExpresionRegular",5, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -520,12 +520,12 @@ class CUP$ParserGramatica$actions {
               Object RESULT =null;
 		int identificadorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).left;
 		int identificadorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).right;
-		Symbol identificador = (Symbol)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
+		String identificador = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
 		int expresionleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
 		int expresionright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
 		Nodo expresion = (Nodo)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
 		
-                                                TokenPrimitivo token = new TokenPrimitivo(identificador.value.toString(), expresion);
+                                                TokenPrimitivo token = new TokenPrimitivo(identificador, expresion);
                                                 lexer.getGeneradorAutomata().getTokens().add(token);
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionExpresionRegular",5, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -696,10 +696,10 @@ class CUP$ParserGramatica$actions {
               Nodo RESULT =null;
 		int cadenaleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int cadenaright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
-		Symbol cadena = (Symbol)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
+		String cadena = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
                                                 Nodo nodo = new NodoConcat();
-                                                idNodos = lexer.getGeneradorAutomata().agregarCadena(idNodos, nodo, cadena.value.toString().substring(1, cadena.value.toString().length()-1));
+                                                idNodos = lexer.getGeneradorAutomata().agregarCadena(idNodos, nodo, cadena.substring(1, cadena.length()-1));
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",17, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -714,7 +714,7 @@ class CUP$ParserGramatica$actions {
 		int expresionright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
 		Nodo expresion = (Nodo)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
 		
-                                                Nodo nodo = new Nodo();
+                                                Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
                                                 RESULT = nodo;
                                             
@@ -730,7 +730,7 @@ class CUP$ParserGramatica$actions {
 		int expresionright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
 		Nodo expresion = (Nodo)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
 		
-                                                Nodo nodo = new Nodo();
+                                                Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
                                                 RESULT = expresion;
                                             
@@ -744,10 +744,10 @@ class CUP$ParserGramatica$actions {
               Nodo RESULT =null;
 		int caracterleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int caracterright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
-		Symbol caracter = (Symbol)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
+		String caracter = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
-                                                Nodo nodo = new Nodo();
-                                                if(caracter != null) nodo = new NodoHoja(idNodos++, caracter.value.toString());
+                                                Nodo nodo = new NodoHoja();
+                                                if(caracter != null) nodo = new NodoHoja(idNodos++, caracter.charAt(0));
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",17, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -760,10 +760,10 @@ class CUP$ParserGramatica$actions {
               Nodo RESULT =null;
 		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
-		Symbol valor = (Symbol)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
-                                                Nodo nodo = new Nodo();
-                                                if(caracter != null) nodo = new NodoHoja(idNodos++, valor.value.toString());
+                                                Nodo nodo = new NodoHoja();
+                                                if(valor != null) nodo = new NodoHoja(idNodos++, valor.charAt(0));
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",17, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -776,10 +776,10 @@ class CUP$ParserGramatica$actions {
               Nodo RESULT =null;
 		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
-		Symbol valor = (Symbol)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
-                                                Nodo nodo = new Nodo();
-                                                if(caracter != null) nodo = new NodoHoja(idNodos++, valor.value.toString());
+                                                Nodo nodo = new NodoHoja();
+                                                if(valor != null) nodo = new NodoHoja(idNodos++, valor.charAt(0));
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",17, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
