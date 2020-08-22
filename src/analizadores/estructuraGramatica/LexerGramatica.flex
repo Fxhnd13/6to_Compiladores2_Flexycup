@@ -91,10 +91,10 @@ JavaCode             = "{" [^*] ~"}"
     "cadena"                                { return symbol(yyline+1, yycolumn+1, "cadena", sym.PR_CADENA);}
     "no"                                    { return symbol(yyline+1, yycolumn+1, "no", sym.PR_NO);}
     "terminal"                              { return symbol(yyline+1, yycolumn+1, "terminal", sym.PR_TERMINAL);}
+    ";"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);}
     ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
     {IntegerLiteral}                        { return symbol(yyline+1, yycolumn+1, yytext(), sym.ENTERO);}
     ({IntegerLiteral}("\."{Digito})*)       { return symbol(yyline+1, yycolumn+1, yytext(), sym.VERSION);}
-    ";"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);}
     {Comment}                               { /* se ignoran los comentarios */}
     {LineTerminator}                        { /* se ignoran los saltos de linea */}
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
@@ -142,15 +142,14 @@ JavaCode             = "{" [^*] ~"}"
 <DECLARACION_SIMBOLOS>{
     
     "%%"                                    { yybegin(REGLAS_SEMANTICAS); return symbol(yyline+1, yycolumn+1, yytext(), sym.SEPARADOR);}
-    ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
     "entero"                                { return symbol(yyline+1, yycolumn+1, "entero", sym.PR_ENTERO);}
     "real"                                  { return symbol(yyline+1, yycolumn+1, "real", sym.PR_REAL);}
     "cadena"                                { return symbol(yyline+1, yycolumn+1, "cadena", sym.PR_CADENA);}
     "no"                                    { return symbol(yyline+1, yycolumn+1, "no", sym.PR_NO);}
     "terminal"                              { return symbol(yyline+1, yycolumn+1, "terminal", sym.PR_TERMINAL);}
-    ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
     ","                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.COMA);}
     ";"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);}
+    ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
     {Comment}                               { /* se ignoran los comentarios */}
     {LineTerminator}                        { /* se ignoran los saltos de linea */}
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
@@ -161,11 +160,11 @@ JavaCode             = "{" [^*] ~"}"
 
 <REGLAS_SEMANTICAS>{
 
-    ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
     "::"                                    { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_GRAMA);}
-    {JavaCode}                              { return symbol(yyline+1, yycolumn+1, yytext(), sym.JAVA_CODE);}
     ";"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);}
     ":"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_INF);}
+    ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
+    {JavaCode}                              { return symbol(yyline+1, yycolumn+1, yytext(), sym.JAVA_CODE);}
     {Comment}                               { /* se ignoran los comentarios */}
     {LineTerminator}                        { /* se ignoran los saltos de linea */}
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }

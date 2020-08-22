@@ -20,12 +20,9 @@ public Integer suma(Integer numero1,Integer numero2){
  
 %% //Sección de expresiones regulares 
  
-palabra = [a-z]+; 
-enter = [0-9]+; 
-rea = [0-9]+([0-9]+)?; 
-mas = "+"; 
-menos = "-"; 
-& = [\n\t]; /* Significa que cuando se encuentre este token deberá ser ignorado */ 
+PR_COMIDA = "comida";
+PR_VOCALES = "aeiou";
+ID = [a-z]+;
  
 %% //Seccion de simbolos terminales y no terminales 
  

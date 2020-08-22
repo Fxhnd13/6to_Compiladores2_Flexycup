@@ -9,6 +9,7 @@ package analizadores.objetos;
  *
  * @author jose_
  */
-public class TablaDeSimbolosER {
+public class TablaDeSimbolos {
+    
     
 }

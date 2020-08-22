@@ -2,6 +2,7 @@ package analizadores.estructuraGramatica;
 
 import analizadores.analizadorFinal.Lexer;
 import analizadores.objetos.componentes.NodoER.*;
+import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import java.util.List;
 import java_cup.runtime.Symbol;
 import java_cup.runtime.XMLElement;
@@ -13,12 +14,13 @@ action code {::}
 parser code {:
     
         private List<String> listErrores;
+        private GeneradorAutomata generadorAutomata;
         private Lexer lexer = new Lexer();
-        private int idNodos = 1;
         //private Parser parser = new Parser();
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
+            generadorAutomata = new GeneradorAutomata();
             listErrores = lex.getErrores();
 	}
         
@@ -62,10 +64,10 @@ terminal String                                    ASIGNACION_ER, SEPARADOR, UNA
 terminal String                                    PAR_A, PAR_C, FIN_DE_LINEA, SALTO_DE_LINEA, TABULACION, RETORNO, IGNORAR, CADENA, JAVA_CODE, ENTERO;
 terminal String                                    VERSION, ID, RANGO_NUMEROS, RANGO_LETRAS_MIN, PR_TERMINAL, PR_NO, PR_ENTERO, PR_REAL, PR_CADENA, COMA;
 
-non terminal                                s, seccionInformacion, dato, seccionER, expresionesRegulares, declaracionExpresionRegular;
+non terminal                                s, seccionInformacion, dato, seccionER;
 non terminal                                seccionSimbolos, declaracionesSimbolos, declaracionSimbolo, seccionGramatica;
 non terminal                                produccion, listadoSimbolos, simboloProduccion, idCompuesto, tipoSimbolo, listadoIds, codigoJava;
-non terminal Nodo                           expresionRegular;
+non terminal Nodo                           expresionesRegulares, declaracionExpresionRegular, expresionRegular;
 
 /* precedencia */
 
@@ -99,17 +101,36 @@ seccionER::=                                expresionesRegulares SEPARADOR secci
                                             |error SEPARADOR seccionSimbolos
                                             ;
 
-expresionesRegulares::=                     expresionesRegulares declaracionExpresionRegular
-                                            |declaracionExpresionRegular
+expresionesRegulares::=                     expresionesRegulares:nodos declaracionExpresionRegular:nodo {:
+                                                Nodo nodoUnion = new NodoHoja();
+                                                if(nodos != null && nodo != null){
+                                                    nodoUnion = new NodoDis(nodos, nodo);
+                                                }
+                                                RESULT = nodoUnion;
+                                            :}
+                                            |declaracionExpresionRegular:nodo{:
+                                                Nodo nodoSalida = new NodoHoja();
+                                                if(nodo != null) nodoSalida = nodo;
+                                                RESULT = nodoSalida;
+                                            :}
                                             ;
 
 declaracionExpresionRegular::=              ID:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
-                                                TokenPrimitivo token = new TokenPrimitivo(identificador, expresion);
-                                                lexer.getGeneradorAutomata().getTokens().add(token);
+                                                Nodo nodo = new NodoHoja();
+                                                if(expresion != null) nodo = expresion;
+                                                //explicar en cada nodo hijo el tipo que posee
+                                                RESULT = nodo;
                                             :}
                                             |IGNORAR:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
-                                                TokenPrimitivo token = new TokenPrimitivo(identificador, expresion);
-                                                lexer.getGeneradorAutomata().getTokens().add(token);
+                                                Nodo nodo = new NodoHoja();
+                                                if(expresion != null) nodo = expresion;
+                                                //explicar en cada nodo hijo el tipo que posee
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:identificador ASIGNACION_ER CADENA:cadena FIN_DE_LINEA {:
+                                                Nodo nodo = new NodoConcat();
+                                                generadorAutomata.agregarCadena(nodo, cadena.substring(1, cadena.length()-1));
+                                                RESULT = nodo;
                                             :}
                                             |error FIN_DE_LINEA
                                             ;
@@ -142,29 +163,29 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             :}
                                             |RANGO_LETRAS_MIN {:
                                                 Nodo nodo = new NodoDis();
-                                                idNodos = lexer.getGeneradorAutomata().agregarRango(idNodos, nodo, 0);
+                                                generadorAutomata.agregarRango(nodo, 0);
                                                 RESULT = nodo;
                                             :}
                                             |RANGO_NUMEROS {:
                                                 Nodo nodo = new NodoDis();
-                                                idNodos = lexer.getGeneradorAutomata().agregarRango(idNodos, nodo, 0);
+                                                generadorAutomata.agregarRango(nodo, 0);
                                                 RESULT = nodo;
                                             :}
                                             |SALTO_DE_LINEA {:
-                                                Nodo nodo = new NodoHoja(idNodos++, '\n');
+                                                Nodo nodo = new NodoHoja('\n');
                                                 RESULT = nodo;
                                             :}
                                             |TABULACION {:
-                                                Nodo nodo = new NodoHoja(idNodos++, '\t');
+                                                Nodo nodo = new NodoHoja('\t');
                                                 RESULT = nodo;
                                             :}
                                             |RETORNO {:
-                                                Nodo nodo = new NodoHoja(idNodos++, '\b');
+                                                Nodo nodo = new NodoHoja('\b');
                                                 RESULT = nodo;
                                             :}
                                             |CADENA:cadena {:
                                                 Nodo nodo = new NodoConcat();
-                                                idNodos = lexer.getGeneradorAutomata().agregarCadena(idNodos, nodo, cadena.substring(1, cadena.length()-1));
+                                                generadorAutomata.agregarCadena(nodo, cadena.substring(1, cadena.length()-1));
                                                 RESULT = nodo;
                                             :}
                                             |COR_A expresionRegular:expresion COR_C {:
@@ -179,17 +200,17 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             :}
                                             |CARACTER_EXPLICITO:caracter {:
                                                 Nodo nodo = new NodoHoja();
-                                                if(caracter != null) nodo = new NodoHoja(idNodos++, caracter.charAt(0));
+                                                if(caracter != null) nodo = new NodoHoja(caracter.charAt(0));
                                                 RESULT = nodo;
                                             :}
                                             |ENTERO:valor {:
                                                 Nodo nodo = new NodoHoja();
-                                                if(valor != null) nodo = new NodoHoja(idNodos++, valor.charAt(0));
+                                                if(valor != null) nodo = new NodoHoja(valor.charAt(0));
                                                 RESULT = nodo;
                                             :}
                                             |VERSION:valor {:
                                                 Nodo nodo = new NodoHoja();
-                                                if(valor != null) nodo = new NodoHoja(idNodos++, valor.charAt(0));
+                                                if(valor != null) nodo = new NodoHoja(valor.charAt(0));
                                                 RESULT = nodo;
                                             :}
                                             ;

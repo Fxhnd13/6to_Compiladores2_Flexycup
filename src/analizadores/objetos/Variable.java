@@ -9,6 +9,6 @@ package analizadores.objetos;
  *
  * @author jose_
  */
-public class TablaDeSimbolosGR {
+public class Variable {
     
 }

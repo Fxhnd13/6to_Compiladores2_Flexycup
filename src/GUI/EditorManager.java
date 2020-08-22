@@ -5,8 +5,6 @@
  */
 package GUI;
 
-import analizadores.estructuraGramatica.secciones.LexerSecciones;
-import analizadores.estructuraGramatica.secciones.ParserSecciones;
 import analizadores.estructuraGramatica.LexerGramatica;
 import analizadores.estructuraGramatica.ParserGramatica;
 import java.awt.Component;
@@ -16,16 +14,10 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
-import javax.swing.text.BadLocationException;
 
 /**
  *
@@ -107,63 +99,9 @@ public class EditorManager {
 
     void parsearSecciones(String texto){
         try {
-            LexerGramatica lexer2 = new LexerGramatica(new StringReader(texto));
-//            while(lexer2.isAnalizando()){
-//                lexer2.next_token();
-//            }
-            ParserGramatica parser2 = new ParserGramatica(lexer2);
-            parser2.debug_parse();
-//            LexerSecciones lexer = new LexerSecciones(new StringReader(texto));
-//            ParserSecciones parser = new ParserSecciones(lexer);
-//            List<String> secciones = (List<String>) parser.parse().value;
-//            String espacios = "";
-//            for (int i = 0; i < secciones.get(1).split("\n").length; i++) {
-//                espacios+="\n";
-//            }
-//            for (int i = 0; i < secciones.size(); i++) {
-//                switch(i){
-//                    case 0:{
-//                        System.out.println("---------------------------------------------------------------------------------------");
-//                        System.out.println("Seccion de informacion:   ");
-//                        System.out.println(secciones.get(0));
-//                        break;
-//                    }
-//                    case 1:{
-//                        System.out.println("---------------------------------------------------------------------------------------");
-//                        System.out.println("Seccion de Codigo:   ");
-//                        System.out.println(secciones.get(1));
-//                        break;
-//                    }
-//                    case 2:{
-//                        System.out.println("---------------------------------------------------------------------------------------");
-//                        System.out.println("Seccion de Expresiones Regulares:   ");
-//                        System.out.println(secciones.get(2));
-//                        break;
-//                    }
-//                    case 3:{
-//                        System.out.println("---------------------------------------------------------------------------------------");
-//                        System.out.println("Seccion de Simbolos:   ");
-//                        System.out.println(secciones.get(3));
-//                        break;
-//                    }
-//                    case 4:{
-//                        System.out.println("---------------------------------------------------------------------------------------");
-//                        System.out.println("Seccion de reglas gramaticales:   ");
-//                        System.out.println(secciones.get(4));
-//                        break;
-//                    }
-//                }
-//            }
-//            String cadena = "";
-//            for (int i = 0; i < secciones.size(); i++) {
-//                if(i>1 && i<secciones.size()) cadena+="%%";
-//                if(i==1){
-//                    cadena+=espacios;
-//                }else{
-//                    cadena+=secciones.get(i);
-//                }
-//            }
-//            System.out.println(cadena);
+            LexerGramatica lexer = new LexerGramatica(new StringReader(texto));
+            ParserGramatica parser = new ParserGramatica(lexer);
+            parser.debug_parse();
         } catch (Exception ex) {
             Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }

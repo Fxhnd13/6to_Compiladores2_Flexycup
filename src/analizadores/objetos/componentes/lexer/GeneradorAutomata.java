@@ -3,8 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package analizadores.objetos.componentes.NodoER;
+package analizadores.objetos.componentes.lexer;
 
+import analizadores.objetos.componentes.NodoER.Nodo;
+import analizadores.objetos.componentes.NodoER.NodoAst;
+import analizadores.objetos.componentes.NodoER.NodoConcat;
+import analizadores.objetos.componentes.NodoER.NodoDis;
+import analizadores.objetos.componentes.NodoER.NodoHoja;
+import analizadores.objetos.componentes.NodoER.NodoMas;
+import analizadores.objetos.componentes.NodoER.NodoQuiza;
+import analizadores.objetos.componentes.NodoER.TokenPrimitivo;
 import analizadores.objetos.componentes.Utilidades;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,18 +23,37 @@ import java.util.List;
  */
 public class GeneradorAutomata {
     
-    private List<TokenPrimitivo> tokens;
+    private List<String> palabrasReservadas;
+    private Nodo expresionRegular;
     
     public GeneradorAutomata(){
-        tokens = new ArrayList<TokenPrimitivo>();
+        this.palabrasReservadas = new ArrayList<String>();
     }
     
-    public List<TokenPrimitivo> getTokens(){return tokens; }
+    public List<String> getPalabrasReservadas(){ return palabrasReservadas; }
     
-    public void calcularTodosLosSiguientes(){
-        for (TokenPrimitivo token : tokens) {
-            calcularSiguientes(token.getExpresionRegular());
+    public void calcularArbol(){
+        numerarNodosHoja(1, expresionRegular);
+        calcularSiguientes(expresionRegular);
+    }
+    
+    public int numerarNodosHoja(int id, Nodo expresion){
+        if(expresion instanceof NodoConcat){
+            id = numerarNodosHoja(id, ((NodoConcat) expresion).getIzquierdo());
+            id = numerarNodosHoja(id, ((NodoConcat) expresion).getDerecho());
+        }else if(expresion instanceof NodoDis){
+            id = numerarNodosHoja(id, ((NodoConcat) expresion).getIzquierdo());
+            id = numerarNodosHoja(id, ((NodoConcat) expresion).getDerecho());
+        }else if(expresion instanceof NodoQuiza){
+            id = numerarNodosHoja(id, ((NodoQuiza) expresion).getHijo());
+        }else if(expresion instanceof NodoAst){
+            id = numerarNodosHoja(id, ((NodoAst) expresion).getHijo());
+        }else if(expresion instanceof NodoMas){
+            id = numerarNodosHoja(id, ((NodoMas) expresion).getHijo());
+        }else if(expresion instanceof NodoHoja){
+            ((NodoHoja) expresion).setId(id++);
         }
+        return id;
     }
     
     public void calcularSiguientes(Nodo expresion){
@@ -54,45 +81,43 @@ public class GeneradorAutomata {
         }
     }
     
-    public int agregarRango(int id, Nodo raiz, int opcion){
+    public void agregarRango(Nodo raiz, int opcion){
         char[] caracteres = (opcion == 0)? Utilidades.ARREGLO_LETRAS : Utilidades.ARREGLO_NUMEROS;
         for (int i = 0; i < caracteres.length; i++) {
             if(i == 0){
-                Nodo izquierdo = new NodoHoja(id++, caracteres[i++]);
-                Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                Nodo izquierdo = new NodoHoja(caracteres[i++]);
+                Nodo derecho = new NodoHoja(caracteres[i]);
                 raiz = new NodoDis(izquierdo, derecho);
             }else{
-                Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                Nodo derecho = new NodoHoja(caracteres[i]);
                 Nodo nuevo = new NodoDis(raiz, derecho);
                 raiz = nuevo;
             }
         }
-        return id;
     }
     
-    public int agregarCadena(int id, Nodo raiz, String cadena){
+    public void agregarCadena(Nodo raiz, String cadena){
         char[] caracteres = cadena.toCharArray();
         for (int i = 0; i < caracteres.length; i++) {
             if(caracteres.length > 2){
                 if(i == 0){
-                    Nodo izquierdo = new NodoHoja(id++, caracteres[i++]);
-                    Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                    Nodo izquierdo = new NodoHoja(caracteres[i++]);
+                    Nodo derecho = new NodoHoja(caracteres[i]);
                     raiz = new NodoConcat(izquierdo, derecho);
                 }else{
-                    Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                    Nodo derecho = new NodoHoja(caracteres[i]);
                     Nodo nuevo = new NodoConcat(raiz, derecho);
                     raiz = nuevo;
                 }
             }else{
                 if(caracteres.length == 2){
-                    Nodo izquierdo = new NodoHoja(id++, caracteres[i++]);
-                    Nodo derecho = new NodoHoja(id++, caracteres[i]);
+                    Nodo izquierdo = new NodoHoja(caracteres[i++]);
+                    Nodo derecho = new NodoHoja(caracteres[i]);
                     raiz = new NodoConcat(izquierdo, derecho);
                 }else{
-                    raiz = new NodoHoja(id++, caracteres[i]);
+                    raiz = new NodoHoja(caracteres[i]);
                 }
             }
         }
-        return id;
     }
 }
