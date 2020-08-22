@@ -130,6 +130,7 @@ declaracionExpresionRegular::=              ID:identificador ASIGNACION_ER expre
                                             |ID:identificador ASIGNACION_ER CADENA:cadena FIN_DE_LINEA {:
                                                 Nodo nodo = new NodoConcat();
                                                 generadorAutomata.agregarCadena(nodo, cadena.substring(1, cadena.length()-1));
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(cadena.substring(1, cadena.length()-1));
                                                 RESULT = nodo;
                                             :}
                                             |error FIN_DE_LINEA

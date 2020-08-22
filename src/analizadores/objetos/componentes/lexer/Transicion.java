@@ -11,4 +11,31 @@ package analizadores.objetos.componentes.lexer;
  */
 public class Transicion {
     
+    int idSalida, idDestino;
+    char caracter;
+
+    public int getIdSalida() {
+        return idSalida;
+    }
+
+    public void setIdSalida(int idSalida) {
+        this.idSalida = idSalida;
+    }
+
+    public int getIdDestino() {
+        return idDestino;
+    }
+
+    public void setIdDestino(int idDestino) {
+        this.idDestino = idDestino;
+    }
+
+    public char getCaracter() {
+        return caracter;
+    }
+
+    public void setCaracter(char caracter) {
+        this.caracter = caracter;
+    }
+    
 }

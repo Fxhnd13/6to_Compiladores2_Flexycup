@@ -23,18 +23,35 @@ import java.util.List;
  */
 public class GeneradorAutomata {
     
-    private List<String> palabrasReservadas;
     private Nodo expresionRegular;
+    private Automata automata;
     
     public GeneradorAutomata(){
-        this.palabrasReservadas = new ArrayList<String>();
+        this.automata = new Automata();
+    }
+
+    public Automata getAutomata() {
+        return automata;
+    }
+
+    public void setAutomata(Automata automata) {
+        this.automata = automata;
     }
     
-    public List<String> getPalabrasReservadas(){ return palabrasReservadas; }
+    public void setExpresionRegular(Nodo expresion){
+        this.expresionRegular = expresion;
+    }
+    
+    public Nodo getExpresionRegular(){ return expresionRegular; }
     
     public void calcularArbol(){
         numerarNodosHoja(1, expresionRegular);
         calcularSiguientes(expresionRegular);
+    }
+    
+    public void crearEstadosAutomata(){
+        int indiceEstadoActual = 0;
+        
     }
     
     public int numerarNodosHoja(int id, Nodo expresion){

@@ -26,5 +26,13 @@ public class Lexer {
     public void setCadena(String cadena) {
         this.cadena = cadena;
     }
+
+    public Automata getAutomata() {
+        return automata;
+    }
+
+    public void setAutomata(Automata automata) {
+        this.automata = automata;
+    }
     
 }

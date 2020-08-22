@@ -575,6 +575,7 @@ class CUP$ParserGramatica$actions {
 		
                                                 Nodo nodo = new NodoConcat();
                                                 generadorAutomata.agregarCadena(nodo, cadena.substring(1, cadena.length()-1));
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(cadena.substring(1, cadena.length()-1));
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionExpresionRegular",16, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
