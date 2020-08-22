@@ -11,4 +11,23 @@ package analizadores.objetos;
  */
 public class Variable {
     
+    String id;
+    Object valor;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Object getValor() {
+        return valor;
+    }
+
+    public void setValor(Object valor) {
+        this.valor = valor;
+    }
+    
 }

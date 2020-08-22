@@ -7,6 +7,8 @@ package analizadores.estructuraGramatica;
 import java.util.ArrayList;
 import java.util.List;
 import java_cup.runtime.Symbol;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 // See https://github.com/jflex-de/jflex/issues/222
@@ -392,15 +394,18 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
     
     private List<String> errores;
     private boolean leyendo = true;
+    private DefaultTableModel tablaTokens;
 
     private Symbol symbol(int linea, int columna, String lexema, int type){
         Symbol simbolo = new Symbol(type, linea, columna, lexema);
+        tablaTokens.addRow(new String[] {sym.terminalNames[type], lexema, String.valueOf(linea), String.valueOf(columna)});
         //System.out.println(type+"|"+lexema+"|<"+linea+","+columna+">");
         return simbolo;
     }
 
     private Symbol symbol(int linea, int columna, int type){
         Symbol simbolo = new Symbol(type,linea,columna);
+        tablaTokens.addRow(new String[] {sym.terminalNames[type],"Sin definir", String.valueOf(linea), String.valueOf(columna)});
         //System.out.println(type+"|"+yytext()+"|<"+linea+","+columna+">");
         return simbolo;
     }
@@ -416,9 +421,13 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
     public boolean isAnalizando(){
         return leyendo;
     }
-
-
-
+    
+    public void setTablaTokens(JTable tablaTokens){
+        this.tablaTokens = (DefaultTableModel) tablaTokens.getModel();
+    }
+    
+    public JTable getTablaTokens(){ return new JTable(tablaTokens); }
+    
   /**
    * Creates a new scanner
    *

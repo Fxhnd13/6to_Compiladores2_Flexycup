@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 
 /**
@@ -39,6 +40,11 @@ public class Editor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        ReporteErroresEstructuraGramatica = new javax.swing.JDialog();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        TablaTokens = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TextoErrores = new javax.swing.JTextArea();
         tabs = new javax.swing.JTabbedPane();
         informacionLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -52,6 +58,50 @@ public class Editor extends javax.swing.JFrame {
         jMenu3 = new javax.swing.JMenu();
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+
+        TablaTokens.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Token", "Lexema", "Linea", "Columna"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(TablaTokens);
+
+        TextoErrores.setEditable(false);
+        TextoErrores.setColumns(20);
+        TextoErrores.setRows(5);
+        jScrollPane2.setViewportView(TextoErrores);
+
+        javax.swing.GroupLayout ReporteErroresEstructuraGramaticaLayout = new javax.swing.GroupLayout(ReporteErroresEstructuraGramatica.getContentPane());
+        ReporteErroresEstructuraGramatica.getContentPane().setLayout(ReporteErroresEstructuraGramaticaLayout);
+        ReporteErroresEstructuraGramaticaLayout.setHorizontalGroup(
+            ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReporteErroresEstructuraGramaticaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        ReporteErroresEstructuraGramaticaLayout.setVerticalGroup(
+            ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(ReporteErroresEstructuraGramaticaLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -201,7 +251,10 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
-        manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText());
+        ((DefaultTableModel) TablaTokens.getModel()).setRowCount(0);
+        TextoErrores.setText("");
+        manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TextoErrores);
+        this.ReporteErroresEstructuraGramatica.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
@@ -240,6 +293,9 @@ public class Editor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog ReporteErroresEstructuraGramatica;
+    private javax.swing.JTable TablaTokens;
+    private javax.swing.JTextArea TextoErrores;
     private javax.swing.JLabel informacionLabel;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -252,6 +308,8 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane tabs;
     // End of variables declaration//GEN-END:variables
 

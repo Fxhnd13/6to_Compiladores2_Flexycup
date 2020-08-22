@@ -12,10 +12,7 @@ import analizadores.objetos.componentes.NodoER.NodoDis;
 import analizadores.objetos.componentes.NodoER.NodoHoja;
 import analizadores.objetos.componentes.NodoER.NodoMas;
 import analizadores.objetos.componentes.NodoER.NodoQuiza;
-import analizadores.objetos.componentes.NodoER.TokenPrimitivo;
 import analizadores.objetos.componentes.Utilidades;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *

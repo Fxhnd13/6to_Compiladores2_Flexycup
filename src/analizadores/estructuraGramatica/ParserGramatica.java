@@ -7,6 +7,7 @@ package analizadores.estructuraGramatica;
 
 import analizadores.analizadorFinal.Lexer;
 import analizadores.objetos.componentes.NodoER.*;
+import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import java.util.List;
 import java_cup.runtime.Symbol;
@@ -293,15 +294,16 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
 
 
     
+        private TablaDeSimbolos expresionesRegulares, simbolosGramatica;
         private List<String> listErrores;
         private GeneradorAutomata generadorAutomata;
-        private Lexer lexer = new Lexer();
-        //private Parser parser = new Parser();
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
             generadorAutomata = new GeneradorAutomata();
             listErrores = lex.getErrores();
+            expresionesRegulares = new TablaDeSimbolos();
+            simbolosGramatica = new TablaDeSimbolos();
 	}
         
         public void setAccion(String tipo, String mensaje, String accion){
@@ -310,9 +312,9 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
 
         public void unrecovered_syntax_error(Symbol cur_token){
             if(cur_token.toString().equals("#0")){
-                System.err.println("No se pudo recuperar y seguir analizando, no se encontraron más tokens, se llegó al final del archivo.");
+                listErrores.add("No se pudo recuperar y seguir analizando, no se encontraron más tokens, se llegó al final del archivo.");
             }else{
-                System.err.println("No se pudo recuperar y seguir analizando, error con el token: "+cur_token.toString());
+                listErrores.add("No se pudo recuperar y seguir analizando, error con el token: "+cur_token.value.toString());
             }
         }
 
@@ -332,9 +334,6 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
 
         public void setErrores(List<String> e){listErrores = e;}
 
-        public Lexer getLexer(){return lexer;}
-
-        //public Parser getParser(){return parser;}
 
 
 /** Cup generated class to encapsulate user supplied action code.*/

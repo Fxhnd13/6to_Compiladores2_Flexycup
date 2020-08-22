@@ -18,6 +18,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -96,12 +98,23 @@ public class EditorManager {
             ArchivosManager.guardarComo(tab, true);
         }
     }
-
-    void parsearSecciones(String texto){
+    
+    void parsearSecciones(String texto, JTable TablaTokens, JTextArea TextoErrores) {
         try {
             LexerGramatica lexer = new LexerGramatica(new StringReader(texto));
+            lexer.setTablaTokens(TablaTokens);
             ParserGramatica parser = new ParserGramatica(lexer);
-            parser.debug_parse();
+            parser.parse();
+            if(parser.getErrores().isEmpty()){
+                //Cargamos el lenguaje y activamos la pestaña de analizar
+            }else{
+                String reporteErrores = "**********************Errores al analizar el archivo*************************************\n";
+                for (String error : parser.getErrores()) {
+                    reporteErrores+=error+"\n";
+                }
+                reporteErrores = reporteErrores.substring(0, reporteErrores.length()-1);
+                TextoErrores.setText(reporteErrores);
+            }
         } catch (Exception ex) {
             Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }

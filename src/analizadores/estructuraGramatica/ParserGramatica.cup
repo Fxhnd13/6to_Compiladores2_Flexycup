@@ -2,6 +2,7 @@ package analizadores.estructuraGramatica;
 
 import analizadores.analizadorFinal.Lexer;
 import analizadores.objetos.componentes.NodoER.*;
+import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import java.util.List;
 import java_cup.runtime.Symbol;
@@ -13,10 +14,9 @@ action code {::}
 
 parser code {:
     
+        private TablaDeSimbolos expresionesRegulares, simbolosGramatica;
         private List<String> listErrores;
         private GeneradorAutomata generadorAutomata;
-        private Lexer lexer = new Lexer();
-        //private Parser parser = new Parser();
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
@@ -30,9 +30,9 @@ parser code {:
 
         public void unrecovered_syntax_error(Symbol cur_token){
             if(cur_token.toString().equals("#0")){
-                System.err.println("No se pudo recuperar y seguir analizando, no se encontraron más tokens, se llegó al final del archivo.");
+                listErrores.add("No se pudo recuperar y seguir analizando, no se encontraron más tokens, se llegó al final del archivo.");
             }else{
-                System.err.println("No se pudo recuperar y seguir analizando, error con el token: "+cur_token.toString());
+                listErrores.add("No se pudo recuperar y seguir analizando, error con el token: "+cur_token.value.toString());
             }
         }
 
@@ -45,16 +45,13 @@ parser code {:
             switch(s.toString()){
                 //anotamos los diferentes mensajes dependiendo del simbolo que causó el problema
             }
-            System.out.println("Se ha encontrado un error en la linea: "+linea+", columna: "+columna+" con la cadena "+cadena+"|Descripcion: "+message);
+            listErrores.add("Se ha encontrado un error en la linea: "+linea+", columna: "+columna+" con la cadena "+cadena+"|Descripcion: "+message);
         }
 
         public List<String> getErrores(){return listErrores;}
 
         public void setErrores(List<String> e){listErrores = e;}
 
-        public Lexer getLexer(){return lexer;}
-
-        //public Parser getParser(){return parser;}
 :}
 
 /* terminales y no terminales */
@@ -118,13 +115,11 @@ expresionesRegulares::=                     expresionesRegulares:nodos declaraci
 declaracionExpresionRegular::=              ID:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
-                                                //explicar en cada nodo hijo el tipo que posee
                                                 RESULT = nodo;
                                             :}
                                             |IGNORAR:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
-                                                //explicar en cada nodo hijo el tipo que posee
                                                 RESULT = nodo;
                                             :}
                                             |ID:identificador ASIGNACION_ER CADENA:cadena FIN_DE_LINEA {:
@@ -206,12 +201,12 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             :}
                                             |ENTERO:valor {:
                                                 Nodo nodo = new NodoHoja();
-                                                if(valor != null) nodo = new NodoHoja(valor.charAt(0));
+                                                if(valor != null) nodo = generadorAutomata.agregarCadena(nodo, valor.substring(1, valor.length()-1));
                                                 RESULT = nodo;
                                             :}
                                             |VERSION:valor {:
                                                 Nodo nodo = new NodoHoja();
-                                                if(valor != null) nodo = new NodoHoja(valor.charAt(0));
+                                                if(valor != null) nodo = generadorAutomata.agregarCadena(nodo, valor.substring(1, valor.length()-1));
                                                 RESULT = nodo;
                                             :}
                                             ;
