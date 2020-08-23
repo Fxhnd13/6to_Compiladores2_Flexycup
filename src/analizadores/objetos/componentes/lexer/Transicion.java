@@ -14,6 +14,12 @@ public class Transicion {
     int idSalida, idDestino;
     char caracter;
 
+    Transicion(int salida, int destino, char caracter) {
+        this.idSalida = salida;
+        this.idDestino = destino;
+        this.caracter = caracter;
+    }
+
     public int getIdSalida() {
         return idSalida;
     }
@@ -38,4 +44,7 @@ public class Transicion {
         this.caracter = caracter;
     }
     
+    public String toString(){
+        return "Salida: "+idSalida+"|||Destino: "+idDestino+"|||Caracter: '"+caracter+"'";
+    }
 }

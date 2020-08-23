@@ -106,7 +106,9 @@ public class EditorManager {
             ParserGramatica parser = new ParserGramatica(lexer);
             parser.parse();
             if(parser.getErrores().isEmpty()){
-                //Cargamos el lenguaje y activamos la pestaña de analizar
+                parser.getGeneradorAutomata().calcularArbol();
+                parser.getGeneradorAutomata().crearEstadosAutomata();
+                System.out.println(parser.getGeneradorAutomata().getAutomata().toString());
             }else{
                 String reporteErrores = "**********************Errores al analizar el archivo*************************************\n";
                 for (String error : parser.getErrores()) {

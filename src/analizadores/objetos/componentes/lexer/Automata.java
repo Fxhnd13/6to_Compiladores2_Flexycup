@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Automata {
     
-    private List<String> palabrasReservadas;
+    private List<PR> palabrasReservadas;
     private List<Estado> estados;
     private List<Transicion> transiciones;
     int estadoActual;
@@ -24,11 +24,11 @@ public class Automata {
         this.transiciones = new ArrayList<Transicion>();
     }
 
-    public List<String> getPalabrasReservadas() {
+    public List<PR> getPalabrasReservadas() {
         return palabrasReservadas;
     }
 
-    public void setPalabrasReservadas(List<String> palabrasReservadas) {
+    public void setPalabrasReservadas(List<PR> palabrasReservadas) {
         this.palabrasReservadas = palabrasReservadas;
     }
 
@@ -48,4 +48,20 @@ public class Automata {
         this.transiciones = transiciones;
     }
     
+    @Override
+    public String toString(){
+        String cadena = "----------------Palabras Reservadas detectadas-------------------------";
+        for (PR palabraReservada : palabrasReservadas) {
+            cadena+=palabraReservada+"\n";
+        }
+        cadena+="--------------------------Estados------------------------------------";
+        for (Estado estado : estados) {
+            cadena+=estado.toString()+"\n";
+        }
+        cadena+="--------------------------Transiciones-------------------------------";
+        for (Transicion transicion : transiciones) {
+            cadena+=transicion.toString()+"\n";
+        }
+        return cadena;
+    }
 }

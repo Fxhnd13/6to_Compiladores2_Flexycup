@@ -1,14 +1,12 @@
 package analizadores.estructuraGramatica;
-
-import analizadores.analizadorFinal.Lexer;
+ 
 import analizadores.objetos.componentes.NodoER.*;
 import analizadores.objetos.TablaDeSimbolos;
+import analizadores.objetos.Variable;
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
+import analizadores.objetos.componentes.lexer.PR;
 import java.util.List;
 import java_cup.runtime.Symbol;
-import java_cup.runtime.XMLElement;
-import java_cup.runtime.XMLElement;
-import java_cup.runtime.XMLElement;
 
 action code {::}
 
@@ -20,8 +18,10 @@ parser code {:
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
-            generadorAutomata = new GeneradorAutomata();
             listErrores = lex.getErrores();
+            generadorAutomata = new GeneradorAutomata();
+            expresionesRegulares = new TablaDeSimbolos();
+            simbolosGramatica = new TablaDeSimbolos();
 	}
         
         public void setAccion(String tipo, String mensaje, String accion){
@@ -51,6 +51,10 @@ parser code {:
         public List<String> getErrores(){return listErrores;}
 
         public void setErrores(List<String> e){listErrores = e;}
+
+        public GeneradorAutomata getGeneradorAutomata(){ return generadorAutomata; }
+        public TablaDeSimbolos getTablaDeER(){ return expresionesRegulares; }
+        public TablaDeSimbolos getTablaDeSimbolosGramaticales(){ return simbolosGramatica;}
 
 :}
 
@@ -94,7 +98,9 @@ dato::=                                     PR_NOMBRE ASIGNACION_INF idCompuesto
                                             |error FIN_DE_LINEA
                                             ;
 
-seccionER::=                                expresionesRegulares SEPARADOR seccionSimbolos
+seccionER::=                                expresionesRegulares:nodo SEPARADOR seccionSimbolos {:
+                                                generadorAutomata.setExpresionRegular(nodo);
+                                            :}
                                             |error SEPARADOR seccionSimbolos
                                             ;
 
@@ -115,17 +121,89 @@ expresionesRegulares::=                     expresionesRegulares:nodos declaraci
 declaracionExpresionRegular::=              ID:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }else{
+                                                    generadorAutomata.asignarTipoToken(identificador, nodo);
+                                                }
                                                 RESULT = nodo;
                                             :}
                                             |IGNORAR:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }else{
+                                                    generadorAutomata.asignarTipoToken(identificador, nodo);
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:identificador SALTO_DE_LINEA FIN_DE_LINEA{:
+                                                Nodo nodo = new NodoHoja('\n');
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, "\n"));
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:identificador TABULACION FIN_DE_LINEA {:
+                                                Nodo nodo = new NodoHoja('\t');
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, "\t"));
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:identificador RETORNO FIN_DE_LINEA {:
+                                                Nodo nodo = new NodoHoja('\b');
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, "\b"));
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:identificador CARACTER_EXPLICITO:caracter FIN_DE_LINEA{:
+                                                Nodo nodo = new NodoHoja(caracter.charAt(0));
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, caracter));
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
                                                 RESULT = nodo;
                                             :}
                                             |ID:identificador ASIGNACION_ER CADENA:cadena FIN_DE_LINEA {:
                                                 Nodo nodo = new NodoConcat();
                                                 generadorAutomata.agregarCadena(nodo, cadena.substring(1, cadena.length()-1));
-                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(cadena.substring(1, cadena.length()-1));
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, cadena.substring(1, cadena.length()-1)));
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:identificador ENTERO:valor FIN_DE_LINEA {:
+                                                Nodo nodo = new NodoConcat();
+                                                generadorAutomata.agregarCadena(nodo, valor);
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, valor));
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:identificador VERSION:valor FIN_DE_LINEA {:
+                                                Nodo nodo = new NodoConcat();
+                                                generadorAutomata.agregarCadena(nodo, valor);
+                                                generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, valor));
+                                                if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
+                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
                                                 RESULT = nodo;
                                             :}
                                             |error FIN_DE_LINEA
@@ -201,12 +279,12 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             :}
                                             |ENTERO:valor {:
                                                 Nodo nodo = new NodoHoja();
-                                                if(valor != null) nodo = generadorAutomata.agregarCadena(nodo, valor.substring(1, valor.length()-1));
+                                                if(valor != null) generadorAutomata.agregarCadena(nodo, valor.substring(1, valor.length()-1));
                                                 RESULT = nodo;
                                             :}
                                             |VERSION:valor {:
                                                 Nodo nodo = new NodoHoja();
-                                                if(valor != null) nodo = generadorAutomata.agregarCadena(nodo, valor.substring(1, valor.length()-1));
+                                                if(valor != null) generadorAutomata.agregarCadena(nodo, valor.substring(1, valor.length()-1));
                                                 RESULT = nodo;
                                             :}
                                             ;

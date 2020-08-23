@@ -45,9 +45,9 @@ public class NodoDis implements Nodo{
     
     @Override
     public int[] primeros() {
-        int[] primeros = null;
         int[] primerosIzquierda = izquierdo.primeros();
         int[] primerosDerecha = derecho.primeros();
+        int[] primeros = new int[primerosIzquierda.length + primerosDerecha.length];
         System.arraycopy(primerosIzquierda, 0, primeros, 0, primerosIzquierda.length);
         System.arraycopy(primerosDerecha  , 0, primeros, primerosIzquierda.length, primerosDerecha.length);
         primeros = Utilidades.ordenar(primeros);
@@ -56,9 +56,9 @@ public class NodoDis implements Nodo{
 
     @Override
     public int[] ultimos() {
-        int[] ultimos = null;
         int[] ultimosIzquierda = izquierdo.ultimos();
         int[] ultimosDerecha = derecho.ultimos();
+        int[] ultimos = new int[ultimosIzquierda.length + ultimosDerecha.length];
         System.arraycopy(ultimosIzquierda, 0, ultimos, 0, ultimosIzquierda.length);
         System.arraycopy(ultimosDerecha  , 0, ultimos, ultimosIzquierda.length, ultimosDerecha.length);
         ultimos = Utilidades.ordenar(ultimos);
