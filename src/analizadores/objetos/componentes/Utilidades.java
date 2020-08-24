@@ -62,4 +62,22 @@ public class Utilidades {
         }
         return valor;
     }
+    
+    public static String escribirArreglo(int[] arreglo){
+        String cadena = "[";
+        for (int i = 0; i < arreglo.length; i++) {
+            cadena+=arreglo[i];
+            if((i+1) < arreglo.length) cadena+=",";
+        }
+        return (cadena+"]");
+    }
+    
+    public static String escribirArreglo(List<Integer> arreglo){
+        String cadena = "[";
+        for (int i = 0; i < arreglo.size(); i++) {
+            cadena+=arreglo.get(i);
+            if((i+1) < arreglo.size()) cadena+=",";
+        }
+        return (cadena+"]");
+    }
 }

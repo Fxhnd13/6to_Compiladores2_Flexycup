@@ -67,7 +67,7 @@ public class NodoDis implements Nodo{
 
     @Override
     public int[] siguientes(int id) {
-        if(Utilidades.existe(id, izquierdo.primeros())||Utilidades.existe(id, izquierdo.ultimos())){
+        if(izquierdo.siguientes(id) != null){
             return izquierdo.siguientes(id);
         }else{
             return derecho.siguientes(id);
@@ -81,7 +81,7 @@ public class NodoDis implements Nodo{
 
     @Override
     public void agregarSiguientes(int id, int[] ids) {
-        if(Utilidades.existe(id, izquierdo.primeros())||Utilidades.existe(id, izquierdo.ultimos())){
+        if(izquierdo.siguientes(id) != null){
             izquierdo.agregarSiguientes(id, ids);
         }else{
             derecho.agregarSiguientes(id, ids);

@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import analizadores.analizadorFinal.Lenguaje;
 import analizadores.estructuraGramatica.LexerGramatica;
 import analizadores.estructuraGramatica.ParserGramatica;
 import java.awt.Component;
@@ -99,7 +100,8 @@ public class EditorManager {
         }
     }
     
-    void parsearSecciones(String texto, JTable TablaTokens, JTextArea TextoErrores) {
+    public boolean parsearSecciones(String texto, JTable TablaTokens, JTextArea TextoErrores) {
+        boolean valor = false;
         try {
             LexerGramatica lexer = new LexerGramatica(new StringReader(texto));
             lexer.setTablaTokens(TablaTokens);
@@ -108,6 +110,7 @@ public class EditorManager {
             if(parser.getErrores().isEmpty()){
                 parser.getGeneradorAutomata().calcularArbol();
                 parser.getGeneradorAutomata().crearEstadosAutomata();
+                Lenguaje lenguaje = new Lenguaje();
                 System.out.println(parser.getGeneradorAutomata().getAutomata().toString());
             }else{
                 String reporteErrores = "**********************Errores al analizar el archivo*************************************\n";
@@ -117,8 +120,10 @@ public class EditorManager {
                 reporteErrores = reporteErrores.substring(0, reporteErrores.length()-1);
                 TextoErrores.setText(reporteErrores);
             }
+            valor = parser.getErrores().isEmpty();
         } catch (Exception ex) {
             Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return valor;
     }
 }

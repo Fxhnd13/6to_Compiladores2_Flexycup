@@ -19,7 +19,7 @@ public class NodoHoja implements Nodo{
 
     private char valor;
     private int id;
-    private int[] siguientes;
+    private int[] siguientes = new int[0];
     private String tipoToken;
     
     public NodoHoja(int id, char valor){
@@ -71,7 +71,11 @@ public class NodoHoja implements Nodo{
 
     @Override
     public int[] siguientes(int id) {
-        return siguientes;
+        if(id == this.id){
+            return siguientes;
+        }else{
+            return null;
+        }
     }
 
     @Override

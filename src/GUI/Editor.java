@@ -59,6 +59,8 @@ public class Editor extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
+        ReporteErroresEstructuraGramatica.setSize(new java.awt.Dimension(1270, 350));
+
         TablaTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -253,8 +255,8 @@ public class Editor extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         ((DefaultTableModel) TablaTokens.getModel()).setRowCount(0);
         TextoErrores.setText("");
-        manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TextoErrores);
-        this.ReporteErroresEstructuraGramatica.setVisible(true);
+        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TextoErrores);
+        if(!mostrarErrores) this.ReporteErroresEstructuraGramatica.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**

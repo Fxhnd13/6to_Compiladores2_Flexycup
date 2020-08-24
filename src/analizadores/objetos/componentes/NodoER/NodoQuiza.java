@@ -34,7 +34,7 @@ public class NodoQuiza implements Nodo{
 
     @Override
     public int[] ultimos() {
-        return hijo.primeros();
+        return hijo.ultimos();
     }
 
     @Override

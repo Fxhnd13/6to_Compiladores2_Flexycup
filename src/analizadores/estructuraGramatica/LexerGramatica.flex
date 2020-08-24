@@ -109,7 +109,7 @@ JavaCode             = "{" [^*] ~"}"
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
 
 /* error fallback */
-    [^]                                     { System.out.println("Error");}
+    [^]                                     { errores.add("Se encontro un caracter no definido en <linea: "+(yyline+1)+",columna: "+(yycolumn+1)+" con el caracter: "+yytext());}
 }
 
 <JAVACODE>{
@@ -143,9 +143,9 @@ JavaCode             = "{" [^*] ~"}"
     {Comment}                               { /* se ignoran los comentarios */}
     {LineTerminator}                        { /* se ignoran los saltos de linea */}
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
+    [^]                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.CARACTER_EXPLICITO);}
 
 /* error fallback */
-    [^]                                     { System.out.println("Error");}
 }
 
 <DECLARACION_SIMBOLOS>{
@@ -164,7 +164,7 @@ JavaCode             = "{" [^*] ~"}"
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
     
 /* error fallback */
-    [^]                                     { System.out.println("Error");}
+    [^]                                     { errores.add("Se encontro un caracter no definido en <linea: "+(yyline+1)+",columna: "+(yycolumn+1)+" con el caracter: "+yytext());}
 }
 
 <REGLAS_SEMANTICAS>{
@@ -179,5 +179,5 @@ JavaCode             = "{" [^*] ~"}"
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
 
 /* error fallback */
-    [^]                                     { System.out.println("Error");}
+    [^]                                     { errores.add("Se encontro un caracter no definido en <linea: "+(yyline+1)+",columna: "+(yycolumn+1)+" con el caracter: "+yytext());}
 }

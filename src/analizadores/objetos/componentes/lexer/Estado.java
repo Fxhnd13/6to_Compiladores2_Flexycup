@@ -14,8 +14,9 @@ import java.util.ArrayList;
  */
 public class Estado {
  
-    boolean estadoFinal = false;
-    int[] idNodosComponentes;
+    private boolean estadoFinal = false;
+    private String tipoToken;
+    private int[] idNodosComponentes;
 
     Estado(int[] primeros) {
         this.idNodosComponentes = primeros;
@@ -25,8 +26,11 @@ public class Estado {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    Estado(int idFinal, ArrayList<Integer> composicionRealNuevoEstado) {
-        if(Utilidades.existe(idFinal, composicionRealNuevoEstado)) this.estadoFinal = true;
+    Estado(int idFinal, ArrayList<Integer> composicionRealNuevoEstado, String tipoToken) {
+        if(Utilidades.existe(idFinal, composicionRealNuevoEstado)){
+            this.estadoFinal = true;
+            this.tipoToken = tipoToken;
+        }
         this.idNodosComponentes = new int[composicionRealNuevoEstado.size()];
         for (int i = 0; i < composicionRealNuevoEstado.size(); i++) {
             idNodosComponentes[i] = composicionRealNuevoEstado.get(i);
@@ -48,8 +52,21 @@ public class Estado {
     public void setIdNodosComponentes(int[] idNodosComponentes) {
         this.idNodosComponentes = idNodosComponentes;
     }
+
+    public String getTipoToken() {
+        return tipoToken;
+    }
+
+    public void setTipoToken(String tipoToken) {
+        this.tipoToken = tipoToken;
+    }
     
     public String toString(){
-        return "Es_Final: "+this.estadoFinal+"|||Id's que componen el estado: "+this.idNodosComponentes.toString();
+        String arreglo ="[";
+        for (int i = 0; i < idNodosComponentes.length; i++) {
+            arreglo+= idNodosComponentes[i];
+            if((i+1)< idNodosComponentes.length) arreglo+=",";
+        }
+        return "Es_Final: "+this.estadoFinal+"|||Id's que componen el estado: "+arreglo+"]";
     }
 }

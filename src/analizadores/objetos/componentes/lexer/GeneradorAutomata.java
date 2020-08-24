@@ -53,52 +53,64 @@ public class GeneradorAutomata {
     public void crearEstadosAutomata(){
         int indiceEstadoActual = 0;
         int idFinal = ((NodoHoja)((NodoConcat)expresionRegular).getDerecho()).getId();
-        Estado actual = new Estado(expresionRegular.primeros());
-        if(actual.getIdNodosComponentes()[actual.getIdNodosComponentes().length-1] == idFinal){
-            actual.setEstadoFinal(true);
+        Estado estado = new Estado(expresionRegular.primeros());
+        if(estado.getIdNodosComponentes()[estado.getIdNodosComponentes().length-1] == idFinal){
+            estado.setEstadoFinal(true);
         }
-        automata.getEstados().add(actual);
+        automata.getEstados().add(estado);
         while(indiceEstadoActual < automata.getEstados().size()){
             
-            Estado estado = automata.getEstados().get(indiceEstadoActual);
+            estado = automata.getEstados().get(indiceEstadoActual);
             int [] primerosAnalizados  = new int[estado.getIdNodosComponentes().length]; //agregamos a este arreglo los id, que ya han sido analizados
             int indicePrimerosAnalizados = 0; //Para saber en que indice agregamos el siguiente primero que fue analizado
             for (int i = 0; i < estado.getIdNodosComponentes().length; i++) { //por cada id que se encuentre en la composición del estado
+                System.out.println("Estado: "+indiceEstadoActual+"--Compuesto: "+Utilidades.escribirArreglo(estado.getIdNodosComponentes()));
                 
-                if(!Utilidades.existe(estado.getIdNodosComponentes()[i], primerosAnalizados)){
-                    
-                    ArrayList<Integer> composicionNuevoEstado = new ArrayList<Integer>(); 
-                    char caracter = obtenerCaracterDelNodo(estado.getIdNodosComponentes()[i], expresionRegular); //obtenemos el caracter
-                    composicionNuevoEstado.add(estado.getIdNodosComponentes()[i]); //añadimos los id que conforman a Ui
-                    primerosAnalizados[indicePrimerosAnalizados++] = estado.getIdNodosComponentes()[i]; //añadimos el id a los ya analizados
-                    for (int j = i+1; j < estado.getIdNodosComponentes().length; j++) { //para cada id que este por delante del actual estudiado
-                        
-                        if(!Utilidades.existe(estado.getIdNodosComponentes()[j], primerosAnalizados)){
-                            ParametroBusqueda parametro = new ParametroBusqueda(caracter);
-                            idPoseeCaracter(estado.getIdNodosComponentes()[j], parametro, expresionRegular);
-                            if(parametro.isValorRetorno()){ //revisamos si posee el caracter
-                                composicionNuevoEstado.add(estado.getIdNodosComponentes()[j]); //agregamos el id al conjunto de id que componen Ui
-                                primerosAnalizados[indicePrimerosAnalizados++] = estado.getIdNodosComponentes()[j]; //agregamos al conjunto de id ya analizados
+                if(estado.getIdNodosComponentes()[i] != (idFinal)){
+                    if(!Utilidades.existe(estado.getIdNodosComponentes()[i], primerosAnalizados)){
+
+                        ArrayList<Integer> composicionNuevoEstado = new ArrayList<Integer>(); 
+                        char caracter = obtenerCaracterDelNodo(estado.getIdNodosComponentes()[i], expresionRegular); //obtenemos el caracter
+                        composicionNuevoEstado.add(estado.getIdNodosComponentes()[i]); //añadimos los id que conforman a Ui
+                        primerosAnalizados[indicePrimerosAnalizados++] = estado.getIdNodosComponentes()[i]; //añadimos el id a los ya analizados
+                        for (int j = i+1; j < estado.getIdNodosComponentes().length; j++) { //para cada id que este por delante del actual estudiado
+
+                            if(estado.getIdNodosComponentes()[j] != (idFinal)){
+                                if(!Utilidades.existe(estado.getIdNodosComponentes()[j], primerosAnalizados)){
+                                    ParametroBusqueda parametro = new ParametroBusqueda(caracter);
+                                    idPoseeCaracter(estado.getIdNodosComponentes()[j], parametro, expresionRegular);
+                                    if(parametro.isValorRetorno()){ //revisamos si posee el caracter
+                                        composicionNuevoEstado.add(estado.getIdNodosComponentes()[j]); //agregamos el id al conjunto de id que componen Ui
+                                        primerosAnalizados[indicePrimerosAnalizados++] = estado.getIdNodosComponentes()[j]; //agregamos al conjunto de id ya analizados
+                                    }
+
+                                }
                             }
-                            
+
                         }
                         
+                        System.out.println("Composicion antes de unir los siguientes de cada uno: "+Utilidades.escribirArreglo(composicionNuevoEstado));
+                        Utilidades.ordenar(composicionNuevoEstado); //ordenamos el arreglo, dado que el tipo del id al inicio, será el token que retornará
+                        //vamos a crear nuestro nuevo estado, con la union de todos los siguientes que tienen todos los id's en composicionNuevoEstado
+                        ArrayList<Integer> composicionRealNuevoEstado = new ArrayList<Integer>();
+                        for (Integer id : composicionNuevoEstado) {
+                            agregarSiguientesDe(expresionRegular.siguientes(id), composicionRealNuevoEstado);
+                        }
+                        //if(composicionRealNuevoEstado.size()==1) composicionRealNuevoEstado.add(0, estado.getIdNodosComponentes()[estado.getIdNodosComponentes().length-1]);
+                        int indiceEstado = indiceEstadoConComposicion(composicionRealNuevoEstado);
+                        if( indiceEstado == -1){
+                            System.out.println("Composicion del estado a agregar: "+Utilidades.escribirArreglo(composicionRealNuevoEstado));
+                            automata.getEstados().add(new Estado(idFinal, composicionRealNuevoEstado, obtenerTipoTokenDe(composicionRealNuevoEstado.get(0), expresionRegular)));
+                            automata.getEstados().get(indiceEstadoActual).getTransiciones().add(new Transicion(automata.getEstados().size()-1, caracter));
+                            //automata.getTransiciones().add(new Transicion(indiceEstadoActual, automata.getEstados().size()-1, caracter));
+                        }else{
+                            System.out.println("Composicion del estado a agregar: "+Utilidades.escribirArreglo(composicionRealNuevoEstado));
+                            automata.getEstados().get(indiceEstadoActual).getTransiciones().add(new Transicion(indiceEstado, caracter));
+                            automata.getTransiciones().add(new Transicion(indiceEstadoActual, indiceEstado, caracter));
+                        }
+
                     }
-                    
-                    Utilidades.ordenar(composicionNuevoEstado); //ordenamos el arreglo, dado que el tipo del id al inicio, será el token que retornará
-                    //vamos a crear nuestro nuevo estado, con la union de todos los siguientes que tienen todos los id's en composicionNuevoEstado
-                    ArrayList<Integer> composicionRealNuevoEstado = new ArrayList<Integer>();
-                    for (Integer id : composicionNuevoEstado) {
-                        agregarSiguientesDe(expresionRegular.siguientes(id), composicionRealNuevoEstado);
-                    }
-                    int indiceEstado = indiceEstadoConComposicion(composicionNuevoEstado);
-                    if( indiceEstado == -1){
-                        automata.getEstados().add(new Estado(idFinal, composicionRealNuevoEstado));
-                        automata.getTransiciones().add(new Transicion(indiceEstadoActual, automata.getEstados().size()-1, caracter));
-                    }else{
-                        automata.getTransiciones().add(new Transicion(indiceEstadoActual, indiceEstado, caracter));
-                    }
-                    
+                
                 }
                 
             }
@@ -106,6 +118,7 @@ public class GeneradorAutomata {
             indiceEstadoActual++;
             
         }
+        System.out.println("llegué");
     }
     
     public void asignarTipoToken(String token, Nodo expresion){
@@ -170,7 +183,8 @@ public class GeneradorAutomata {
         }
     }
     
-    public void agregarRango(Nodo raiz, int opcion){
+    public Nodo agregarRango(int opcion){
+        Nodo raiz = new NodoDis();
         char[] caracteres = (opcion == 0)? Utilidades.ARREGLO_LETRAS : Utilidades.ARREGLO_NUMEROS;
         for (int i = 0; i < caracteres.length; i++) {
             if(i == 0){
@@ -184,12 +198,14 @@ public class GeneradorAutomata {
                 raiz = nuevo;
             }
         }
+        return raiz;
     }
     
-    public void agregarCadena(Nodo raiz, String cadena){
+    public Nodo agregarCadena(String cadena){
+        Nodo raiz = new NodoConcat();
         char[] caracteres = cadena.toCharArray();
-        for (int i = 0; i < caracteres.length; i++) {
-            if(caracteres.length > 2){
+        if(caracteres.length > 2){
+            for (int i = 0; i < caracteres.length; i++) {
                 if(i == 0){
                     Nodo izquierdo = new NodoHoja(caracteres[i++]);
                     Nodo derecho = new NodoHoja(caracteres[i]);
@@ -200,17 +216,18 @@ public class GeneradorAutomata {
                     Nodo nuevo = new NodoConcat(raiz, derecho);
                     raiz = nuevo;
                 }
+        }
+        }else{
+            if(caracteres.length == 2){
+                Nodo izquierdo = new NodoHoja(cadena.charAt(0));
+                Nodo derecho = new NodoHoja(cadena.charAt(1));
+                ((NodoConcat) raiz).setIzquierdo(izquierdo);
+                ((NodoConcat) raiz).setDerecho(derecho);
             }else{
-                if(caracteres.length == 2){
-                    Nodo izquierdo = new NodoHoja(caracteres[i++]);
-                    Nodo derecho = new NodoHoja(caracteres[i]);
-                    ((NodoConcat) raiz).setIzquierdo(izquierdo);
-                    ((NodoConcat) raiz).setDerecho(derecho);
-                }else{
-                    raiz = new NodoHoja(caracteres[i]);
-                }
+                raiz = new NodoHoja(cadena.charAt(0));
             }
         }
+        return raiz;
     }
 
     private char obtenerCaracterDelNodo(int id, Nodo expresion) {
@@ -229,6 +246,26 @@ public class GeneradorAutomata {
             caracter = obtenerCaracterDelNodo(id, ((NodoMas)expresion).getHijo());
         }else if(expresion instanceof NodoHoja){
             if(((NodoHoja) expresion).getId() == id) caracter = ((NodoHoja) expresion).getValor();
+        }
+        return caracter;
+    }
+    
+    private String obtenerTipoTokenDe(int id, Nodo expresion) {
+        String caracter = null;
+        if(expresion instanceof NodoConcat){
+            caracter = obtenerTipoTokenDe(id, ((NodoConcat)expresion).getIzquierdo());
+            if(caracter == null) caracter = obtenerTipoTokenDe(id, ((NodoConcat)expresion).getDerecho());
+        }else if(expresion instanceof NodoDis){
+            caracter = obtenerTipoTokenDe(id, ((NodoDis)expresion).getIzquierdo());
+            if(caracter == null) caracter = obtenerTipoTokenDe(id, ((NodoDis)expresion).getDerecho());
+        }else if(expresion instanceof NodoQuiza){
+            caracter = obtenerTipoTokenDe(id, ((NodoQuiza)expresion).getHijo());
+        }else if(expresion instanceof NodoAst){
+            caracter = obtenerTipoTokenDe(id, ((NodoAst)expresion).getHijo());
+        }else if(expresion instanceof NodoMas){
+            caracter = obtenerTipoTokenDe(id, ((NodoMas)expresion).getHijo());
+        }else if(expresion instanceof NodoHoja){
+            if(((NodoHoja) expresion).getId() == id) caracter = ((NodoHoja) expresion).getTipoToken();
         }
         return caracter;
     }
@@ -268,9 +305,9 @@ public class GeneradorAutomata {
         for (int i = 0; i < automata.getEstados().size(); i++) {
             int[] nuevo = new int[composicionNuevoEstado.size()];
             for (int j = 0; j < composicionNuevoEstado.size(); j++) {
-                nuevo[i] = composicionNuevoEstado.get(i);
+                nuevo[j] = composicionNuevoEstado.get(j);
             }
-            if(Arrays.equals(automata.getEstados().get(indice).getIdNodosComponentes(), nuevo)) indice = i;
+            if(Arrays.equals(automata.getEstados().get(i).getIdNodosComponentes(), nuevo)) indice = i;
         }
         return indice;
     }
