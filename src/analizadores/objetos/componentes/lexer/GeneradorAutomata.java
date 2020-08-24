@@ -96,17 +96,14 @@ public class GeneradorAutomata {
                         for (Integer id : composicionNuevoEstado) {
                             agregarSiguientesDe(expresionRegular.siguientes(id), composicionRealNuevoEstado);
                         }
-                        //if(composicionRealNuevoEstado.size()==1) composicionRealNuevoEstado.add(0, estado.getIdNodosComponentes()[estado.getIdNodosComponentes().length-1]);
                         int indiceEstado = indiceEstadoConComposicion(composicionRealNuevoEstado);
                         if( indiceEstado == -1){
                             System.out.println("Composicion del estado a agregar: "+Utilidades.escribirArreglo(composicionRealNuevoEstado));
                             automata.getEstados().add(new Estado(idFinal, composicionRealNuevoEstado, obtenerTipoTokenDe(composicionRealNuevoEstado.get(0), expresionRegular)));
                             automata.getEstados().get(indiceEstadoActual).getTransiciones().add(new Transicion(automata.getEstados().size()-1, caracter));
-                            //automata.getTransiciones().add(new Transicion(indiceEstadoActual, automata.getEstados().size()-1, caracter));
                         }else{
                             System.out.println("Composicion del estado a agregar: "+Utilidades.escribirArreglo(composicionRealNuevoEstado));
                             automata.getEstados().get(indiceEstadoActual).getTransiciones().add(new Transicion(indiceEstado, caracter));
-                            automata.getTransiciones().add(new Transicion(indiceEstadoActual, indiceEstado, caracter));
                         }
 
                     }

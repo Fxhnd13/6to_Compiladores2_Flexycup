@@ -7,6 +7,7 @@ package analizadores.objetos.componentes.lexer;
 
 import analizadores.objetos.componentes.Utilidades;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -17,13 +18,10 @@ public class Estado {
     private boolean estadoFinal = false;
     private String tipoToken;
     private int[] idNodosComponentes;
+    private List<Transicion> transiciones = new ArrayList<Transicion>();
 
     Estado(int[] primeros) {
         this.idNodosComponentes = primeros;
-    }
-
-    Estado(ArrayList<Integer> composicionRealNuevoEstado) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     Estado(int idFinal, ArrayList<Integer> composicionRealNuevoEstado, String tipoToken) {
@@ -59,6 +57,14 @@ public class Estado {
 
     public void setTipoToken(String tipoToken) {
         this.tipoToken = tipoToken;
+    }
+
+    public List<Transicion> getTransiciones() {
+        return transiciones;
+    }
+
+    public void setTransiciones(List<Transicion> transiciones) {
+        this.transiciones = transiciones;
     }
     
     public String toString(){

@@ -11,21 +11,17 @@ package analizadores.objetos.componentes.lexer;
  */
 public class Transicion {
     
-    int idSalida, idDestino;
+    int idDestino;
     char caracter;
 
     Transicion(int salida, int destino, char caracter) {
-        this.idSalida = salida;
         this.idDestino = destino;
         this.caracter = caracter;
     }
 
-    public int getIdSalida() {
-        return idSalida;
-    }
-
-    public void setIdSalida(int idSalida) {
-        this.idSalida = idSalida;
+    Transicion(int destino, char caracter) {
+        this.idDestino = destino;
+        this.caracter = caracter;
     }
 
     public int getIdDestino() {
@@ -45,6 +41,6 @@ public class Transicion {
     }
     
     public String toString(){
-        return "Salida: "+idSalida+"|||Destino: "+idDestino+"|||Caracter: '"+caracter+"'";
+        return "Destino: "+idDestino+"|||Caracter: '"+caracter+"'";
     }
 }
