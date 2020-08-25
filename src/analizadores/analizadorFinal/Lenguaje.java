@@ -5,10 +5,46 @@
  */
 package analizadores.analizadorFinal;
 
+import analizadores.objetos.componentes.lexer.Automata;
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class Lenguaje {
+public class Lenguaje implements Serializable {
+    
+    private String nombre;
+    private Lexer lexer = new Lexer();
+    private Parser parser = new Parser();
+
+    public Lenguaje(String nombre, Automata automata, Object object) {
+        this.nombre = nombre;
+        this.lexer.setAutomata(automata);
+    }
+
+    public Lexer getLexer() {
+        return lexer;
+    }
+
+    public void setLexer(Lexer lexer) {
+        this.lexer = lexer;
+    }
+
+    public Parser getParser() {
+        return parser;
+    }
+
+    public void setParser(Parser parser) {
+        this.parser = parser;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
     
 }

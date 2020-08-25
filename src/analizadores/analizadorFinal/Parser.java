@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package analizadores.objetos.componentes;
+package analizadores.analizadorFinal;
 
 import java.io.Serializable;
 
@@ -11,6 +11,6 @@ import java.io.Serializable;
  *
  * @author jose_
  */
-public class Informacion implements Serializable {
+public class Parser implements Serializable{
     
 }

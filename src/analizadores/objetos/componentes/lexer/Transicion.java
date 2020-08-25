@@ -5,11 +5,13 @@
  */
 package analizadores.objetos.componentes.lexer;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class Transicion {
+public class Transicion implements Serializable {
     
     int idDestino;
     char caracter;

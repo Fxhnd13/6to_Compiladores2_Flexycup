@@ -5,11 +5,13 @@
  */
 package analizadores.objetos.componentes.lexer;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class PR {
+public class PR  implements Serializable{
     
     String tipo;
     String cadena;

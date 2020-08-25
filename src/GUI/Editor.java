@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
@@ -56,7 +57,10 @@ public class Editor extends javax.swing.JFrame {
         jMenuItem6 = new javax.swing.JMenuItem();
         jMenuItem5 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
+        jMenuItem8 = new javax.swing.JMenuItem();
         jMenuItem7 = new javax.swing.JMenuItem();
+        jMenuItem9 = new javax.swing.JMenuItem();
+        MenuLenguajes = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
         ReporteErroresEstructuraGramatica.setSize(new java.awt.Dimension(1270, 350));
@@ -163,7 +167,10 @@ public class Editor extends javax.swing.JFrame {
 
         jMenu3.setText("Pruebas");
 
-        jMenuItem7.setText("Separar Secciones");
+        jMenuItem8.setText("Compilar");
+        jMenu3.add(jMenuItem8);
+
+        jMenuItem7.setText("Cargar Lenguaje");
         jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem7ActionPerformed(evt);
@@ -171,7 +178,13 @@ public class Editor extends javax.swing.JFrame {
         });
         jMenu3.add(jMenuItem7);
 
+        jMenuItem9.setText("Borrar Lenguaje");
+        jMenu3.add(jMenuItem9);
+
         jMenuBar1.add(jMenu3);
+
+        MenuLenguajes.setText("Lenguajes");
+        jMenuBar1.add(MenuLenguajes);
 
         jMenu2.setText("Acerca de...");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -255,10 +268,13 @@ public class Editor extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         ((DefaultTableModel) TablaTokens.getModel()).setRowCount(0);
         TextoErrores.setText("");
-        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TextoErrores);
+        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getNombre(), ((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TextoErrores);
         if(!mostrarErrores) this.ReporteErroresEstructuraGramatica.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
+    public JMenu getMenuLenguajes(){ return this.MenuLenguajes; }
+    
+    public EditorManager getEditorManager(){ return this.manager; }
     /**
      * @param args the command line arguments
      */
@@ -295,6 +311,7 @@ public class Editor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu MenuLenguajes;
     private javax.swing.JDialog ReporteErroresEstructuraGramatica;
     private javax.swing.JTable TablaTokens;
     private javax.swing.JTextArea TextoErrores;
@@ -310,6 +327,8 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem5;
     private javax.swing.JMenuItem jMenuItem6;
     private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
+    private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane tabs;

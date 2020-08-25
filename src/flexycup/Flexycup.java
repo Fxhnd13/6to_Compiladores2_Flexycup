@@ -5,7 +5,13 @@
  */
 package flexycup;
 
+import GUI.ArchivosManager;
 import GUI.Editor;
+import analizadores.analizadorFinal.Lenguaje;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.ButtonGroup;
+import javax.swing.JRadioButtonMenuItem;
 
 /**
  *
@@ -18,6 +24,13 @@ public class Flexycup {
      */
     public static void main(String[] args) {
         Editor editor = new Editor();
+        List<String> lenguajes =  ArchivosManager.cargarNombresLenguajes();
+        ButtonGroup grupo = new ButtonGroup();
+        for (String lenguaje : lenguajes) {
+            JRadioButtonMenuItem item = new JRadioButtonMenuItem(lenguaje);
+            grupo.add(item);
+            editor.getMenuLenguajes().add(item);
+        }
         editor.setVisible(true);
     }
     

@@ -6,6 +6,7 @@
 package analizadores.objetos.componentes.lexer;
 
 import analizadores.objetos.componentes.Utilidades;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ import java.util.List;
  *
  * @author jose_
  */
-public class Estado {
+public class Estado implements Serializable {
  
     private boolean estadoFinal = false;
     private String tipoToken;

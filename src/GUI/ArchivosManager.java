@@ -8,8 +8,19 @@ package GUI;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import analizadores.analizadorFinal.Lenguaje;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -71,5 +82,61 @@ public class ArchivosManager {
                 }
             }
         }
+    }
+    
+    public static Lenguaje cargarLenguaje(String nombre){
+        Lenguaje lenguaje = null;
+        
+        File file = new File("Repositorio_Lenguajes/");
+        if(!file.mkdir()){
+            file = new File("Repositorio_Lenguajes/"+nombre+".lngs");
+            if(file.exists()){
+                try {
+                    ObjectInputStream lectorObjeto = new ObjectInputStream(new FileInputStream(file));
+                    lenguaje = (Lenguaje) lectorObjeto.readObject();
+                } catch (FileNotFoundException ex) {
+                    ex.printStackTrace();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } catch (ClassNotFoundException ex) {
+                    ex.printStackTrace();
+                }
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontraron lenguajes cargados anteriormente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        
+        return lenguaje;
+    }
+    
+    public static void guardarLenguaje(Lenguaje lenguaje){
+        File file = new File("Repositorio_Lenguajes/");
+        if(!file.mkdir()){
+            file = new File("Repositorio_Lenguajes/"+lenguaje.getNombre()+".lngs");
+            try {
+                ObjectOutputStream lectorObjeto = new ObjectOutputStream(new FileOutputStream(file));
+                lectorObjeto.writeObject(lenguaje);
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
+
+    public static List<String> cargarNombresLenguajes() {
+        List<String> lenguajes = new ArrayList();
+        
+        File file = new File("Repositorio_Lenguajes/");
+        if(!file.mkdir() && file.list().length > 0){
+            for (File archivo : file.listFiles()) {
+                lenguajes.add(archivo.getName().substring(0, archivo.getName().length()-5));
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No se encontraron lenguajes guardados. ", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+        }
+        
+        return lenguajes;
     }
 }

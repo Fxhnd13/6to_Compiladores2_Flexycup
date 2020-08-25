@@ -5,6 +5,7 @@
  */
 package analizadores.objetos.componentes.lexer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -13,7 +14,7 @@ import java.util.Stack;
  *
  * @author jose_
  */
-public class Automata {
+public class Automata implements Serializable {
     
     private List<PR> palabrasReservadas;
     private List<Estado> estados;

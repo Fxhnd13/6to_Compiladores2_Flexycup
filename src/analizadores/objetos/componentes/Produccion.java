@@ -5,10 +5,12 @@
  */
 package analizadores.objetos.componentes;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class Produccion {
+public class Produccion implements Serializable {
     
 }

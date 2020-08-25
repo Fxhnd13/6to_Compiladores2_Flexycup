@@ -7,6 +7,7 @@ package analizadores.analizadorFinal;
 
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import analizadores.objetos.componentes.lexer.Automata;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ import java.util.List;
  *
  * @author jose_
  */
-public class Lexer {
+public class Lexer implements Serializable {
     
     private String cadena; 
     private Automata automata = new Automata();

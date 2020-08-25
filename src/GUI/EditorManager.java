@@ -15,6 +15,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -27,6 +29,12 @@ import javax.swing.JTextArea;
  * @author jose_
  */
 public class EditorManager {
+    
+    List<Lenguaje> lenguajes;
+    
+    public EditorManager(){
+        this.lenguajes = new ArrayList();
+    }
     
     public void nuevoTab(JTabbedPane panel){
         String nombre = JOptionPane.showInputDialog(null, "¿Qué nombre desea tenga su nueva pestaña?", "Informacion", JOptionPane.QUESTION_MESSAGE);
@@ -100,7 +108,7 @@ public class EditorManager {
         }
     }
     
-    public boolean parsearSecciones(String texto, JTable TablaTokens, JTextArea TextoErrores) {
+    public boolean parsearSecciones(String nombreLenguaje, String texto, JTable TablaTokens, JTextArea TextoErrores) {
         boolean valor = false;
         try {
             LexerGramatica lexer = new LexerGramatica(new StringReader(texto));
@@ -110,8 +118,8 @@ public class EditorManager {
             if(parser.getErrores().isEmpty()){
                 parser.getGeneradorAutomata().calcularArbol();
                 parser.getGeneradorAutomata().crearEstadosAutomata();
-                Lenguaje lenguaje = new Lenguaje();
-                System.out.println(parser.getGeneradorAutomata().getAutomata().toString());
+                Lenguaje lenguaje = new Lenguaje(nombreLenguaje, parser.getGeneradorAutomata().getAutomata(), null);
+                ArchivosManager.guardarLenguaje(lenguaje);
             }else{
                 String reporteErrores = "**********************Errores al analizar el archivo*************************************\n";
                 for (String error : parser.getErrores()) {

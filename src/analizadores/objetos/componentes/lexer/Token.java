@@ -5,11 +5,13 @@
  */
 package analizadores.objetos.componentes.lexer;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-class Token {
+class Token implements Serializable {
     
     private int linea, columna;
     private String lexema, tipo;
