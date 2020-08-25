@@ -5,6 +5,7 @@
  */
 package analizadores.objetos.componentes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,8 +14,9 @@ import java.util.List;
  */
 public class Utilidades {
 
-    public static final char[] ARREGLO_LETRAS = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
-    public static final char[] ARREGLO_NUMEROS = {'0','1','2','3','4','5','6','7','8','9'};
+    public static final char[] ARREGLO_LETRAS = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
+                                                 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+    public static final char[] ARREGLO_NUMEROS = {'0','1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7','8','9'};
     
     public static int[] ordenar(int[] arreglo){
         for (int i = 1; i < arreglo.length; i++) {
@@ -79,5 +81,46 @@ public class Utilidades {
             if((i+1) < arreglo.size()) cadena+=",";
         }
         return (cadena+"]");
+    }
+    
+    public static char[] obtenerCaracteres(String rango, int opcion){
+        List<String> caracteres = new ArrayList();
+        rango = rango.substring(1, rango.length()-1);
+        char primero = rango.split("-")[0].charAt(0);
+        char ultimo = rango.split("-")[1].charAt(0);
+        boolean bandera = false;
+        if(primero != ultimo){
+            if(opcion == 0){
+                for (int i = 0; i < ARREGLO_LETRAS.length; i++) {
+                    if(ARREGLO_LETRAS[i] == primero) bandera = true;
+                    while(bandera){
+                        caracteres.add(String.valueOf(ARREGLO_LETRAS[i++]));
+                        if(ARREGLO_LETRAS[i] == ultimo){
+                            bandera = false;
+                            caracteres.add(String.valueOf(ARREGLO_LETRAS[i]));
+                        }
+                    }
+                }
+            }else{
+                for (int i = 0; i < ARREGLO_NUMEROS.length; i++) {
+                    if(ARREGLO_NUMEROS[i] == primero) bandera = true;
+                    while(bandera){
+                        caracteres.add(String.valueOf(ARREGLO_NUMEROS[i++]));
+                        if(ARREGLO_NUMEROS[i] == ultimo){
+                            bandera = false;
+                            caracteres.add(String.valueOf(ARREGLO_NUMEROS[i]));
+                        }
+                    }
+                    break;
+                }
+            }
+        }else{
+            caracteres.add(String.valueOf(primero));
+        }
+        char[] retorno = new char[caracteres.size()];
+        for (int i = 0; i < caracteres.size(); i++) {
+            retorno[i] = caracteres.get(i).charAt(0);
+        }
+        return retorno;
     }
 }

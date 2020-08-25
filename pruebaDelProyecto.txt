@@ -20,8 +20,10 @@ public Integer suma(Integer numero1,Integer numero2){
  
 %% //Sección de expresiones regulares 
  
-PR_COMIDA = "comida";
-PR_VOCALES = [0-9]((.)[0-9]+)?;
+pr_comida = "comida";
+pr_elefante = "elefante";
+pr_entero = [0-9]+;
+pr_decimal = pr_entero((.)pr_entero)?;
  
 %% //Seccion de simbolos terminales y no terminales 
  

@@ -135,7 +135,7 @@ public class Automata {
     public String toString(){
         String cadena = "----------------Palabras Reservadas detectadas-------------------------\n";
         for (PR palabraReservada : palabrasReservadas) {
-            cadena+=palabraReservada+"\n";
+            cadena+="Tipo: "+palabraReservada.getTipo()+"-- Lexema: "+palabraReservada.getCadena()+"\n";
         }
         cadena+="--------------------------Estados------------------------------------\n";
         for (int i = 0; i < estados.size(); i++) {

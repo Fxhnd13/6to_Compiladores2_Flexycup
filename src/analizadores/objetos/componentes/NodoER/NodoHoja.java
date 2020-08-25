@@ -22,15 +22,16 @@ public class NodoHoja implements Nodo{
     private int[] siguientes = new int[0];
     private String tipoToken;
     
+    public NodoHoja(NodoHoja nuevo){
+        this.valor = nuevo.getValor();
+    }
     public NodoHoja(int id, char valor){
         this.id = id;
         this.valor = valor;
     }
-
     public NodoHoja(char valor) {
         this.valor = valor;
     }
- 
     public NodoHoja() {}
 
     public char getValor() {

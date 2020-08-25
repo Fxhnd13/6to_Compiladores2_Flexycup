@@ -38,7 +38,7 @@ public class TablaDeSimbolos {
     
     public Variable getVariable(String id){
         Variable retorno = null;
-        if(verificarDisponibilidad(id)){
+        if(!verificarDisponibilidad(id)){
             for (Variable variable : variables) {
                 if(variable.getId().equals(id)){
                     retorno = variable;

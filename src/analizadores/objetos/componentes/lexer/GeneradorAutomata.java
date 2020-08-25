@@ -180,9 +180,9 @@ public class GeneradorAutomata {
         }
     }
     
-    public Nodo agregarRango(int opcion){
+    public Nodo agregarRango(String rango, int opcion){
         Nodo raiz = new NodoDis();
-        char[] caracteres = (opcion == 0)? Utilidades.ARREGLO_LETRAS : Utilidades.ARREGLO_NUMEROS;
+        char[] caracteres = Utilidades.obtenerCaracteres(rango, opcion);
         for (int i = 0; i < caracteres.length; i++) {
             if(i == 0){
                 Nodo izquierdo = new NodoHoja(caracteres[i++]);

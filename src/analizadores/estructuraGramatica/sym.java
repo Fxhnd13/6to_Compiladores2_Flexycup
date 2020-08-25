@@ -15,6 +15,7 @@ public class sym {
   public static final int CARACTER_EXPLICITO = 17;
   public static final int O = 14;
   public static final int PR_REAL = 35;
+  public static final int ID_T = 38;
   public static final int SEPARADOR = 10;
   public static final int PR_AUTOR = 3;
   public static final int PR_CADENA = 36;
@@ -34,6 +35,7 @@ public class sym {
   public static final int RANGO_NUMEROS = 30;
   public static final int CADENA = 25;
   public static final int PAR_C = 19;
+  public static final int ID_NT = 39;
   public static final int PAR_A = 18;
   public static final int UNA_O_MAS_VECES = 11;
   public static final int FIN_DE_LINEA = 20;
@@ -84,7 +86,9 @@ public class sym {
   "PR_ENTERO",
   "PR_REAL",
   "PR_CADENA",
-  "COMA"
+  "COMA",
+  "ID_T",
+  "ID_NT"
   };
 }
 

@@ -13,10 +13,22 @@ public class NodoAst implements Nodo{
 
     private Nodo hijo;
     
+    public NodoAst(NodoAst nuevo){
+        if(nuevo.getHijo() instanceof NodoConcat){
+            this.hijo = new NodoConcat((NodoConcat) nuevo.getHijo());
+        }else if(nuevo.getHijo() instanceof NodoDis){
+            this.hijo = new NodoDis((NodoDis) nuevo.getHijo());
+        }else if(nuevo.getHijo() instanceof NodoMas){
+            this.hijo = new NodoMas((NodoMas) nuevo.getHijo());
+        }else if(nuevo.getHijo() instanceof NodoQuiza){
+            this.hijo = new NodoQuiza((NodoQuiza)nuevo.getHijo());
+        }else if(nuevo.getHijo() instanceof NodoHoja){
+            this.hijo = new NodoHoja((NodoHoja) nuevo.getHijo());
+        }
+    }
     public NodoAst(Nodo hijo){
         this.hijo = hijo;
     }
-
     public NodoAst() {}
 
     public Nodo getHijo() {

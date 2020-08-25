@@ -3,6 +3,8 @@ package analizadores.estructuraGramatica;
 import java.util.ArrayList;
 import java.util.List;
 import java_cup.runtime.Symbol;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 %%
 
@@ -20,6 +22,8 @@ WhiteSpace = [ \t\f]+
 
 /* identifiers */
 L = [a-zA-Z]
+Lmin = [a-z]
+Lmay = [A-Z]
 
 /* integer literals */
 Digito = [0-9]
@@ -120,8 +124,8 @@ JavaCode             = "{" [^*] ~"}"
 <EXPRESIONES_REGULARES>{
 
     "%%"                                    { yybegin(DECLARACION_SIMBOLOS); return symbol(yyline+1, yycolumn+1, yytext(), sym.SEPARADOR);}
-    "[a-z]"                                 { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);}
-    "[0-9]"                                 { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);}
+    ("["{L}"-"{L}"]")                       { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);}
+    ("["{D}"-"{D}"]")                        { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);}
     "="                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_ER); }
     "+"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.UNA_O_MAS_VECES);}
     "*"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.CERO_O_MAS_VECES);}
@@ -158,7 +162,8 @@ JavaCode             = "{" [^*] ~"}"
     "terminal"                              { return symbol(yyline+1, yycolumn+1, "terminal", sym.PR_TERMINAL);}
     ","                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.COMA);}
     ";"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.FIN_DE_LINEA);}
-    ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
+    ({Lmin}|("\_"))({Lmin}|{Digito}|("\_"))* { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID_T);}
+    ({Lmay}|("\_"))({Lmay}|{Digito}|("\_"))* { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID_NT);}
     {Comment}                               { /* se ignoran los comentarios */}
     {LineTerminator}                        { /* se ignoran los saltos de linea */}
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }

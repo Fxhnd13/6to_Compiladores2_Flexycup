@@ -17,14 +17,36 @@ public class NodoDis implements Nodo{
     private Nodo izquierdo, derecho;
     
     public NodoDis() {}
-    
     public NodoDis(Nodo izquierdo) {
         this.izquierdo = izquierdo;
     }
-    
     public NodoDis(Nodo izquierdo, Nodo derecho){
         this.izquierdo = izquierdo;
         this.derecho = derecho;
+    }
+    public NodoDis(NodoDis nuevo){
+        if(nuevo.getIzquierdo() instanceof NodoConcat){
+            this.izquierdo = new NodoConcat((NodoConcat) nuevo.getIzquierdo());
+        }else if(nuevo.getIzquierdo() instanceof NodoDis){
+            this.izquierdo = new NodoDis((NodoDis) nuevo.getIzquierdo());
+        }else if(nuevo.getIzquierdo()instanceof NodoMas){
+            this.izquierdo = new NodoMas((NodoMas) nuevo.getIzquierdo());
+        }else if(nuevo.getIzquierdo()instanceof NodoQuiza){
+            this.izquierdo = new NodoQuiza((NodoQuiza)nuevo.getIzquierdo());
+        }else if(nuevo.getIzquierdo() instanceof NodoHoja){
+            this.izquierdo = new NodoHoja((NodoHoja) nuevo.getIzquierdo());
+        }
+        if(nuevo.getDerecho() instanceof NodoConcat){
+            this.derecho = new NodoConcat((NodoConcat) nuevo.getDerecho());
+        }else if(nuevo.getDerecho()instanceof NodoDis){
+            this.derecho = new NodoDis((NodoDis) nuevo.getDerecho());
+        }else if(nuevo.getDerecho()instanceof NodoMas){
+            this.derecho = new NodoMas((NodoMas) nuevo.getDerecho());
+        }else if(nuevo.getDerecho()instanceof NodoQuiza){
+            this.derecho = new NodoQuiza((NodoQuiza)nuevo.getDerecho());
+        }else if(nuevo.getDerecho()instanceof NodoHoja){
+            this.derecho = new NodoHoja((NodoHoja) nuevo.getDerecho());
+        }
     }
 
     public Nodo getIzquierdo() {

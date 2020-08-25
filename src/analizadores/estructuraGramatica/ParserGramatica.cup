@@ -5,6 +5,7 @@ import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.Variable;
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import analizadores.objetos.componentes.lexer.PR;
+import java.util.ArrayList;
 import java.util.List;
 import java_cup.runtime.Symbol;
 
@@ -13,7 +14,7 @@ action code {::}
 parser code {:
     
         private TablaDeSimbolos expresionesRegulares, simbolosGramatica;
-        private List<String> listErrores;
+        private List<String> listErrores, cadenasTemporales;
         private GeneradorAutomata generadorAutomata;
 
         public ParserGramatica(LexerGramatica lex) { 
@@ -22,6 +23,7 @@ parser code {:
             generadorAutomata = new GeneradorAutomata();
             expresionesRegulares = new TablaDeSimbolos();
             simbolosGramatica = new TablaDeSimbolos();
+            cadenasTemporales = new ArrayList<String>();
 	}
         
         public void setAccion(String tipo, String mensaje, String accion){
@@ -38,12 +40,38 @@ parser code {:
 
         public void syntax_error(Symbol s){
             String message = "";
-            StringBuilder m = new StringBuilder("Error:");
+            StringBuilder m = new StringBuilder("Error: ");
             String cadena = (String) s.value;
             int linea = s.left;
             int columna = s.right;
             switch(s.toString()){
-                //anotamos los diferentes mensajes dependiendo del simbolo que causó el problema
+                case "#1":{ message = " No se esperaba la cadena ¿error? "; break;}
+                case "#2": case "#3": case "#4": case "#5": case "#6": { 
+                    message = " No se esperaba la palabra reservada '"+cadena+"'"; break;  
+                }
+                case "#7": case "#8": case "#9":{ message = " No se esperaba una asignacion del tipo '"+cadena+"'"; break; }
+                case "#10": { message = " No se esperaba un separador de seccion '%%'"; break; }
+                case "#12": case "#13": case "#14": { message = " No se esperaba el operador de expresiones regulares '"+cadena+"'"; break;}
+                case "#15": case "#16": case "#18": case "#19": { message = " No se esperaba un caracter de agrupacion '"+cadena+"'"; break; }
+                //case #17:{ message = " No se esperaba un caracter explicito '"+cadena+"'"; break;}
+                //case #20:{ message = " No se esperaba un fin de linea ';'"; break; }
+                //case #21:{ message = " No se esperaba un salto de linea '\\n'"; break; }
+                //case #22:{ message = " No se esperaba una tabulacion '\\t'"; break; }
+                //case #23:{ message = " No se esperaba un retorno '\\b'"; break; }
+                //case #24:{ message = " No se esperaba el simbolo '&'; break; }
+                //case #25:{ message = " No se esperaba una cadena <"+cadena+">"; break; }
+                //case #26:{ message = " No se esperaba codigo java"; break;}
+                //case #27:{ message = " No se esperaba un entero '"+cadena+"'"; break;}
+                //case #28:{ message = " No se esperaba una version '"+cadena+"'"; break;}
+                //7case #29:{ message = " No se esperaba un identificador '"+cadena+"'"; break;}
+                //case #30:{ message = " No se esperaba un rango de numeros"; break; }
+                //case #31:{ message = " No se esperaba un rango de letras"; break; }
+                //case #32:{}
+                //case #33:{}
+                //case #34:{}
+                //case #35:{}
+                //case #36:{}
+                //case #37:{}
             }
             listErrores.add("Se ha encontrado un error en la linea: "+linea+", columna: "+columna+" con la cadena "+cadena+"|Descripcion: "+message);
         }
@@ -64,16 +92,17 @@ terminal String                                    PR_NOMBRE, PR_AUTOR, PR_VERSI
 terminal String                                    ASIGNACION_ER, SEPARADOR, UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE, O, COR_A, COR_C, CARACTER_EXPLICITO;
 terminal String                                    PAR_A, PAR_C, FIN_DE_LINEA, SALTO_DE_LINEA, TABULACION, RETORNO, IGNORAR, CADENA, JAVA_CODE, ENTERO;
 terminal String                                    VERSION, ID, RANGO_NUMEROS, RANGO_LETRAS_MIN, PR_TERMINAL, PR_NO, PR_ENTERO, PR_REAL, PR_CADENA, COMA;
+terminal String                                    ID_T, ID_NT;
 
-non terminal                                s, seccionInformacion, dato, seccionER;
+non terminal                                s, seccionInformacion, dato, seccionER, listadoIdsMinus, listadoIdsMayus;
 non terminal                                seccionSimbolos, declaracionesSimbolos, declaracionSimbolo, seccionGramatica;
-non terminal                                produccion, listadoSimbolos, simboloProduccion, idCompuesto, tipoSimbolo, listadoIds, codigoJava;
+non terminal                                produccion, listadoSimbolos, simboloProduccion, idCompuesto, tipoSimbolo, codigoJava;
 non terminal Nodo                           expresionesRegulares, declaracionExpresionRegular, expresionRegular;
 
 /* precedencia */
 
 precedence left     SALTO_DE_LINEA, TABULACION, RETORNO, CADENA;
-precedence left     O, RANGO_LETRAS_MIN, RANGO_NUMEROS, ENTERO, VERSION;
+precedence left     O, RANGO_LETRAS_MIN, RANGO_NUMEROS, ENTERO, VERSION, ID;
 precedence left     CARACTER_EXPLICITO;
 precedence left     UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE;
 precedence left     PAR_A, COR_A, PAR_C, COR_C;
@@ -126,6 +155,10 @@ declaracionExpresionRegular::=              ID:identificador ASIGNACION_ER expre
                                                     nodo = new NodoHoja();
                                                 }else{
                                                     generadorAutomata.asignarTipoToken(identificador, nodo);
+                                                    for(String cadena : cadenasTemporales){
+                                                        generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, cadena));
+                                                    }
+                                                    cadenasTemporales.clear();
                                                 }
                                                 RESULT = nodo;
                                             :}
@@ -169,12 +202,12 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                                 }
                                                 RESULT = nodo;
                                             :}
-                                            |RANGO_LETRAS_MIN {:
-                                                Nodo nodo = generadorAutomata.agregarRango(0);
+                                            |RANGO_LETRAS_MIN:valor {:
+                                                Nodo nodo = generadorAutomata.agregarRango(valor, 0);
                                                 RESULT = nodo;
                                             :}
-                                            |RANGO_NUMEROS {:
-                                                Nodo nodo = generadorAutomata.agregarRango(1);
+                                            |RANGO_NUMEROS:valor {:
+                                                Nodo nodo = generadorAutomata.agregarRango(valor, 1);
                                                 RESULT = nodo;
                                             :}
                                             |SALTO_DE_LINEA {:
@@ -187,11 +220,6 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             :}
                                             |RETORNO {:
                                                 Nodo nodo = new NodoHoja('\b');
-                                                RESULT = nodo;
-                                            :}
-                                            |CADENA:cadena {:
-                                                Nodo nodo = new NodoConcat();
-                                                if(cadena != null) nodo = generadorAutomata.agregarCadena(cadena.substring(1, cadena.length()-1));
                                                 RESULT = nodo;
                                             :}
                                             |COR_A expresionRegular:expresion COR_C {:
@@ -209,14 +237,43 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                                 if(caracter != null) nodo = new NodoHoja(caracter.charAt(0));
                                                 RESULT = nodo;
                                             :}
+                                            |CADENA:cadena {:
+                                                Nodo nodo = new NodoConcat();
+                                                if(cadena != null) nodo = generadorAutomata.agregarCadena(cadena.substring(1, cadena.length()-1));
+                                                cadenasTemporales.add(cadena.substring(1,cadena.length()-1));
+                                                RESULT = nodo;
+                                            :}
                                             |ENTERO:valor {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(valor != null) nodo = generadorAutomata.agregarCadena(valor);
+                                                cadenasTemporales.add(cadena);
                                                 RESULT = nodo;
                                             :}
                                             |VERSION:valor {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(valor != null) nodo = generadorAutomata.agregarCadena(valor);
+                                                cadenasTemporales.add(cadena);
+                                                RESULT = nodo;
+                                            :}
+                                            |ID:valor {:
+                                                Nodo nodo = new NodoHoja();
+                                                if(!expresionesRegulares.verificarDisponibilidad(valor)){
+                                                    Nodo nuevo = (Nodo) expresionesRegulares.getVariable(valor).getValor();
+                                                    if(nuevo instanceof NodoConcat){
+                                                        nodo = new NodoConcat((NodoConcat) nuevo);
+                                                    }else if(nuevo instanceof NodoDis){
+                                                        nodo = new NodoDis((NodoDis) nuevo);
+                                                    }else if(nuevo instanceof NodoMas){
+                                                        nodo = new NodoMas((NodoMas) nuevo);
+                                                    }else if(nuevo instanceof NodoQuiza){
+                                                        nodo = new NodoQuiza((NodoQuiza)nuevo);
+                                                    }else if(nuevo instanceof NodoHoja){
+                                                        nodo = new NodoHoja((NodoHoja) nuevo);
+                                                    }
+                                                }else{
+                                                    listErrores.add("Error: No existe una expresion regular con el identificador: '"+valor+"' declarado en <Linea: "+valorleft+", Columna: "+valorright+">");
+                                                    nodo = new NodoHoja();
+                                                }
                                                 RESULT = nodo;
                                             :}
                                             ;
@@ -230,8 +287,8 @@ declaracionesSimbolos::=                    declaracionesSimbolos declaracionSim
                                             |declaracionSimbolo
                                             ;
 
-declaracionSimbolo::=                       PR_TERMINAL tipoSimbolo listadoIds FIN_DE_LINEA
-                                            |PR_NO PR_TERMINAL tipoSimbolo listadoIds FIN_DE_LINEA
+declaracionSimbolo::=                       PR_TERMINAL tipoSimbolo listadoIdsMinus FIN_DE_LINEA
+                                            |PR_NO PR_TERMINAL tipoSimbolo listadoIdsMayus FIN_DE_LINEA
                                             |error FIN_DE_LINEA
                                             ;
 
@@ -261,8 +318,12 @@ tipoSimbolo::=                              PR_ENTERO
                                             |
                                             ;
 
-listadoIds::=                               listadoIds COMA ID
-                                            |ID
+listadoIdsMinus::=                          listadoIdsMinus COMA ID_T
+                                            |ID_T
+                                            ;
+
+listadoIdsMayus::=                          listadoIdsMayus COMA ID_NT
+                                            |ID_NT
                                             ;
 
 codigoJava::=                               JAVA_CODE
