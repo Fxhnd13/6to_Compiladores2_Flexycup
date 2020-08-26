@@ -11,7 +11,7 @@ import java.io.Serializable;
  *
  * @author jose_
  */
-class Token implements Serializable {
+public class Token implements Serializable {
     
     private int linea, columna;
     private String lexema, tipo;
@@ -53,6 +53,11 @@ class Token implements Serializable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    @Override
+    public String toString() {
+        return "Token{" + "linea=" + linea + ", columna=" + columna + ", lexema=" + lexema + ", tipo=" + tipo + '}';
     }
     
 }

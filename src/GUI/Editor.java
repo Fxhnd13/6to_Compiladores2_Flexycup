@@ -168,6 +168,11 @@ public class Editor extends javax.swing.JFrame {
         jMenu3.setText("Pruebas");
 
         jMenuItem8.setText("Compilar");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuItem7.setText("Cargar Lenguaje");
@@ -271,6 +276,14 @@ public class Editor extends javax.swing.JFrame {
         boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getNombre(), ((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TextoErrores);
         if(!mostrarErrores) this.ReporteErroresEstructuraGramatica.setVisible(true);
     }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        if(((Tab)tabs.getSelectedComponent()) != null){
+            manager.compilarTexto(this.MenuLenguajes, ((Tab)tabs.getSelectedComponent()).getTexto().getText());
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay ninguna pestaña con texto activa", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
 
     public JMenu getMenuLenguajes(){ return this.MenuLenguajes; }
     

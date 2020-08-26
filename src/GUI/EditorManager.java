@@ -8,6 +8,7 @@ package GUI;
 import analizadores.analizadorFinal.Lenguaje;
 import analizadores.estructuraGramatica.LexerGramatica;
 import analizadores.estructuraGramatica.ParserGramatica;
+import analizadores.objetos.componentes.lexer.Token;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
@@ -19,10 +20,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JMenu;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.MenuElement;
 
 /**
  *
@@ -133,5 +137,25 @@ public class EditorManager {
             Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
         }
         return valor;
+    }
+
+    void compilarTexto(JMenu menuLenguajes, String text) {
+        String nombreLenguaje = null;
+        for (Component menuComponent : menuLenguajes.getMenuComponents()) {
+            if(((JRadioButtonMenuItem)menuComponent).isSelected()) nombreLenguaje = ((JRadioButtonMenuItem)menuComponent).getName();
+        }
+        if(nombreLenguaje != null){
+            Lenguaje lenguaje = ArchivosManager.cargarLenguaje(nombreLenguaje);
+            lenguaje.getLexer().getAutomata().setCadena(text);
+            lenguaje.getLexer().getAutomata().analizar();
+            for (Token token : lenguaje.getLexer().getAutomata().getTokens()) {
+                System.out.println(token.toString());
+            }
+            for (String error : lenguaje.getLexer().getAutomata().getErrores()) {
+                System.out.println(error);
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "No ha seleccionado ningun lenguaje del menú 'Lenguajes'.","Error",JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

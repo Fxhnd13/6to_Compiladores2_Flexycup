@@ -16,77 +16,92 @@ import java.util.Stack;
  */
 public class Automata implements Serializable {
     
-    private List<PR> palabrasReservadas;
-    private List<Estado> estados;
-    private List<Token> tokens;
-    private List<String> errores;
-    private int estadoActual, buffer, linea, columna, indiceCaracter;
-    private char[] caracteres;
-    private Stack<Integer> estadosRecorridos;
-    private String cadena;
+    private List<PR> palabrasReservadas; //para comparar palabras reservadas al final
+    private List<Estado> estados; //conjunto de estados, donde se encuentran las transiciones que cada uno posee
+    private List<Token> tokens; //listado de tokens encontrados
+    private List<String> errores; //listado de errores encontrados
+    private int estadoActual, buffer, linea, columna, indiceCaracter; //herramientas para la lectura
+    private char[] caracteres; //caracteres para el analisis
+    private Stack<Integer> estadosRecorridos; //para recuperacion de errores
+    private String cadena; //cadena a analizar
     
     public Automata(){
-        this.estados = new ArrayList<Estado>();
-        this.palabrasReservadas = new ArrayList<PR>();
-        this.errores = new ArrayList<String>();
+        this.estados = new ArrayList();
+        this.palabrasReservadas = new ArrayList();
+        this.errores = new ArrayList();
     }
     
     public void analizar(){
-        estadosRecorridos = new Stack<Integer>();
-        caracteres = cadena.toCharArray();
-        tokens = new ArrayList<Token>();
-        estadoActual = 0;
-        buffer = 0;
-        linea = 1; columna = 1;
-        for (indiceCaracter = 0; indiceCaracter < caracteres.length; indiceCaracter++) {
-            if(caracteres[indiceCaracter] == '\n') {
-                linea++;
-                columna = 1;
+        this.estadosRecorridos = new Stack();
+        this.caracteres = cadena.toCharArray();
+        this.tokens = new ArrayList();
+        this.estadoActual = 0;
+        this.buffer = 0;
+        this.linea = 1; columna = 1;
+        for (this.indiceCaracter = 0; this.indiceCaracter < this.caracteres.length; this.indiceCaracter++) {
+            if(this.caracteres[this.indiceCaracter] == '\n') {
+                this.linea++;
+                this.columna = 1;
             }
             Transicion transicion = null;
-            if((transicion = existeTransicion(caracteres[indiceCaracter])) != null){
-                buffer++;
-                estadosRecorridos.add(estadoActual);
-                estadoActual = transicion.getIdDestino();
+            if((transicion = existeTransicion(this.caracteres[this.indiceCaracter])) != null){
+                this.buffer++;
+                this.estadosRecorridos.add(this.estadoActual);
+                this.estadoActual = transicion.getIdDestino();
             }else{
-                if(estados.get(estadoActual).isEstadoFinal()){
-                    tokens.add(new Token(linea, columna, cadena.substring(0, buffer), estados.get(estadoActual).getTipoToken()));
-                    cadena = cadena.substring(buffer, cadena.length());
-                    reiniciarAutomata();
+                if(!this.estadosRecorridos.isEmpty())this.indiceCaracter--;
+                if(this.estados.get(this.estadoActual).isEstadoFinal()){
+                    this.verificarEstado();
                 }else{
-                    verificarRetroceso();
+                    this.verificarRetroceso();
                 }
             }
-            columna++;
+            this.columna++;
+            if(((this.indiceCaracter+1) == this.caracteres.length)&&(!this.estadosRecorridos.isEmpty())) this.verificarEstado();
         }
     }
 
-    private void verificarRetroceso(){
-        if(estadosRecorridos.isEmpty()){
-            errores.add("Se encontro un error en <linea: "+linea+", columna: "+columna+" con el caracter : '"+caracteres[indiceCaracter]);
+    private void verificarEstado(){
+        String tipoToken = "", lexema = cadena.substring(0, this.buffer);
+        if(this.estados.get(this.estadoActual).getTipoToken() == null){
+            for (PR palabraReservada : this.palabrasReservadas) {
+                if(palabraReservada.getCadena().equals(lexema)){
+                    tipoToken = palabraReservada.getTipo();
+                }
+            }
         }else{
-            int estadoActual = estadosRecorridos.pop();
-            if(caracteres[indiceCaracter] == '\n') linea--;
-            columna--; buffer--; indiceCaracter--;
-            if(estados.get(estadoActual).isEstadoFinal()){
-                    tokens.add(new Token(linea, columna, cadena.substring(0, buffer), estados.get(estadoActual).getTipoToken()));
-                    cadena = cadena.substring(buffer, cadena.length());
-                    reiniciarAutomata();
+            tipoToken = this.estados.get(this.estadoActual).getTipoToken();
+        }
+        this.tokens.add(new Token(this.linea, this.columna-this.buffer, lexema, tipoToken));
+        this.cadena = this.cadena.substring(this.buffer, this.cadena.length());
+        this.reiniciarAutomata();
+    }
+    
+    private void verificarRetroceso(){
+        if(this.estadosRecorridos.isEmpty()){
+            this.errores.add("Se encontro un error en <linea: "+this.linea+", columna: "+this.columna+" con el caracter : '"+this.caracteres[this.indiceCaracter]+"'");
+            this.cadena = this.cadena.substring(1,cadena.length());
+        }else{
+            this.estadoActual = this.estadosRecorridos.pop();
+            if(this.caracteres[this.indiceCaracter] == '\n') this.linea--;
+            this.columna--; this.buffer--; this.indiceCaracter--;
+            if(this.estados.get(estadoActual).isEstadoFinal()){
+                this.verificarEstado();
             }else{
-                verificarRetroceso();
+                this.verificarRetroceso();
             }
         }
     }
     
     private void reiniciarAutomata(){
-        estadoActual = 0;
-        buffer = 0;
-        estadosRecorridos.clear();
+        this.estadoActual = 0;
+        this.buffer = 0;
+        this.estadosRecorridos.clear();
     }
     
     private Transicion existeTransicion(char caracter){
         Transicion valor = null;
-        for (Transicion transicion : estados.get(estadoActual).getTransiciones()) {
+        for (Transicion transicion : this.estados.get(this.estadoActual).getTransiciones()) {
             if(transicion.getCaracter() == caracter) valor = transicion;
         }
         return valor;

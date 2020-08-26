@@ -64,7 +64,6 @@ public class GeneradorAutomata {
             int [] primerosAnalizados  = new int[estado.getIdNodosComponentes().length]; //agregamos a este arreglo los id, que ya han sido analizados
             int indicePrimerosAnalizados = 0; //Para saber en que indice agregamos el siguiente primero que fue analizado
             for (int i = 0; i < estado.getIdNodosComponentes().length; i++) { //por cada id que se encuentre en la composición del estado
-                System.out.println("Estado: "+indiceEstadoActual+"--Compuesto: "+Utilidades.escribirArreglo(estado.getIdNodosComponentes()));
                 
                 if(estado.getIdNodosComponentes()[i] != (idFinal)){
                     if(!Utilidades.existe(estado.getIdNodosComponentes()[i], primerosAnalizados)){
@@ -89,7 +88,6 @@ public class GeneradorAutomata {
 
                         }
                         
-                        System.out.println("Composicion antes de unir los siguientes de cada uno: "+Utilidades.escribirArreglo(composicionNuevoEstado));
                         Utilidades.ordenar(composicionNuevoEstado); //ordenamos el arreglo, dado que el tipo del id al inicio, será el token que retornará
                         //vamos a crear nuestro nuevo estado, con la union de todos los siguientes que tienen todos los id's en composicionNuevoEstado
                         ArrayList<Integer> composicionRealNuevoEstado = new ArrayList<Integer>();
@@ -98,11 +96,9 @@ public class GeneradorAutomata {
                         }
                         int indiceEstado = indiceEstadoConComposicion(composicionRealNuevoEstado);
                         if( indiceEstado == -1){
-                            System.out.println("Composicion del estado a agregar: "+Utilidades.escribirArreglo(composicionRealNuevoEstado));
                             automata.getEstados().add(new Estado(idFinal, composicionRealNuevoEstado, obtenerTipoTokenDe(composicionRealNuevoEstado.get(0), expresionRegular)));
                             automata.getEstados().get(indiceEstadoActual).getTransiciones().add(new Transicion(automata.getEstados().size()-1, caracter));
                         }else{
-                            System.out.println("Composicion del estado a agregar: "+Utilidades.escribirArreglo(composicionRealNuevoEstado));
                             automata.getEstados().get(indiceEstadoActual).getTransiciones().add(new Transicion(indiceEstado, caracter));
                         }
 
@@ -115,7 +111,6 @@ public class GeneradorAutomata {
             indiceEstadoActual++;
             
         }
-        System.out.println("llegué");
     }
     
     public void asignarTipoToken(String token, Nodo expresion){

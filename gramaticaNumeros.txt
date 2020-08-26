@@ -1,0 +1,44 @@
+//Informacion del lenguaje 
+ 
+nombre: java; 
+version: 11.0.7; 
+autor: sun Microsystems; 
+lanzamiento: 1996; 
+extension: java;
+ 
+%% //codigo fuente 
+ 
+List<String> listString=new ArrayList<>(); 
+ 
+public void addString(String valor){
+          listString.add(valor);  
+} 
+ 
+public Integer suma(Integer numero1,Integer numero2){
+           return numero1+numero2;  
+} 
+ 
+%% //Sección de expresiones regulares 
+ 
+mas = "+";
+menos = "-";
+pr_entero = [0-9]+;
+pr_decimal = pr_entero((.)pr_entero)?;
+ 
+%% //Seccion de simbolos terminales y no terminales 
+ 
+terminal por, div; 
+terminal mas, menos; 
+terminal enter; 
+ 
+no terminal A, B; 
+no terminal S;
+
+%%
+
+S :: E:val {printf("Resultado = %d",val);};
+E :: E:val menos E:val2 {RESULT=val - val2;}; 
+E :: E:val mas E:val2 {RESULT=val + val2;}; 
+E :: E:val por E:val2 {RESULT=val * val2;}; 
+E :: E:val div E:val2 {RESULT=val / val2;}; 
+E :: enter:val {RESULT=val;}; 
