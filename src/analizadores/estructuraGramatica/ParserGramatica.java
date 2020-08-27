@@ -374,6 +374,7 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
         public void setErrores(List<String> e){listErrores = e;}
 
         public GeneradorAutomata getGeneradorAutomata(){ return generadorAutomata; }
+        public GeneradorParser getGeneradorParser() { return generadorParser; }
         public TablaDeSimbolos getTablaDeER(){ return expresionesRegulares; }
         public TablaDeSimbolos getTablaDeSimbolosGramaticales(){ return simbolosGramatica;}
 
@@ -921,7 +922,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 		
-                                                generadorParser.verificarIntegridad(listErrores, expresionesRegulares, simbolosGramatica);
+                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionSimbolos",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
@@ -932,7 +933,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 		
-                                                generadorParser.verificarIntegridad(listErrores, expresionesRegulares, simbolosGramatica);
+                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionSimbolos",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
@@ -1106,7 +1107,7 @@ class CUP$ParserGramatica$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
 		
-                                                Simbolo simbolo = (Simbolo) simbolosGramatica.getVariable(id).getValor();
+                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
                                                 RESULT = simbolo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("simboloProduccion",15, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -1121,7 +1122,7 @@ class CUP$ParserGramatica$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
-                                                Simbolo simbolo = (Simbolo) simbolosGramatica.getVariable(id).getValor();
+                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
                                                 RESULT = simbolo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("simboloProduccion",15, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -1197,7 +1198,13 @@ class CUP$ParserGramatica$actions {
                                                 if(simbolosGramatica.getVariable(id) != null){
                                                     listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) {
+                                                        if(expresionesRegulares.getVariable(id) != null){
+                                                            listado.add(id);
+                                                        }else{
+                                                            listErrores.add("Error: el simbolo terminal '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+" no corresponde a ningun token");
+                                                        }
+                                                    }
                                                 }
                                                 RESULT = listado;
                                             

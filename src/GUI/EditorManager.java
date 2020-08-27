@@ -72,11 +72,11 @@ public class EditorManager {
                 ex.printStackTrace();
             }
         }
-        for (Component component : panel.getComponents()) {
-            Tab tab = (Tab) component;
-            System.out.println(tab.toString());
-            System.out.println("------------------------------------------------");
-        }
+//        for (Component component : panel.getComponents()) {
+//            Tab tab = (Tab) component;
+//            System.out.println(tab.toString());
+//            System.out.println("------------------------------------------------");
+//        }
     }
 
     void cerrarTab(JTabbedPane tabs) {
@@ -122,6 +122,7 @@ public class EditorManager {
             if(parser.getErrores().isEmpty()){
                 parser.getGeneradorAutomata().calcularArbol();
                 parser.getGeneradorAutomata().crearEstadosAutomata();
+                parser.getGeneradorParser().verificarIntegridad(parser.getErrores(), parser.getTablaDeSimbolosGramaticales());
                 Lenguaje lenguaje = new Lenguaje(nombreLenguaje, parser.getGeneradorAutomata().getAutomata(), null);
                 ArchivosManager.guardarLenguaje(lenguaje);
             }else{

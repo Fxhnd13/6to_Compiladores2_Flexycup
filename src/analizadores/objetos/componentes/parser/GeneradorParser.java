@@ -21,7 +21,7 @@ public class GeneradorParser {
         this.producciones = new ArrayList();
     }
     
-    public void verificarIntegridad(List<String> errores, TablaDeSimbolos terminales, TablaDeSimbolos noTerminales){
+    public void verificarIntegridad(List<String> errores, TablaDeSimbolos simbolos){
         
     }
 

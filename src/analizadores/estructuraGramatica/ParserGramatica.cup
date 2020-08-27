@@ -86,6 +86,7 @@ parser code {:
         public void setErrores(List<String> e){listErrores = e;}
 
         public GeneradorAutomata getGeneradorAutomata(){ return generadorAutomata; }
+        public GeneradorParser getGeneradorParser() { return generadorParser; }
         public TablaDeSimbolos getTablaDeER(){ return expresionesRegulares; }
         public TablaDeSimbolos getTablaDeSimbolosGramaticales(){ return simbolosGramatica;}
 
@@ -288,10 +289,10 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
 
 
 seccionSimbolos::=                          declaracionesSimbolos SEPARADOR seccionGramatica {:
-                                                generadorParser.verificarIntegridad(listErrores, expresionesRegulares, simbolosGramatica);
+                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
                                             :}
                                             |error SEPARADOR seccionGramatica {:
-                                                generadorParser.verificarIntegridad(listErrores, expresionesRegulares, simbolosGramatica);
+                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
                                             :}
                                             ;
 
@@ -346,11 +347,11 @@ listadoSimbolos::=                          listadoSimbolos:listadoSimbolos simb
                                             ;
 
 simboloProduccion::=                        ID:id ASIGNACION_INF ID {:
-                                                Simbolo simbolo = (Simbolo) simbolosGramatica.getVariable(id).getValor();
+                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
                                                 RESULT = simbolo;
                                             :}
                                             |ID:id {:
-                                                Simbolo simbolo = (Simbolo) simbolosGramatica.getVariable(id).getValor();
+                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
                                                 RESULT = simbolo;
                                             :}
                                             ;
@@ -370,7 +371,13 @@ listadoIdsMinus::=                          listadoIdsMinus:listado COMA ID_T:id
                                                 if(simbolosGramatica.getVariable(id) != null){
                                                     listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) {
+                                                        if(expresionesRegulares.getVariable(id) != null){
+                                                            listado.add(id);
+                                                        }else{
+                                                            listErrores.add("Error: el simbolo terminal '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+" no corresponde a ningun token");
+                                                        }
+                                                    }
                                                 }
                                                 RESULT = listado;
                                             :}
