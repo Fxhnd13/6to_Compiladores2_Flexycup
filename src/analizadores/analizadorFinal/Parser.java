@@ -5,12 +5,18 @@
  */
 package analizadores.analizadorFinal;
 
+import analizadores.objetos.componentes.lexer.Token;
+import analizadores.objetos.componentes.parser.AutomataParser;
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author jose_
  */
 public class Parser implements Serializable{
+    
+    List<Token> tokens;
+    AutomataParser automata;
     
 }

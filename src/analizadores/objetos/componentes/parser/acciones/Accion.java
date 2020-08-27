@@ -3,14 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package analizadores.objetos.componentes;
-
-import java.io.Serializable;
+package analizadores.objetos.componentes.parser.acciones;
 
 /**
  *
  * @author jose_
  */
-public class Produccion implements Serializable {
+public interface Accion {
     
 }

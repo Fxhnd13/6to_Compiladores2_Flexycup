@@ -5,6 +5,9 @@ import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.Variable;
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import analizadores.objetos.componentes.lexer.PR;
+import analizadores.objetos.componentes.parser.GeneradorParser;
+import analizadores.objetos.componentes.parser.Produccion;
+import analizadores.objetos.componentes.parser.Simbolo;
 import java.util.ArrayList;
 import java.util.List;
 import java_cup.runtime.Symbol;
@@ -16,11 +19,13 @@ parser code {:
         private TablaDeSimbolos expresionesRegulares, simbolosGramatica;
         private List<String> listErrores, cadenasTemporales;
         private GeneradorAutomata generadorAutomata;
+        private GeneradorParser generadorParser;
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
             listErrores = lex.getErrores();
             generadorAutomata = new GeneradorAutomata();
+            generadorParser = new GeneradorParser();
             expresionesRegulares = new TablaDeSimbolos();
             simbolosGramatica = new TablaDeSimbolos();
             cadenasTemporales = new ArrayList<String>();
@@ -94,15 +99,18 @@ terminal String                                    PAR_A, PAR_C, FIN_DE_LINEA, S
 terminal String                                    VERSION, ID, RANGO_NUMEROS, RANGO_LETRAS_MIN, PR_TERMINAL, PR_NO, PR_ENTERO, PR_REAL, PR_CADENA, COMA;
 terminal String                                    ID_T, ID_NT;
 
-non terminal                                s, seccionInformacion, dato, seccionER, listadoIdsMinus, listadoIdsMayus;
+non terminal                                s, seccionInformacion, dato, seccionER;
 non terminal                                seccionSimbolos, declaracionesSimbolos, declaracionSimbolo, seccionGramatica;
-non terminal                                produccion, listadoSimbolos, simboloProduccion, idCompuesto, tipoSimbolo, codigoJava;
+non terminal                                produccion, idCompuesto, tipoSimbolo, codigoJava;
+non terminal List<String>                   listadoIdsMinus, listadoIdsMayus;
+non terminal List<Simbolo>                  listadoSimbolos;
+non terminal Simbolo                        simboloProduccion;
 non terminal Nodo                           expresionesRegulares, declaracionExpresionRegular, expresionRegular;
 
 /* precedencia */
 
 precedence left     SALTO_DE_LINEA, TABULACION, RETORNO, CADENA;
-precedence left     O, RANGO_LETRAS_MIN, RANGO_NUMEROS, ENTERO, VERSION, ID;
+precedence left     O, RANGO_LETRAS_MIN, RANGO_NUMEROS, ENTERO, VERSION, ID_T;
 precedence left     CARACTER_EXPLICITO;
 precedence left     UNA_O_MAS_VECES, CERO_O_MAS_VECES, PUEDE_O_NO_PUEDE;
 precedence left     PAR_A, COR_A, PAR_C, COR_C;
@@ -147,7 +155,7 @@ expresionesRegulares::=                     expresionesRegulares:nodos declaraci
                                             :}
                                             ;
 
-declaracionExpresionRegular::=              ID:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
+declaracionExpresionRegular::=              ID_T:identificador ASIGNACION_ER expresionRegular:expresion FIN_DE_LINEA {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
                                                 if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
@@ -246,16 +254,16 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             |ENTERO:valor {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(valor != null) nodo = generadorAutomata.agregarCadena(valor);
-                                                cadenasTemporales.add(cadena);
+                                                cadenasTemporales.add(valor);
                                                 RESULT = nodo;
                                             :}
                                             |VERSION:valor {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(valor != null) nodo = generadorAutomata.agregarCadena(valor);
-                                                cadenasTemporales.add(cadena);
+                                                cadenasTemporales.add(valor);
                                                 RESULT = nodo;
                                             :}
-                                            |ID:valor {:
+                                            |ID_T:valor {:
                                                 Nodo nodo = new NodoHoja();
                                                 if(!expresionesRegulares.verificarDisponibilidad(valor)){
                                                     Nodo nuevo = (Nodo) expresionesRegulares.getVariable(valor).getValor();
@@ -279,16 +287,30 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             ;
 
 
-seccionSimbolos::=                          declaracionesSimbolos SEPARADOR seccionGramatica
-                                            |error SEPARADOR seccionGramatica
+seccionSimbolos::=                          declaracionesSimbolos SEPARADOR seccionGramatica {:
+                                                generadorParser.verificarIntegridad(listErrores, expresionesRegulares, simbolosGramatica);
+                                            :}
+                                            |error SEPARADOR seccionGramatica {:
+                                                generadorParser.verificarIntegridad(listErrores, expresionesRegulares, simbolosGramatica);
+                                            :}
                                             ;
 
 declaracionesSimbolos::=                    declaracionesSimbolos declaracionSimbolo
                                             |declaracionSimbolo
                                             ;
 
-declaracionSimbolo::=                       PR_TERMINAL tipoSimbolo listadoIdsMinus FIN_DE_LINEA
-                                            |PR_NO PR_TERMINAL tipoSimbolo listadoIdsMayus FIN_DE_LINEA
+declaracionSimbolo::=                       PR_TERMINAL tipoSimbolo listadoIdsMinus:listadoIds FIN_DE_LINEA {:
+                                                if(listadoIds == null) listadoIds = new ArrayList();
+                                                for(String id : listadoIds){
+                                                    simbolosGramatica.addVariable(new Variable(id, new Simbolo(id, false)));
+                                                }
+                                            :}
+                                            |PR_NO PR_TERMINAL tipoSimbolo listadoIdsMayus:listadoIds FIN_DE_LINEA{:
+                                                if(listadoIds == null) listadoIds = new ArrayList();
+                                                for(String id : listadoIds){
+                                                    simbolosGramatica.addVariable(new Variable(id, new Simbolo(id, false)));
+                                                }
+                                            :}
                                             |error FIN_DE_LINEA
                                             ;
 
@@ -296,16 +318,41 @@ seccionGramatica::=                         seccionGramatica produccion
                                             |produccion
                                             ;
 
-produccion::=                               ID ASIGNACION_GRAMA listadoSimbolos codigoJava FIN_DE_LINEA
+produccion::=                               ID_NT:parteIzquierda ASIGNACION_GRAMA listadoSimbolos:parteDerecha codigoJava FIN_DE_LINEA {:
+                                                if(parteIzquierda != null && parteDerecha != null){
+                                                    Produccion produccion = new Produccion((Simbolo) simbolosGramatica.getVariable(parteIzquierda).getValor(), (ArrayList<Simbolo>)parteDerecha);
+                                                    generadorParser.getProducciones().add(produccion);
+                                                }
+                                            :}
+                                            |ID_NT:parteIzquierda FIN_DE_LINEA {:
+                                                if(parteIzquierda != null){
+                                                    Produccion produccion = new Produccion((Simbolo) simbolosGramatica.getVariable(parteIzquierda).getValor(), new ArrayList<Simbolo>());
+                                                    generadorParser.getProducciones().add(produccion);
+                                                }   
+                                            :}
                                             |error FIN_DE_LINEA
                                             ;
 
-listadoSimbolos::=                          listadoSimbolos simboloProduccion
-                                            |simboloProduccion
+listadoSimbolos::=                          listadoSimbolos:listadoSimbolos simboloProduccion:simbolo {:
+                                                if(listadoSimbolos == null) listadoSimbolos = new ArrayList();
+                                                if(simbolo != null) listadoSimbolos.add(simbolo);
+                                                RESULT = listadoSimbolos;
+                                            :}
+                                            |simboloProduccion:simbolo {:
+                                                List<Simbolo> simbolos = new ArrayList();
+                                                if(simbolo != null) simbolos.add(simbolo);
+                                                RESULT = simbolos;
+                                            :}
                                             ;
 
-simboloProduccion::=                        ID ASIGNACION_INF ID
-                                            |ID
+simboloProduccion::=                        ID:id ASIGNACION_INF ID {:
+                                                Simbolo simbolo = (Simbolo) simbolosGramatica.getVariable(id).getValor();
+                                                RESULT = simbolo;
+                                            :}
+                                            |ID:id {:
+                                                Simbolo simbolo = (Simbolo) simbolosGramatica.getVariable(id).getValor();
+                                                RESULT = simbolo;
+                                            :}
                                             ;
 
 idCompuesto::=                              idCompuesto ID
@@ -318,12 +365,44 @@ tipoSimbolo::=                              PR_ENTERO
                                             |
                                             ;
 
-listadoIdsMinus::=                          listadoIdsMinus COMA ID_T
-                                            |ID_T
+listadoIdsMinus::=                          listadoIdsMinus:listado COMA ID_T:id {:
+                                                if(listado == null) listado = new ArrayList();
+                                                if(simbolosGramatica.getVariable(id) != null){
+                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                }else{
+                                                    if(id != null) listado.add(id);
+                                                }
+                                                RESULT = listado;
+                                            :}
+                                            |ID_T:id {:
+                                                List<String> listado = new ArrayList();
+                                                if(simbolosGramatica.getVariable(id) != null){
+                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                }else{
+                                                    if(id != null) listado.add(id);
+                                                }
+                                                RESULT = listado;
+                                            :}
                                             ;
 
-listadoIdsMayus::=                          listadoIdsMayus COMA ID_NT
-                                            |ID_NT
+listadoIdsMayus::=                          listadoIdsMayus:listado COMA ID_NT:id {:
+                                                if(listado == null) listado = new ArrayList();
+                                                if(simbolosGramatica.getVariable(id) != null){
+                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                }else{
+                                                    if(id != null) listado.add(id);
+                                                }
+                                                RESULT = listado;
+                                            :}
+                                            |ID_NT:id {:
+                                                List<String> listado = new ArrayList();
+                                                if(simbolosGramatica.getVariable(id) != null){
+                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                }else{
+                                                    if(id != null) listado.add(id);
+                                                }
+                                                RESULT = listado;
+                                            :}
                                             ;
 
 codigoJava::=                               JAVA_CODE
