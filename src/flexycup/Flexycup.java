@@ -24,15 +24,7 @@ public class Flexycup {
      */
     public static void main(String[] args) {
         Editor editor = new Editor();
-        List<String> lenguajes =  ArchivosManager.cargarNombresLenguajes();
-        ButtonGroup grupo = new ButtonGroup();
-        for (int i = 0; i < lenguajes.size(); i++){
-            JRadioButtonMenuItem item = new JRadioButtonMenuItem(lenguajes.get(i));
-            if(i==0) item.setSelected(true);
-            item.setName(lenguajes.get(i));
-            grupo.add(item);
-            editor.getMenuLenguajes().add(item);
-        }
+        editor.cargarLenguajes();
         editor.setVisible(true);
     }
     

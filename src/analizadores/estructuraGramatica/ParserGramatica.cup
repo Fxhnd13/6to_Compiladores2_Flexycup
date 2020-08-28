@@ -1,10 +1,13 @@
 package analizadores.estructuraGramatica;
  
+import analizadores.objetos.ErrorAnalisis;
 import analizadores.objetos.componentes.NodoER.*;
 import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.Variable;
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import analizadores.objetos.componentes.lexer.PR;
+import analizadores.objetos.componentes.Dato;
+import analizadores.objetos.componentes.Informacion;
 import analizadores.objetos.componentes.parser.GeneradorParser;
 import analizadores.objetos.componentes.parser.Produccion;
 import analizadores.objetos.componentes.parser.Simbolo;
@@ -17,9 +20,11 @@ action code {::}
 parser code {:
     
         private TablaDeSimbolos expresionesRegulares, simbolosGramatica;
-        private List<String> listErrores, cadenasTemporales;
+        private List<ErrorAnalisis> listErrores;
+        private List<String> cadenasTemporales;
         private GeneradorAutomata generadorAutomata;
         private GeneradorParser generadorParser;
+        private Informacion informacionLenguaje;
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
@@ -29,6 +34,7 @@ parser code {:
             expresionesRegulares = new TablaDeSimbolos();
             simbolosGramatica = new TablaDeSimbolos();
             cadenasTemporales = new ArrayList<String>();
+            informacionLenguaje = new Informacion();
 	}
         
         public void setAccion(String tipo, String mensaje, String accion){
@@ -37,9 +43,9 @@ parser code {:
 
         public void unrecovered_syntax_error(Symbol cur_token){
             if(cur_token.toString().equals("#0")){
-                listErrores.add("No se pudo recuperar y seguir analizando, no se encontraron más tokens, se llegó al final del archivo.");
+                listErrores.add(new ErrorAnalisis("Sintactico","Fin del archivo", "No se pudo recuperar y seguir analizando, no se encontraron mas tokens.",cur_token.left,cur_token.right));
             }else{
-                listErrores.add("No se pudo recuperar y seguir analizando, error con el token: "+cur_token.value.toString());
+                listErrores.add(new ErrorAnalisis("Sintactico",(String)cur_token.value, "No se pudo recuperar y seguir analizando.",cur_token.left,cur_token.right));
             }
         }
 
@@ -51,44 +57,40 @@ parser code {:
             int columna = s.right;
             switch(s.toString()){
                 case "#1":{ message = " No se esperaba la cadena ¿error? "; break;}
-                case "#2": case "#3": case "#4": case "#5": case "#6": { 
+                case "#2": case "#3": case "#4": case "#5": case "#6": case "#32": case "#33": case "#34":  case "#35": case "#36": { 
                     message = " No se esperaba la palabra reservada '"+cadena+"'"; break;  
                 }
                 case "#7": case "#8": case "#9":{ message = " No se esperaba una asignacion del tipo '"+cadena+"'"; break; }
                 case "#10": { message = " No se esperaba un separador de seccion '%%'"; break; }
-                case "#12": case "#13": case "#14": { message = " No se esperaba el operador de expresiones regulares '"+cadena+"'"; break;}
+                case "#11": case "#12": case "#13": case "#14": { message = " No se esperaba el operador de expresiones regulares '"+cadena+"'"; break;}
                 case "#15": case "#16": case "#18": case "#19": { message = " No se esperaba un caracter de agrupacion '"+cadena+"'"; break; }
-                //case #17:{ message = " No se esperaba un caracter explicito '"+cadena+"'"; break;}
-                //case #20:{ message = " No se esperaba un fin de linea ';'"; break; }
-                //case #21:{ message = " No se esperaba un salto de linea '\\n'"; break; }
-                //case #22:{ message = " No se esperaba una tabulacion '\\t'"; break; }
-                //case #23:{ message = " No se esperaba un retorno '\\b'"; break; }
-                //case #24:{ message = " No se esperaba el simbolo '&'; break; }
-                //case #25:{ message = " No se esperaba una cadena <"+cadena+">"; break; }
-                //case #26:{ message = " No se esperaba codigo java"; break;}
-                //case #27:{ message = " No se esperaba un entero '"+cadena+"'"; break;}
-                //case #28:{ message = " No se esperaba una version '"+cadena+"'"; break;}
-                //7case #29:{ message = " No se esperaba un identificador '"+cadena+"'"; break;}
-                //case #30:{ message = " No se esperaba un rango de numeros"; break; }
-                //case #31:{ message = " No se esperaba un rango de letras"; break; }
-                //case #32:{}
-                //case #33:{}
-                //case #34:{}
-                //case #35:{}
-                //case #36:{}
-                //case #37:{}
+                case "#17":{ message = " No se esperaba un caracter explicito '"+cadena+"'"; break;}
+                case "#20":{ message = " No se esperaba un fin de linea ';'"; break; }
+                case "#21":{ message = " No se esperaba un salto de linea '\\n'"; break; }
+                case "#22":{ message = " No se esperaba una tabulacion '\\t'"; break; }
+                case "#23":{ message = " No se esperaba un retorno '\\b'"; break; }
+                case "#24":{ message = " No se esperaba el simbolo '&'"; break; }
+                case "#25":{ message = " No se esperaba una cadena <"+cadena+">"; break; }
+                case "#26":{ message = " No se esperaba codigo java"; break;}
+                case "#27":{ message = " No se esperaba un entero '"+cadena+"'"; break;}
+                case "#28":{ message = " No se esperaba una version '"+cadena+"'"; break;}
+                case "#29":{ message = " No se esperaba un identificador '"+cadena+"'"; break;}
+                case "#30":{ message = " No se esperaba un rango de numeros"; break; }
+                case "#31":{ message = " No se esperaba un rango de letras"; break; }
+                case "#37":{ message = " No se esperaba una coma"; break; }
+                case "#38":{ message = " No se esperaba un identificador de simbolo terminal '"+cadena+"'"; break; }
+                case "#39":{ message = " No se esperaba un identificador de simbolo no terminal '"+cadena+"'"; break; }
             }
-            listErrores.add("Se ha encontrado un error en la linea: "+linea+", columna: "+columna+" con la cadena "+cadena+"|Descripcion: "+message);
+            listErrores.add(new ErrorAnalisis("Sintactico",cadena,message,linea,columna));
         }
 
-        public List<String> getErrores(){return listErrores;}
-
-        public void setErrores(List<String> e){listErrores = e;}
-
+        public List<ErrorAnalisis> getErrores(){return listErrores;}
+        public void setErrores(List<ErrorAnalisis> e){listErrores = e;}
         public GeneradorAutomata getGeneradorAutomata(){ return generadorAutomata; }
         public GeneradorParser getGeneradorParser() { return generadorParser; }
         public TablaDeSimbolos getTablaDeER(){ return expresionesRegulares; }
         public TablaDeSimbolos getTablaDeSimbolosGramaticales(){ return simbolosGramatica;}
+        public Informacion getInformacion(){ return informacionLenguaje; }
 
 :}
 
@@ -100,11 +102,12 @@ terminal String                                    PAR_A, PAR_C, FIN_DE_LINEA, S
 terminal String                                    VERSION, ID, RANGO_NUMEROS, RANGO_LETRAS_MIN, PR_TERMINAL, PR_NO, PR_ENTERO, PR_REAL, PR_CADENA, COMA;
 terminal String                                    ID_T, ID_NT;
 
-non terminal                                s, seccionInformacion, dato, seccionER;
+non terminal                                s, seccionER;
 non terminal                                seccionSimbolos, declaracionesSimbolos, declaracionSimbolo, seccionGramatica;
-non terminal                                produccion, idCompuesto, tipoSimbolo, codigoJava;
-non terminal List<String>                   listadoIdsMinus, listadoIdsMayus;
-non terminal List<Simbolo>                  listadoSimbolos;
+non terminal                                produccion, tipoSimbolo, codigoJava;
+non terminal String                         idCompuesto;
+non terminal                                seccionInformacion, dato; 
+non terminal List<Simbolo>                  listadoSimbolos, listadoIdsMinus, listadoIdsMayus;
 non terminal Simbolo                        simboloProduccion;
 non terminal Nodo                           expresionesRegulares, declaracionExpresionRegular, expresionRegular;
 
@@ -120,7 +123,11 @@ precedence left     PAR_A, COR_A, PAR_C, COR_C;
 
 start with s;
 
-s::=                                        seccionInformacion SEPARADOR SEPARADOR seccionER {: System.out.println("Termino exitosamente"); :}
+s::=                                        seccionInformacion SEPARADOR SEPARADOR seccionER {:
+                                                if(informacionLenguaje.getNombre() == null){
+                                                    listErrores.add(new ErrorAnalisis("Semantico","<sin cadena>","En la seccion informacion, debe al menos especiicarse el nombre del lenguaje",0,0));
+                                                }
+                                            :}
                                             |error SEPARADOR seccionER
                                             ;
 
@@ -128,11 +135,31 @@ seccionInformacion::=                       seccionInformacion dato
                                             |dato
                                             ;
 
-dato::=                                     PR_NOMBRE ASIGNACION_INF idCompuesto FIN_DE_LINEA
-                                            |PR_LANZAMIENTO ASIGNACION_INF ENTERO FIN_DE_LINEA
-                                            |PR_VERSION ASIGNACION_INF VERSION FIN_DE_LINEA
-                                            |PR_AUTOR ASIGNACION_INF idCompuesto FIN_DE_LINEA
-                                            |PR_EXTENSION ASIGNACION_INF ID FIN_DE_LINEA
+dato::=                                     PR_NOMBRE:tipo ASIGNACION_INF idCompuesto:valor FIN_DE_LINEA {:
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Nombre",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            :}
+                                            |PR_LANZAMIENTO:tipo ASIGNACION_INF ENTERO:valor FIN_DE_LINEA {:
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Lanzamiento",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            :}
+                                            |PR_VERSION:tipo ASIGNACION_INF VERSION:valor FIN_DE_LINEA {:
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Version",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            :}
+                                            |PR_AUTOR:tipo ASIGNACION_INF idCompuesto:valor FIN_DE_LINEA {:
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Autor",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            :}
+                                            |PR_EXTENSION:tipo ASIGNACION_INF ID:valor FIN_DE_LINEA {:
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Extension",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            :}
                                             |error FIN_DE_LINEA
                                             ;
 
@@ -160,7 +187,7 @@ declaracionExpresionRegular::=              ID_T:identificador ASIGNACION_ER exp
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
                                                 if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
-                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",identificador,"Ya existe una expresion regular con el identificador ingresado.",identificadorleft, identificadorright));
                                                     nodo = new NodoHoja();
                                                 }else{
                                                     generadorAutomata.asignarTipoToken(identificador, nodo);
@@ -175,7 +202,7 @@ declaracionExpresionRegular::=              ID_T:identificador ASIGNACION_ER exp
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
                                                 if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
-                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",identificador,"Ya existe una expresion regular con el identificador ingresado.",identificadorleft, identificadorright));
                                                     nodo = new NodoHoja();
                                                 }else{
                                                     generadorAutomata.asignarTipoToken(identificador, nodo);
@@ -280,7 +307,7 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                                         nodo = new NodoHoja((NodoHoja) nuevo);
                                                     }
                                                 }else{
-                                                    listErrores.add("Error: No existe una expresion regular con el identificador: '"+valor+"' declarado en <Linea: "+valorleft+", Columna: "+valorright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",valor,"No existe una expresion regular declarada anteriormente con el identificador ingresado.",valorleft,valorright));
                                                     nodo = new NodoHoja();
                                                 }
                                                 RESULT = nodo;
@@ -288,12 +315,8 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             ;
 
 
-seccionSimbolos::=                          declaracionesSimbolos SEPARADOR seccionGramatica {:
-                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
-                                            :}
-                                            |error SEPARADOR seccionGramatica {:
-                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
-                                            :}
+seccionSimbolos::=                          declaracionesSimbolos SEPARADOR seccionGramatica 
+                                            |error SEPARADOR seccionGramatica 
                                             ;
 
 declaracionesSimbolos::=                    declaracionesSimbolos declaracionSimbolo
@@ -302,14 +325,16 @@ declaracionesSimbolos::=                    declaracionesSimbolos declaracionSim
 
 declaracionSimbolo::=                       PR_TERMINAL tipoSimbolo listadoIdsMinus:listadoIds FIN_DE_LINEA {:
                                                 if(listadoIds == null) listadoIds = new ArrayList();
-                                                for(String id : listadoIds){
-                                                    simbolosGramatica.addVariable(new Variable(id, new Simbolo(id, false)));
+                                                for(Simbolo id : listadoIds){
+                                                    id.setTerminal(true);
+                                                    simbolosGramatica.addVariable(new Variable(id.getSimbolo(), id));
                                                 }
                                             :}
                                             |PR_NO PR_TERMINAL tipoSimbolo listadoIdsMayus:listadoIds FIN_DE_LINEA{:
                                                 if(listadoIds == null) listadoIds = new ArrayList();
-                                                for(String id : listadoIds){
-                                                    simbolosGramatica.addVariable(new Variable(id, new Simbolo(id, false)));
+                                                for(Simbolo id : listadoIds){
+                                                    id.setTerminal(false);
+                                                    simbolosGramatica.addVariable(new Variable(id.getSimbolo(), id));
                                                 }
                                             :}
                                             |error FIN_DE_LINEA
@@ -319,17 +344,17 @@ seccionGramatica::=                         seccionGramatica produccion
                                             |produccion
                                             ;
 
-produccion::=                               ID_NT:parteIzquierda ASIGNACION_GRAMA listadoSimbolos:parteDerecha codigoJava FIN_DE_LINEA {:
+produccion::=                               ID:parteIzquierda ASIGNACION_GRAMA listadoSimbolos:parteDerecha codigoJava FIN_DE_LINEA {:
                                                 if(parteIzquierda != null && parteDerecha != null){
-                                                    Produccion produccion = new Produccion((Simbolo) simbolosGramatica.getVariable(parteIzquierda).getValor(), (ArrayList<Simbolo>)parteDerecha);
+                                                    Produccion produccion = new Produccion(new Simbolo(parteIzquierda,parteIzquierdaleft,parteIzquierdaright), (ArrayList<Simbolo>)parteDerecha);
                                                     generadorParser.getProducciones().add(produccion);
                                                 }
                                             :}
-                                            |ID_NT:parteIzquierda FIN_DE_LINEA {:
+                                            |ID:parteIzquierda FIN_DE_LINEA {:
                                                 if(parteIzquierda != null){
-                                                    Produccion produccion = new Produccion((Simbolo) simbolosGramatica.getVariable(parteIzquierda).getValor(), new ArrayList<Simbolo>());
+                                                    Produccion produccion = new Produccion(new Simbolo(parteIzquierda,parteIzquierdaleft,parteIzquierdaright), new ArrayList<Simbolo>());
                                                     generadorParser.getProducciones().add(produccion);
-                                                }   
+                                                } 
                                             :}
                                             |error FIN_DE_LINEA
                                             ;
@@ -347,17 +372,27 @@ listadoSimbolos::=                          listadoSimbolos:listadoSimbolos simb
                                             ;
 
 simboloProduccion::=                        ID:id ASIGNACION_INF ID {:
-                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
+                                                Simbolo simbolo = null;
+                                                if(id != null) simbolo = new Simbolo(id, idleft, idright);
                                                 RESULT = simbolo;
                                             :}
                                             |ID:id {:
-                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
+                                                Simbolo simbolo = null;
+                                                if(id != null) simbolo = new Simbolo(id, idleft, idright);
                                                 RESULT = simbolo;
                                             :}
                                             ;
 
-idCompuesto::=                              idCompuesto ID
-                                            |ID
+idCompuesto::=                              idCompuesto:cadena ID:valor {:
+                                                if(cadena == null) cadena = "";
+                                                if(valor != null) cadena+= " "+valor;
+                                                RESULT = cadena;
+                                            :}
+                                            |ID:valor {:
+                                                String cadena = "";
+                                                if(valor != null) cadena = valor;
+                                                RESULT = cadena;
+                                            :}
                                             ;
 
 tipoSimbolo::=                              PR_ENTERO
@@ -369,24 +404,18 @@ tipoSimbolo::=                              PR_ENTERO
 listadoIdsMinus::=                          listadoIdsMinus:listado COMA ID_T:id {:
                                                 if(listado == null) listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) {
-                                                        if(expresionesRegulares.getVariable(id) != null){
-                                                            listado.add(id);
-                                                        }else{
-                                                            listErrores.add("Error: el simbolo terminal '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+" no corresponde a ningun token");
-                                                        }
-                                                    }
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             :}
                                             |ID_T:id {:
-                                                List<String> listado = new ArrayList();
+                                                List<Simbolo> listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             :}
@@ -395,18 +424,18 @@ listadoIdsMinus::=                          listadoIdsMinus:listado COMA ID_T:id
 listadoIdsMayus::=                          listadoIdsMayus:listado COMA ID_NT:id {:
                                                 if(listado == null) listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             :}
                                             |ID_NT:id {:
-                                                List<String> listado = new ArrayList();
+                                                List<Simbolo> listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             :}

@@ -5,11 +5,14 @@
 
 package analizadores.estructuraGramatica;
 
+import analizadores.objetos.ErrorAnalisis;
 import analizadores.objetos.componentes.NodoER.*;
 import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.Variable;
 import analizadores.objetos.componentes.lexer.GeneradorAutomata;
 import analizadores.objetos.componentes.lexer.PR;
+import analizadores.objetos.componentes.Dato;
+import analizadores.objetos.componentes.Informacion;
 import analizadores.objetos.componentes.parser.GeneradorParser;
 import analizadores.objetos.componentes.parser.Produccion;
 import analizadores.objetos.componentes.parser.Simbolo;
@@ -42,25 +45,25 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
     "\000\077\000\002\002\004\000\002\002\006\000\002\002" +
-    "\005\000\002\003\004\000\002\003\003\000\002\004\006" +
-    "\000\002\004\006\000\002\004\006\000\002\004\006\000" +
-    "\002\004\006\000\002\004\004\000\002\005\005\000\002" +
-    "\005\005\000\002\022\004\000\002\022\003\000\002\023" +
+    "\005\000\002\014\004\000\002\014\003\000\002\015\006" +
+    "\000\002\015\006\000\002\015\006\000\002\015\006\000" +
+    "\002\015\006\000\002\015\004\000\002\003\005\000\002" +
+    "\003\005\000\002\022\004\000\002\022\003\000\002\023" +
     "\006\000\002\023\006\000\002\023\004\000\002\024\004" +
     "\000\002\024\004\000\002\024\004\000\002\024\005\000" +
     "\002\024\004\000\002\024\003\000\002\024\003\000\002" +
     "\024\003\000\002\024\003\000\002\024\003\000\002\024" +
     "\005\000\002\024\005\000\002\024\003\000\002\024\003" +
     "\000\002\024\003\000\002\024\003\000\002\024\003\000" +
-    "\002\006\005\000\002\006\005\000\002\007\004\000\002" +
-    "\007\003\000\002\010\006\000\002\010\007\000\002\010" +
-    "\004\000\002\011\004\000\002\011\003\000\002\012\007" +
-    "\000\002\012\004\000\002\012\004\000\002\020\004\000" +
-    "\002\020\003\000\002\021\005\000\002\021\003\000\002" +
-    "\013\004\000\002\013\003\000\002\014\003\000\002\014" +
-    "\003\000\002\014\003\000\002\014\002\000\002\016\005" +
-    "\000\002\016\003\000\002\017\005\000\002\017\003\000" +
-    "\002\015\003\000\002\015\002" });
+    "\002\004\005\000\002\004\005\000\002\005\004\000\002" +
+    "\005\003\000\002\006\006\000\002\006\007\000\002\006" +
+    "\004\000\002\007\004\000\002\007\003\000\002\010\007" +
+    "\000\002\010\004\000\002\010\004\000\002\016\004\000" +
+    "\002\016\003\000\002\021\005\000\002\021\003\000\002" +
+    "\013\004\000\002\013\003\000\002\011\003\000\002\011" +
+    "\003\000\002\011\003\000\002\011\002\000\002\017\005" +
+    "\000\002\017\003\000\002\020\005\000\002\020\003\000" +
+    "\002\012\003\000\002\012\002" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -183,21 +186,21 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\000\012\003\uffda\014\uffda\042\uffda\043\uffda\001\002\000" +
     "\006\026\uffc8\047\uffc8\001\002\000\012\003\uffdc\014\uffdc" +
     "\042\uffdc\043\uffdc\001\002\000\004\026\144\001\002\000" +
-    "\006\003\125\051\124\001\002\000\010\002\uffde\003\125" +
-    "\051\124\001\002\000\006\012\130\026\131\001\002\000" +
-    "\004\026\127\001\002\000\010\002\uffd6\003\uffd6\051\uffd6" +
-    "\001\002\000\010\002\uffd3\003\uffd3\051\uffd3\001\002\000" +
-    "\004\037\132\001\002\000\010\002\uffd4\003\uffd4\051\uffd4" +
-    "\001\002\000\012\011\141\026\uffcf\034\uffcf\037\uffcf\001" +
-    "\002\000\010\026\uffd1\034\uffd1\037\uffd1\001\002\000\010" +
-    "\026\uffc3\034\136\037\132\001\002\000\010\026\uffd2\034" +
-    "\uffd2\037\uffd2\001\002\000\004\026\uffc4\001\002\000\004" +
-    "\026\140\001\002\000\010\002\uffd5\003\uffd5\051\uffd5\001" +
-    "\002\000\004\037\142\001\002\000\010\026\uffd0\034\uffd0" +
-    "\037\uffd0\001\002\000\010\002\uffd7\003\uffd7\051\uffd7\001" +
+    "\006\003\125\037\123\001\002\000\006\012\131\026\132" +
+    "\001\002\000\010\002\uffde\003\125\037\123\001\002\000" +
+    "\004\026\127\001\002\000\010\002\uffd6\003\uffd6\037\uffd6" +
+    "\001\002\000\010\002\uffd3\003\uffd3\037\uffd3\001\002\000" +
+    "\010\002\uffd7\003\uffd7\037\uffd7\001\002\000\004\037\133" +
+    "\001\002\000\010\002\uffd4\003\uffd4\037\uffd4\001\002\000" +
+    "\012\011\142\026\uffcf\034\uffcf\037\uffcf\001\002\000\010" +
+    "\026\uffd1\034\uffd1\037\uffd1\001\002\000\010\026\uffc3\034" +
+    "\137\037\133\001\002\000\010\026\uffd2\034\uffd2\037\uffd2" +
+    "\001\002\000\004\026\uffc4\001\002\000\004\026\141\001" +
+    "\002\000\010\002\uffd5\003\uffd5\037\uffd5\001\002\000\004" +
+    "\037\143\001\002\000\010\026\uffd0\034\uffd0\037\uffd0\001" +
     "\002\000\012\003\uffd8\014\uffd8\042\uffd8\043\uffd8\001\002" +
-    "\000\006\003\125\051\124\001\002\000\010\002\uffdd\003" +
-    "\125\051\124\001\002\000\012\003\ufff0\014\ufff0\032\ufff0" +
+    "\000\006\003\125\037\123\001\002\000\010\002\uffdd\003" +
+    "\125\037\123\001\002\000\012\003\ufff0\014\ufff0\032\ufff0" +
     "\050\ufff0\001\002\000\010\003\073\042\075\043\076\001" +
     "\002\000\004\002\ufff5\001\002\000\004\037\153\001\002" +
     "\000\004\026\154\001\002\000\020\003\ufff8\004\ufff8\005" +
@@ -220,13 +223,13 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\170\000\010\002\013\003\005\004\012\001\001\000" +
-    "\002\001\001\000\002\001\001\000\004\004\160\001\001" +
+    "\000\170\000\010\002\013\014\005\015\012\001\001\000" +
+    "\002\001\001\000\002\001\001\000\004\015\160\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\004\013\017\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\010" +
-    "\005\024\022\027\023\026\001\001\000\002\001\001\000" +
+    "\003\024\022\027\023\026\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\004" +
     "\023\070\001\001\000\002\001\001\000\002\001\001\000" +
     "\004\024\042\001\001\000\002\001\001\000\004\024\061" +
@@ -239,29 +242,29 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\001\001\000\002\001\001\000\004\024\054\001\001\000" +
     "\002\001\001\000\004\024\054\001\001\000\002\001\001" +
     "\000\004\024\064\001\001\000\004\024\054\001\001\000" +
-    "\002\001\001\000\002\001\001\000\010\006\076\007\073" +
-    "\010\071\001\001\000\002\001\001\000\002\001\001\000" +
-    "\002\001\001\000\004\010\117\001\001\000\004\014\111" +
-    "\001\001\000\002\001\001\000\002\001\001\000\004\014" +
+    "\002\001\001\000\002\001\001\000\010\004\076\005\073" +
+    "\006\071\001\001\000\002\001\001\000\002\001\001\000" +
+    "\002\001\001\000\004\006\117\001\001\000\004\011\111" +
+    "\001\001\000\002\001\001\000\002\001\001\000\004\011" +
     "\103\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\004\017\104\001\001\000\002\001\001\000" +
+    "\001\001\000\004\020\104\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\004\016\112\001\001\000\002\001\001\000" +
+    "\001\001\000\004\017\112\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
-    "\001\001\000\002\001\001\000\002\001\001\000\006\011" +
-    "\122\012\125\001\001\000\004\012\142\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\006\007" +
+    "\123\010\125\001\001\000\002\001\001\000\004\010\127" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\006\020\133\021\132\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\006\015\136\021" +
-    "\134\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\000\002\001\001\000\006\016\134\021\133\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
+    "\006\012\137\021\135\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\002\001\001\000\006\011\145" +
-    "\012\125\001\001\000\004\012\142\001\001\000\002\001" +
-    "\001\000\010\006\150\007\073\010\071\001\001\000\002" +
+    "\001\000\002\001\001\000\002\001\001\000\006\007\145" +
+    "\010\125\001\001\000\004\010\127\001\001\000\002\001" +
+    "\001\000\010\004\150\005\073\006\071\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\010\005\163\022\027\023\026\001\001\000\002\001\001" +
+    "\010\003\163\022\027\023\026\001\001\000\002\001\001" +
     "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\004\013\170\001\001\000\002\001\001\000\002\001\001" +
     "" });
@@ -305,9 +308,11 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
 
     
         private TablaDeSimbolos expresionesRegulares, simbolosGramatica;
-        private List<String> listErrores, cadenasTemporales;
+        private List<ErrorAnalisis> listErrores;
+        private List<String> cadenasTemporales;
         private GeneradorAutomata generadorAutomata;
         private GeneradorParser generadorParser;
+        private Informacion informacionLenguaje;
 
         public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
@@ -317,6 +322,7 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
             expresionesRegulares = new TablaDeSimbolos();
             simbolosGramatica = new TablaDeSimbolos();
             cadenasTemporales = new ArrayList<String>();
+            informacionLenguaje = new Informacion();
 	}
         
         public void setAccion(String tipo, String mensaje, String accion){
@@ -325,9 +331,9 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
 
         public void unrecovered_syntax_error(Symbol cur_token){
             if(cur_token.toString().equals("#0")){
-                listErrores.add("No se pudo recuperar y seguir analizando, no se encontraron más tokens, se llegó al final del archivo.");
+                listErrores.add(new ErrorAnalisis("Sintactico","Fin del archivo", "No se pudo recuperar y seguir analizando, no se encontraron mas tokens.",cur_token.left,cur_token.right));
             }else{
-                listErrores.add("No se pudo recuperar y seguir analizando, error con el token: "+cur_token.value.toString());
+                listErrores.add(new ErrorAnalisis("Sintactico",(String)cur_token.value, "No se pudo recuperar y seguir analizando.",cur_token.left,cur_token.right));
             }
         }
 
@@ -339,44 +345,40 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
             int columna = s.right;
             switch(s.toString()){
                 case "#1":{ message = " No se esperaba la cadena ¿error? "; break;}
-                case "#2": case "#3": case "#4": case "#5": case "#6": { 
+                case "#2": case "#3": case "#4": case "#5": case "#6": case "#32": case "#33": case "#34":  case "#35": case "#36": { 
                     message = " No se esperaba la palabra reservada '"+cadena+"'"; break;  
                 }
                 case "#7": case "#8": case "#9":{ message = " No se esperaba una asignacion del tipo '"+cadena+"'"; break; }
                 case "#10": { message = " No se esperaba un separador de seccion '%%'"; break; }
-                case "#12": case "#13": case "#14": { message = " No se esperaba el operador de expresiones regulares '"+cadena+"'"; break;}
+                case "#11": case "#12": case "#13": case "#14": { message = " No se esperaba el operador de expresiones regulares '"+cadena+"'"; break;}
                 case "#15": case "#16": case "#18": case "#19": { message = " No se esperaba un caracter de agrupacion '"+cadena+"'"; break; }
-                //case #17:{ message = " No se esperaba un caracter explicito '"+cadena+"'"; break;}
-                //case #20:{ message = " No se esperaba un fin de linea ';'"; break; }
-                //case #21:{ message = " No se esperaba un salto de linea '\\n'"; break; }
-                //case #22:{ message = " No se esperaba una tabulacion '\\t'"; break; }
-                //case #23:{ message = " No se esperaba un retorno '\\b'"; break; }
-                //case #24:{ message = " No se esperaba el simbolo '&'; break; }
-                //case #25:{ message = " No se esperaba una cadena <"+cadena+">"; break; }
-                //case #26:{ message = " No se esperaba codigo java"; break;}
-                //case #27:{ message = " No se esperaba un entero '"+cadena+"'"; break;}
-                //case #28:{ message = " No se esperaba una version '"+cadena+"'"; break;}
-                //7case #29:{ message = " No se esperaba un identificador '"+cadena+"'"; break;}
-                //case #30:{ message = " No se esperaba un rango de numeros"; break; }
-                //case #31:{ message = " No se esperaba un rango de letras"; break; }
-                //case #32:{}
-                //case #33:{}
-                //case #34:{}
-                //case #35:{}
-                //case #36:{}
-                //case #37:{}
+                case "#17":{ message = " No se esperaba un caracter explicito '"+cadena+"'"; break;}
+                case "#20":{ message = " No se esperaba un fin de linea ';'"; break; }
+                case "#21":{ message = " No se esperaba un salto de linea '\\n'"; break; }
+                case "#22":{ message = " No se esperaba una tabulacion '\\t'"; break; }
+                case "#23":{ message = " No se esperaba un retorno '\\b'"; break; }
+                case "#24":{ message = " No se esperaba el simbolo '&'"; break; }
+                case "#25":{ message = " No se esperaba una cadena <"+cadena+">"; break; }
+                case "#26":{ message = " No se esperaba codigo java"; break;}
+                case "#27":{ message = " No se esperaba un entero '"+cadena+"'"; break;}
+                case "#28":{ message = " No se esperaba una version '"+cadena+"'"; break;}
+                case "#29":{ message = " No se esperaba un identificador '"+cadena+"'"; break;}
+                case "#30":{ message = " No se esperaba un rango de numeros"; break; }
+                case "#31":{ message = " No se esperaba un rango de letras"; break; }
+                case "#37":{ message = " No se esperaba una coma"; break; }
+                case "#38":{ message = " No se esperaba un identificador de simbolo terminal '"+cadena+"'"; break; }
+                case "#39":{ message = " No se esperaba un identificador de simbolo no terminal '"+cadena+"'"; break; }
             }
-            listErrores.add("Se ha encontrado un error en la linea: "+linea+", columna: "+columna+" con la cadena "+cadena+"|Descripcion: "+message);
+            listErrores.add(new ErrorAnalisis("Sintactico",cadena,message,linea,columna));
         }
 
-        public List<String> getErrores(){return listErrores;}
-
-        public void setErrores(List<String> e){listErrores = e;}
-
+        public List<ErrorAnalisis> getErrores(){return listErrores;}
+        public void setErrores(List<ErrorAnalisis> e){listErrores = e;}
         public GeneradorAutomata getGeneradorAutomata(){ return generadorAutomata; }
         public GeneradorParser getGeneradorParser() { return generadorParser; }
         public TablaDeSimbolos getTablaDeER(){ return expresionesRegulares; }
         public TablaDeSimbolos getTablaDeSimbolosGramaticales(){ return simbolosGramatica;}
+        public Informacion getInformacion(){ return informacionLenguaje; }
 
 
 
@@ -424,7 +426,11 @@ class CUP$ParserGramatica$actions {
           case 1: // s ::= seccionInformacion SEPARADOR SEPARADOR seccionER 
             {
               Object RESULT =null;
-		 System.out.println("Termino exitosamente"); 
+		
+                                                if(informacionLenguaje.getNombre() == null){
+                                                    listErrores.add(new ErrorAnalisis("Semantico","<sin cadena>","En la seccion informacion, debe al menos especiicarse el nombre del lenguaje",0,0));
+                                                }
+                                            
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("s",0, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
@@ -443,7 +449,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionInformacion",1, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionInformacion",10, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -452,7 +458,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionInformacion",1, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionInformacion",10, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -460,8 +466,18 @@ class CUP$ParserGramatica$actions {
           case 5: // dato ::= PR_NOMBRE ASIGNACION_INF idCompuesto FIN_DE_LINEA 
             {
               Object RESULT =null;
-
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+		int tipoleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).left;
+		int tiporight = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).right;
+		String tipo = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
+		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
+		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Nombre",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -469,8 +485,18 @@ class CUP$ParserGramatica$actions {
           case 6: // dato ::= PR_LANZAMIENTO ASIGNACION_INF ENTERO FIN_DE_LINEA 
             {
               Object RESULT =null;
-
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+		int tipoleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).left;
+		int tiporight = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).right;
+		String tipo = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
+		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
+		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Lanzamiento",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -478,8 +504,18 @@ class CUP$ParserGramatica$actions {
           case 7: // dato ::= PR_VERSION ASIGNACION_INF VERSION FIN_DE_LINEA 
             {
               Object RESULT =null;
-
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+		int tipoleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).left;
+		int tiporight = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).right;
+		String tipo = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
+		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
+		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Version",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -487,8 +523,18 @@ class CUP$ParserGramatica$actions {
           case 8: // dato ::= PR_AUTOR ASIGNACION_INF idCompuesto FIN_DE_LINEA 
             {
               Object RESULT =null;
-
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+		int tipoleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).left;
+		int tiporight = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).right;
+		String tipo = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
+		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
+		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Autor",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -496,8 +542,18 @@ class CUP$ParserGramatica$actions {
           case 9: // dato ::= PR_EXTENSION ASIGNACION_INF ID FIN_DE_LINEA 
             {
               Object RESULT =null;
-
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+		int tipoleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).left;
+		int tiporight = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).right;
+		String tipo = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)).value;
+		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
+		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		
+                                                Dato dato = new Dato();
+                                                if(valor != null) dato = new Dato("Extension",valor);
+                                                informacionLenguaje.agregarDato(dato, tipoleft, tiporight, listErrores);
+                                            
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -506,7 +562,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("dato",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -520,7 +576,7 @@ class CUP$ParserGramatica$actions {
 		
                                                 generadorAutomata.setExpresionRegular(nodo);
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionER",3, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionER",1, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -529,7 +585,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionER",3, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionER",1, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -584,7 +640,7 @@ class CUP$ParserGramatica$actions {
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
                                                 if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
-                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",identificador,"Ya existe una expresion regular con el identificador ingresado.",identificadorleft, identificadorright));
                                                     nodo = new NodoHoja();
                                                 }else{
                                                     generadorAutomata.asignarTipoToken(identificador, nodo);
@@ -613,7 +669,7 @@ class CUP$ParserGramatica$actions {
                                                 Nodo nodo = new NodoHoja();
                                                 if(expresion != null) nodo = expresion;
                                                 if(!expresionesRegulares.addVariable(new Variable(identificador, nodo))){
-                                                    listErrores.add("Error: ya existe una expresion regular con el identificador: '"+identificador+"' declarado en <Linea: "+identificadorleft+", Columna: "+identificadorright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",identificador,"Ya existe una expresion regular con el identificador ingresado.",identificadorleft, identificadorright));
                                                     nodo = new NodoHoja();
                                                 }else{
                                                     generadorAutomata.asignarTipoToken(identificador, nodo);
@@ -908,7 +964,7 @@ class CUP$ParserGramatica$actions {
                                                         nodo = new NodoHoja((NodoHoja) nuevo);
                                                     }
                                                 }else{
-                                                    listErrores.add("Error: No existe una expresion regular con el identificador: '"+valor+"' declarado en <Linea: "+valorleft+", Columna: "+valorright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",valor,"No existe una expresion regular declarada anteriormente con el identificador ingresado.",valorleft,valorright));
                                                     nodo = new NodoHoja();
                                                 }
                                                 RESULT = nodo;
@@ -921,10 +977,8 @@ class CUP$ParserGramatica$actions {
           case 35: // seccionSimbolos ::= declaracionesSimbolos SEPARADOR seccionGramatica 
             {
               Object RESULT =null;
-		
-                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
-                                            
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionSimbolos",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionSimbolos",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -932,10 +986,8 @@ class CUP$ParserGramatica$actions {
           case 36: // seccionSimbolos ::= error SEPARADOR seccionGramatica 
             {
               Object RESULT =null;
-		
-                                                generadorParser.verificarIntegridad(listErrores, simbolosGramatica);
-                                            
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionSimbolos",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionSimbolos",2, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -944,7 +996,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionesSimbolos",5, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionesSimbolos",3, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -953,7 +1005,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionesSimbolos",5, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionesSimbolos",3, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -963,14 +1015,15 @@ class CUP$ParserGramatica$actions {
               Object RESULT =null;
 		int listadoIdsleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
 		int listadoIdsright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
-		List<String> listadoIds = (List<String>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		List<Simbolo> listadoIds = (List<Simbolo>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
 		
                                                 if(listadoIds == null) listadoIds = new ArrayList();
-                                                for(String id : listadoIds){
-                                                    simbolosGramatica.addVariable(new Variable(id, new Simbolo(id, false)));
+                                                for(Simbolo id : listadoIds){
+                                                    id.setTerminal(true);
+                                                    simbolosGramatica.addVariable(new Variable(id.getSimbolo(), id));
                                                 }
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionSimbolo",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionSimbolo",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-3)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -980,14 +1033,15 @@ class CUP$ParserGramatica$actions {
               Object RESULT =null;
 		int listadoIdsleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
 		int listadoIdsright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
-		List<String> listadoIds = (List<String>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		List<Simbolo> listadoIds = (List<Simbolo>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
 		
                                                 if(listadoIds == null) listadoIds = new ArrayList();
-                                                for(String id : listadoIds){
-                                                    simbolosGramatica.addVariable(new Variable(id, new Simbolo(id, false)));
+                                                for(Simbolo id : listadoIds){
+                                                    id.setTerminal(false);
+                                                    simbolosGramatica.addVariable(new Variable(id.getSimbolo(), id));
                                                 }
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionSimbolo",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-4)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionSimbolo",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-4)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -996,7 +1050,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionSimbolo",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("declaracionSimbolo",4, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1005,7 +1059,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionGramatica",7, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionGramatica",5, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1014,12 +1068,12 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionGramatica",7, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("seccionGramatica",5, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 44: // produccion ::= ID_NT ASIGNACION_GRAMA listadoSimbolos codigoJava FIN_DE_LINEA 
+          case 44: // produccion ::= ID ASIGNACION_GRAMA listadoSimbolos codigoJava FIN_DE_LINEA 
             {
               Object RESULT =null;
 		int parteIzquierdaleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-4)).left;
@@ -1030,16 +1084,16 @@ class CUP$ParserGramatica$actions {
 		List<Simbolo> parteDerecha = (List<Simbolo>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
 		
                                                 if(parteIzquierda != null && parteDerecha != null){
-                                                    Produccion produccion = new Produccion((Simbolo) simbolosGramatica.getVariable(parteIzquierda).getValor(), (ArrayList<Simbolo>)parteDerecha);
+                                                    Produccion produccion = new Produccion(new Simbolo(parteIzquierda,parteIzquierdaleft,parteIzquierdaright), (ArrayList<Simbolo>)parteDerecha);
                                                     generadorParser.getProducciones().add(produccion);
                                                 }
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",8, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-4)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-4)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 45: // produccion ::= ID_NT FIN_DE_LINEA 
+          case 45: // produccion ::= ID FIN_DE_LINEA 
             {
               Object RESULT =null;
 		int parteIzquierdaleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
@@ -1047,11 +1101,11 @@ class CUP$ParserGramatica$actions {
 		String parteIzquierda = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
 		
                                                 if(parteIzquierda != null){
-                                                    Produccion produccion = new Produccion((Simbolo) simbolosGramatica.getVariable(parteIzquierda).getValor(), new ArrayList<Simbolo>());
+                                                    Produccion produccion = new Produccion(new Simbolo(parteIzquierda,parteIzquierdaleft,parteIzquierdaright), new ArrayList<Simbolo>());
                                                     generadorParser.getProducciones().add(produccion);
-                                                }   
+                                                } 
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",8, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1060,7 +1114,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",8, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1079,7 +1133,7 @@ class CUP$ParserGramatica$actions {
                                                 if(simbolo != null) listadoSimbolos.add(simbolo);
                                                 RESULT = listadoSimbolos;
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoSimbolos",14, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoSimbolos",12, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1095,7 +1149,7 @@ class CUP$ParserGramatica$actions {
                                                 if(simbolo != null) simbolos.add(simbolo);
                                                 RESULT = simbolos;
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoSimbolos",14, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoSimbolos",12, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1107,7 +1161,8 @@ class CUP$ParserGramatica$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
 		
-                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
+                                                Simbolo simbolo = null;
+                                                if(id != null) simbolo = new Simbolo(id, idleft, idright);
                                                 RESULT = simbolo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("simboloProduccion",15, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -1122,7 +1177,8 @@ class CUP$ParserGramatica$actions {
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
-                                                Simbolo simbolo = (simbolosGramatica.getVariable(id) != null)?(Simbolo) simbolosGramatica.getVariable(id).getValor() : null;
+                                                Simbolo simbolo = null;
+                                                if(id != null) simbolo = new Simbolo(id, idleft, idright);
                                                 RESULT = simbolo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("simboloProduccion",15, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -1132,8 +1188,18 @@ class CUP$ParserGramatica$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 51: // idCompuesto ::= idCompuesto ID 
             {
-              Object RESULT =null;
-
+              String RESULT =null;
+		int cadenaleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
+		int cadenaright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
+		String cadena = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
+		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
+		
+                                                if(cadena == null) cadena = "";
+                                                if(valor != null) cadena+= " "+valor;
+                                                RESULT = cadena;
+                                            
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("idCompuesto",9, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
@@ -1141,8 +1207,15 @@ class CUP$ParserGramatica$actions {
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 52: // idCompuesto ::= ID 
             {
-              Object RESULT =null;
-
+              String RESULT =null;
+		int valorleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
+		int valorright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
+		String valor = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
+		
+                                                String cadena = "";
+                                                if(valor != null) cadena = valor;
+                                                RESULT = cadena;
+                                            
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("idCompuesto",9, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
@@ -1152,7 +1225,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",10, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",7, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1161,7 +1234,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",10, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",7, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1170,7 +1243,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",10, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",7, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1179,99 +1252,93 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",10, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("tipoSimbolo",7, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 57: // listadoIdsMinus ::= listadoIdsMinus COMA ID_T 
             {
-              List<String> RESULT =null;
+              List<Simbolo> RESULT =null;
 		int listadoleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).left;
 		int listadoright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).right;
-		List<String> listado = (List<String>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
+		List<Simbolo> listado = (List<Simbolo>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
 		int idleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
                                                 if(listado == null) listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) {
-                                                        if(expresionesRegulares.getVariable(id) != null){
-                                                            listado.add(id);
-                                                        }else{
-                                                            listErrores.add("Error: el simbolo terminal '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+" no corresponde a ningun token");
-                                                        }
-                                                    }
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMinus",12, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMinus",13, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 58: // listadoIdsMinus ::= ID_T 
             {
-              List<String> RESULT =null;
+              List<Simbolo> RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
-                                                List<String> listado = new ArrayList();
+                                                List<Simbolo> listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMinus",12, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMinus",13, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 59: // listadoIdsMayus ::= listadoIdsMayus COMA ID_NT 
             {
-              List<String> RESULT =null;
+              List<Simbolo> RESULT =null;
 		int listadoleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).left;
 		int listadoright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).right;
-		List<String> listado = (List<String>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
+		List<Simbolo> listado = (List<Simbolo>)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
 		int idleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
                                                 if(listado == null) listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMayus",13, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMayus",14, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
           case 60: // listadoIdsMayus ::= ID_NT 
             {
-              List<String> RESULT =null;
+              List<Simbolo> RESULT =null;
 		int idleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).left;
 		int idright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()).right;
 		String id = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.peek()).value;
 		
-                                                List<String> listado = new ArrayList();
+                                                List<Simbolo> listado = new ArrayList();
                                                 if(simbolosGramatica.getVariable(id) != null){
-                                                    listErrores.add("Error: ya existe un simbolo con el identificador: '"+id+"' declarado en <Linea: "+idleft+", Columna: "+idright+">");
+                                                    listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(id);
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
                                                 }
                                                 RESULT = listado;
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMayus",13, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("listadoIdsMayus",14, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1280,7 +1347,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("codigoJava",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("codigoJava",8, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 
@@ -1289,7 +1356,7 @@ class CUP$ParserGramatica$actions {
             {
               Object RESULT =null;
 
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("codigoJava",11, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("codigoJava",8, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 

@@ -8,10 +8,13 @@ package GUI;
 import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
 import javax.swing.table.DefaultTableModel;
@@ -44,8 +47,13 @@ public class Editor extends javax.swing.JFrame {
         ReporteErroresEstructuraGramatica = new javax.swing.JDialog();
         jScrollPane1 = new javax.swing.JScrollPane();
         TablaTokens = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        TextoErrores = new javax.swing.JTextArea();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        TablaErrores = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        EliminarLenguaje = new javax.swing.JDialog();
+        LenguajesComboBox = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
         tabs = new javax.swing.JTabbedPane();
         informacionLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -63,7 +71,7 @@ public class Editor extends javax.swing.JFrame {
         MenuLenguajes = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
 
-        ReporteErroresEstructuraGramatica.setSize(new java.awt.Dimension(1270, 350));
+        ReporteErroresEstructuraGramatica.setSize(new java.awt.Dimension(1270, 600));
 
         TablaTokens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -82,11 +90,46 @@ public class Editor extends javax.swing.JFrame {
             }
         });
         jScrollPane1.setViewportView(TablaTokens);
+        if (TablaTokens.getColumnModel().getColumnCount() > 0) {
+            TablaTokens.getColumnModel().getColumn(0).setPreferredWidth(100);
+            TablaTokens.getColumnModel().getColumn(1).setPreferredWidth(130);
+            TablaTokens.getColumnModel().getColumn(2).setPreferredWidth(830);
+        }
 
-        TextoErrores.setEditable(false);
-        TextoErrores.setColumns(20);
-        TextoErrores.setRows(5);
-        jScrollPane2.setViewportView(TextoErrores);
+        TablaErrores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Tipo", "Valor", "Descripcion", "Linea", "Columna"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TablaErrores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
+        jScrollPane3.setViewportView(TablaErrores);
+        if (TablaErrores.getColumnModel().getColumnCount() > 0) {
+            TablaErrores.getColumnModel().getColumn(0).setPreferredWidth(100);
+            TablaErrores.getColumnModel().getColumn(1).setPreferredWidth(130);
+            TablaErrores.getColumnModel().getColumn(2).setPreferredWidth(830);
+        }
+
+        jLabel1.setText("Listado de tokens");
+
+        jLabel2.setText("Errores encontrados:");
 
         javax.swing.GroupLayout ReporteErroresEstructuraGramaticaLayout = new javax.swing.GroupLayout(ReporteErroresEstructuraGramatica.getContentPane());
         ReporteErroresEstructuraGramatica.getContentPane().setLayout(ReporteErroresEstructuraGramaticaLayout);
@@ -94,19 +137,61 @@ public class Editor extends javax.swing.JFrame {
             ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ReporteErroresEstructuraGramaticaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 791, Short.MAX_VALUE)
+                .addGroup(ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(ReporteErroresEstructuraGramaticaLayout.createSequentialGroup()
+                        .addGroup(ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addGap(0, 649, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         ReporteErroresEstructuraGramaticaLayout.setVerticalGroup(
             ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(ReporteErroresEstructuraGramaticaLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ReporteErroresEstructuraGramaticaLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(ReporteErroresEstructuraGramaticaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 233, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        EliminarLenguaje.setSize(new java.awt.Dimension(270, 130));
+
+        jButton2.setText("Eliminar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout EliminarLenguajeLayout = new javax.swing.GroupLayout(EliminarLenguaje.getContentPane());
+        EliminarLenguaje.getContentPane().setLayout(EliminarLenguajeLayout);
+        EliminarLenguajeLayout.setHorizontalGroup(
+            EliminarLenguajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EliminarLenguajeLayout.createSequentialGroup()
+                .addGroup(EliminarLenguajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(EliminarLenguajeLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(LenguajesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(EliminarLenguajeLayout.createSequentialGroup()
+                        .addGap(82, 82, 82)
+                        .addComponent(jButton2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        EliminarLenguajeLayout.setVerticalGroup(
+            EliminarLenguajeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(EliminarLenguajeLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(LenguajesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addContainerGap(42, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -184,6 +269,11 @@ public class Editor extends javax.swing.JFrame {
         jMenu3.add(jMenuItem7);
 
         jMenuItem9.setText("Borrar Lenguaje");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuBar1.add(jMenu3);
@@ -272,18 +362,36 @@ public class Editor extends javax.swing.JFrame {
 
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         ((DefaultTableModel) TablaTokens.getModel()).setRowCount(0);
-        TextoErrores.setText("");
-        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getNombre(), ((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TextoErrores);
-        if(!mostrarErrores) this.ReporteErroresEstructuraGramatica.setVisible(true);
+        ((DefaultTableModel) TablaErrores.getModel()).setRowCount(0);
+        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getNombre(), ((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TablaErrores);
+        if(!mostrarErrores){
+            this.ReporteErroresEstructuraGramatica.setVisible(true);
+        }else{
+            cargarLenguajes();
+        }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
         if(((Tab)tabs.getSelectedComponent()) != null){
-            manager.compilarTexto(this.MenuLenguajes, ((Tab)tabs.getSelectedComponent()).getTexto().getText());
+            manager.compilarTexto(this.MenuLenguajes, (Tab)tabs.getSelectedComponent());
         }else{
             JOptionPane.showMessageDialog(null, "No hay ninguna pestaña con texto activa", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        this.LenguajesComboBox.removeAllItems();
+        for (String item : ArchivosManager.cargarNombresLenguajes()) {
+            this.LenguajesComboBox.addItem(item);
+        }
+        this.EliminarLenguaje.setVisible(true);
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ArchivosManager.eliminarLenguaje((String) LenguajesComboBox.getSelectedItem());
+        this.EliminarLenguaje.dispose();
+        cargarLenguajes();
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     public JMenu getMenuLenguajes(){ return this.MenuLenguajes; }
     
@@ -324,11 +432,16 @@ public class Editor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog EliminarLenguaje;
+    private javax.swing.JComboBox<String> LenguajesComboBox;
     private javax.swing.JMenu MenuLenguajes;
     private javax.swing.JDialog ReporteErroresEstructuraGramatica;
+    private javax.swing.JTable TablaErrores;
     private javax.swing.JTable TablaTokens;
-    private javax.swing.JTextArea TextoErrores;
     private javax.swing.JLabel informacionLabel;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
@@ -343,7 +456,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane tabs;
     // End of variables declaration//GEN-END:variables
 
@@ -370,5 +483,18 @@ public class Editor extends javax.swing.JFrame {
             @Override
             public void keyReleased(KeyEvent e) {}
         });
+    }
+
+    public void cargarLenguajes() {
+        MenuLenguajes.removeAll();
+        List<String> lenguajes =  ArchivosManager.cargarNombresLenguajes();
+        ButtonGroup grupo = new ButtonGroup();
+        for (int i = 0; i < lenguajes.size(); i++){
+            JRadioButtonMenuItem item = new JRadioButtonMenuItem(lenguajes.get(i));
+            if(i==0) item.setSelected(true);
+            item.setName(lenguajes.get(i));
+            grupo.add(item);
+            MenuLenguajes.add(item);
+        }
     }
 }

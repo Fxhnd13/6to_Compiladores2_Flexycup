@@ -13,9 +13,18 @@ public class Simbolo {
     
     private String[] primeros;
     private String simbolo;
+    private int linea, columna;
     private boolean lambda = false, terminal = false;
 
-    public Simbolo(String id, boolean b) {
+    public Simbolo(String id, int linea, int columna){
+        this.linea = linea;
+        this.columna = columna;
+        this.simbolo = id;
+    }
+    
+    public Simbolo(String id, boolean b, int linea, int columna) {
+        this.linea = linea;
+        this.columna = columna;
         this.simbolo = simbolo;
         this.terminal = terminal;
     }
@@ -50,6 +59,22 @@ public class Simbolo {
 
     public void setTerminal(boolean terminal) {
         this.terminal = terminal;
+    }
+
+    public int getLinea() {
+        return linea;
+    }
+
+    public void setLinea(int linea) {
+        this.linea = linea;
+    }
+
+    public int getColumna() {
+        return columna;
+    }
+
+    public void setColumna(int columna) {
+        this.columna = columna;
     }
     
 }

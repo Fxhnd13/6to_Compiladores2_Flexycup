@@ -95,15 +95,15 @@ public class ArchivosManager {
                     ObjectInputStream lectorObjeto = new ObjectInputStream(new FileInputStream(file));
                     lenguaje = (Lenguaje) lectorObjeto.readObject();
                 } catch (FileNotFoundException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "No se encontro ningun archivo de lenguajes.", "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (IOException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error en ArchivosManager/cargarLenguajes.", "Error", JOptionPane.ERROR_MESSAGE);
                 } catch (ClassNotFoundException ex) {
-                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Ha ocurrido un error en ArchivosManager/cargarLenguajes al castear el objeto.", "Error", JOptionPane.ERROR_MESSAGE);
                 }
                 
             }else{
-                JOptionPane.showMessageDialog(null, "No se encontraron lenguajes cargados anteriormente", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "No se encontro el lenguaje seleccionado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         
@@ -118,9 +118,9 @@ public class ArchivosManager {
                 ObjectOutputStream lectorObjeto = new ObjectOutputStream(new FileOutputStream(file));
                 lectorObjeto.writeObject(lenguaje);
             } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error no se encontro la ruta para guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
-                ex.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Ha ocurrido un error en ArchivosManager/guardarLenguajes.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
@@ -138,5 +138,19 @@ public class ArchivosManager {
         }
         
         return lenguajes;
+    }
+
+    static void eliminarLenguaje(String nombre) {
+        File file = new File("Repositorio_Lenguajes/");
+        if(!file.mkdir()){
+            file = new File("Repositorio_Lenguajes/"+nombre+".lngs");
+            if(file.exists()){
+                if(!file.delete()){
+                    JOptionPane.showMessageDialog(null, "No se logró eliminar el lenguaje seleccionado.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }else{
+                JOptionPane.showMessageDialog(null, "No se encontro el lenguaje seleccionado", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
     }
 }

@@ -47,5 +47,13 @@ public class TablaDeSimbolos {
         }
         return retorno;
     }
+
+    public List<Variable> getVariables() {
+        return variables;
+    }
+
+    public void setVariables(List<Variable> variables) {
+        this.variables = variables;
+    }
     
 }

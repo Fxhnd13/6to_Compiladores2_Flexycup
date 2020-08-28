@@ -1,5 +1,6 @@
 package analizadores.estructuraGramatica;
 
+import analizadores.objetos.ErrorAnalisis;
 import java.util.ArrayList;
 import java.util.List;
 import java_cup.runtime.Symbol;
@@ -35,12 +36,12 @@ EndOfLineComment     = "//" {InputCharacter}* {LineTerminator}?
 Comment = {TraditionalComment} | {EndOfLineComment}
 
 /* cadenas de texto */
-Cadena               = "\"" [^*] ~"\""
-JavaCode             = "{" [^*] ~"}"
+Cadena               = "\"" [^\"] ~"\""
+JavaCode             = "{" [^}] ~"}"
 
 %{
     
-    private List<String> errores;
+    private List<ErrorAnalisis> errores;
     private boolean leyendo = true;
     private DefaultTableModel tablaTokens;
 
@@ -58,11 +59,7 @@ JavaCode             = "{" [^*] ~"}"
         return simbolo;
     }
 
-    private void error(String lexema){
-        errores.add("Se encontro un caracter/simbolo desconocido en la linea: "+(yyline+1)+", columna: "+(yycolumn+1)+" con el simbolo "+lexema);
-    }
-
-    public List<String> getErrores(){
+    public List<ErrorAnalisis> getErrores(){
         return errores;
     }
 
@@ -79,7 +76,7 @@ JavaCode             = "{" [^*] ~"}"
 %}
 
 %init{
-    errores = new ArrayList<String>();
+    errores = new ArrayList<ErrorAnalisis>();
 %init}
 
 %eof{
@@ -113,7 +110,7 @@ JavaCode             = "{" [^*] ~"}"
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
 
 /* error fallback */
-    [^]                                     { errores.add("Se encontro un caracter no definido en <linea: "+(yyline+1)+",columna: "+(yycolumn+1)+" con el caracter: "+yytext());}
+    [^]                                     { errores.add(new ErrorAnalisis("Lexico",yytext(),"Caracter no aceptado",yyline+1, yycolumn+1));}
 }
 
 <JAVACODE>{
@@ -125,7 +122,8 @@ JavaCode             = "{" [^*] ~"}"
 
     "%%"                                    { yybegin(DECLARACION_SIMBOLOS); return symbol(yyline+1, yycolumn+1, yytext(), sym.SEPARADOR);}
     ("["{L}"-"{L}"]")                       { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_LETRAS_MIN);}
-    ("["{D}"-"{D}"]")                        { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);}
+    ("["{Digito}"-"{Digito}"]")             { return symbol(yyline+1, yycolumn+1, yytext(), sym.RANGO_NUMEROS);}
+    {Cadena}                                { return symbol(yyline+1, yycolumn+1, yytext(), sym.CADENA);}
     "="                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.ASIGNACION_ER); }
     "+"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.UNA_O_MAS_VECES);}
     "*"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.CERO_O_MAS_VECES);}
@@ -142,8 +140,7 @@ JavaCode             = "{" [^*] ~"}"
     "&"                                     { return symbol(yyline+1, yycolumn+1, yytext(), sym.IGNORAR);}
     {IntegerLiteral}                        { return symbol(yyline+1, yycolumn+1, yytext(), sym.ENTERO);}
     ({IntegerLiteral}("\."{Digito})*)       { return symbol(yyline+1, yycolumn+1, yytext(), sym.VERSION);}
-    ({L}|("\_"))({L}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID);}
-    {Cadena}                                { return symbol(yyline+1, yycolumn+1, yytext(), sym.CADENA);}
+    ({Lmin}|("\_"))({Lmin}|{Digito}|("\_"))*      { return symbol(yyline+1, yycolumn+1, yytext(), sym.ID_T);}
     {Comment}                               { /* se ignoran los comentarios */}
     {LineTerminator}                        { /* se ignoran los saltos de linea */}
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
@@ -169,7 +166,7 @@ JavaCode             = "{" [^*] ~"}"
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
     
 /* error fallback */
-    [^]                                     { errores.add("Se encontro un caracter no definido en <linea: "+(yyline+1)+",columna: "+(yycolumn+1)+" con el caracter: "+yytext());}
+    [^]                                     { errores.add(new ErrorAnalisis("Lexico",yytext(),"Caracter no aceptado",yyline+1, yycolumn+1)); }
 }
 
 <REGLAS_SEMANTICAS>{
@@ -184,5 +181,5 @@ JavaCode             = "{" [^*] ~"}"
     {WhiteSpace}                            {   /* Ignora los espacios en blanco */  }
 
 /* error fallback */
-    [^]                                     { errores.add("Se encontro un caracter no definido en <linea: "+(yyline+1)+",columna: "+(yycolumn+1)+" con el caracter: "+yytext());}
+    [^]                                     { errores.add(new ErrorAnalisis("Lexico",yytext(),"Caracter no aceptado",yyline+1, yycolumn+1)); }
 }
