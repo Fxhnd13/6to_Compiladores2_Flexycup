@@ -117,6 +117,7 @@ public class ArchivosManager {
             try {
                 ObjectOutputStream lectorObjeto = new ObjectOutputStream(new FileOutputStream(file));
                 lectorObjeto.writeObject(lenguaje);
+                JOptionPane.showMessageDialog(null, "Se ha guardado con exito el nuevo lenguaje.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error no se encontro la ruta para guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {

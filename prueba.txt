@@ -31,16 +31,13 @@ pr_decimal = pr_entero((.)pr_entero)?;
  
 terminal por, div; 
 terminal mas, menos; 
-terminal enter; 
+terminal pr_entero; 
  
-no terminal A, B; 
-no terminal S;
+no terminal E;
 
 %%
 
-S :: E:val {printf("Resultado = %d",val);};
 E :: E:val menos E:val2 {RESULT=val - val2;}; 
 E :: E:val mas E:val2 {RESULT=val + val2;}; 
 E :: E:val por E:val2 {RESULT=val * val2;}; 
 E :: E:val div E:val2 {RESULT=val / val2;}; 
-E :: enter:val {RESULT=val;}; 

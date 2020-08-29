@@ -1271,7 +1271,9 @@ class CUP$ParserGramatica$actions {
                                                 if(simbolosGramatica.getVariable(id) != null){
                                                     listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
+                                                    int precedencia = 0;
+                                                    if(listado.size() >= 1) precedencia = listado.get(listado.size()-1).getPrecedencia()+1;
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright, precedencia));
                                                 }
                                                 RESULT = listado;
                                             
@@ -1291,7 +1293,12 @@ class CUP$ParserGramatica$actions {
                                                 if(simbolosGramatica.getVariable(id) != null){
                                                     listErrores.add(new ErrorAnalisis("Semantico",id,"Ya existe un simbolo declarado con el identificador ingresado.",idleft,idright));
                                                 }else{
-                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright));
+                                                    int precedencia = 0;
+                                                    for(Variable variable : simbolosGramatica.getVariables()){
+                                                        Simbolo simbolo = (Simbolo) variable.getValor();
+                                                        if(simbolo.isTerminal()) precedencia = simbolo.getPrecedencia()+1;
+                                                    }
+                                                    if(id != null) listado.add(new Simbolo(id, idleft, idright, precedencia));
                                                 }
                                                 RESULT = listado;
                                             

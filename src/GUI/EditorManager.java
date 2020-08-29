@@ -113,7 +113,7 @@ public class EditorManager {
         }
     }
     
-    public boolean parsearSecciones(String nombreLenguaje, String texto, JTable TablaTokens, JTable TablaErrores) {
+    public boolean parsearSecciones(String texto, JTable TablaTokens, JTable TablaErrores) {
         boolean valor = false;
         try {
             LexerGramatica lexer = new LexerGramatica(new StringReader(texto));
@@ -124,7 +124,7 @@ public class EditorManager {
             if(parser.getErrores().isEmpty()){
                 parser.getGeneradorAutomata().calcularArbol();
                 parser.getGeneradorAutomata().crearEstadosAutomata();
-                Lenguaje lenguaje = new Lenguaje(parser.getInformacion(), nombreLenguaje, parser.getGeneradorAutomata().getAutomata(), null);
+                Lenguaje lenguaje = new Lenguaje(parser.getInformacion(), parser.getGeneradorAutomata().getAutomata(), null);
                 ArchivosManager.guardarLenguaje(lenguaje);
             }else{
                 DefaultTableModel modelo = (DefaultTableModel) TablaErrores.getModel();

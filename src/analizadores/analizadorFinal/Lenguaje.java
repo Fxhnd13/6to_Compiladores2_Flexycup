@@ -20,9 +20,9 @@ public class Lenguaje implements Serializable {
     private Lexer lexer = new Lexer();
     private Parser parser = new Parser();
 
-    public Lenguaje(Informacion informacion, String nombre, Automata automata, Object object) {
+    public Lenguaje(Informacion informacion, Automata automata, Object object) {
         this.informacion = informacion;
-        this.nombre = nombre;
+        this.nombre = informacion.getNombre();
         this.lexer.setAutomata(automata);
     }
 

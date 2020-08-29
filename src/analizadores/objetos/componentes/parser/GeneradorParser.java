@@ -8,6 +8,7 @@ package analizadores.objetos.componentes.parser;
 import analizadores.objetos.ErrorAnalisis;
 import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.Variable;
+import analizadores.objetos.componentes.parser.acciones.Accion;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,9 +19,12 @@ import java.util.List;
 public class GeneradorParser {
     
     private List<Produccion> producciones;
+    private List<Accion[]> acciones, irA;
+    private TablaDeSimbolos simbolos;
     
     public GeneradorParser(){
         this.producciones = new ArrayList();
+        this.simbolos = new TablaDeSimbolos();
     }
     
     public void verificarIntegridad(List<ErrorAnalisis> errores, TablaDeSimbolos expresionRegulares, TablaDeSimbolos simbolos){
@@ -42,14 +46,34 @@ public class GeneradorParser {
                 }
             }
         }
+        if(errores.isEmpty()) this.simbolos = simbolos;
     }
 
+    public List<Simbolo> getSimbolosT_NT(int opcion){
+        List<Simbolo> simbolos = new ArrayList();
+        for (Variable variable : this.simbolos.getVariables()) {
+            Simbolo simbolo = (Simbolo) variable.getValor();
+            if(opcion == 0){
+                if(simbolo.isTerminal()) simbolos.add(simbolo);
+            }else{
+                if(!simbolo.isTerminal()) simbolos.add(simbolo);
+            }
+        }
+        return simbolos;
+    }
+    
     public List<Produccion> getProducciones() {
         return producciones;
     }
 
     public void setProducciones(List<Produccion> producciones) {
         this.producciones = producciones;
+    }
+
+    public void escribirProducciones() {
+        for (Variable variable : simbolos.getVariables()) {
+            System.out.println(((Simbolo)variable.getValor()).toString());
+        }
     }
     
 }

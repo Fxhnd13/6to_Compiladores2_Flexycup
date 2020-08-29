@@ -363,7 +363,7 @@ public class Editor extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         ((DefaultTableModel) TablaTokens.getModel()).setRowCount(0);
         ((DefaultTableModel) TablaErrores.getModel()).setRowCount(0);
-        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getNombre(), ((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TablaErrores);
+        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TablaErrores);
         if(!mostrarErrores){
             this.ReporteErroresEstructuraGramatica.setVisible(true);
         }else{

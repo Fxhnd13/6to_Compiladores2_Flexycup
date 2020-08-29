@@ -13,7 +13,7 @@ public class Simbolo {
     
     private String[] primeros;
     private String simbolo;
-    private int linea, columna;
+    private int linea, columna, precedencia;
     private boolean lambda = false, terminal = false;
 
     public Simbolo(String id, int linea, int columna){
@@ -22,11 +22,9 @@ public class Simbolo {
         this.simbolo = id;
     }
     
-    public Simbolo(String id, boolean b, int linea, int columna) {
-        this.linea = linea;
-        this.columna = columna;
-        this.simbolo = simbolo;
-        this.terminal = terminal;
+    public Simbolo(String id, int linea, int columna, int precedencia){
+        this(id, linea, columna);
+        this.precedencia = precedencia;
     }
     
     public String[] getPrimeros() {
@@ -75,6 +73,19 @@ public class Simbolo {
 
     public void setColumna(int columna) {
         this.columna = columna;
+    }
+
+    public int getPrecedencia() {
+        return precedencia;
+    }
+
+    public void setPrecedencia(int precedencia) {
+        this.precedencia = precedencia;
+    }
+
+    @Override
+    public String toString() {
+        return "Simbolo{" + "simbolo=" + simbolo + ", linea=" + linea + ", columna=" + columna + ", precedencia=" + precedencia + ", lambda=" + lambda + ", terminal=" + terminal + '}';
     }
     
 }
