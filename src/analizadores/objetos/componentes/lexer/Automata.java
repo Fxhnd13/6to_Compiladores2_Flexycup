@@ -72,7 +72,7 @@ public class Automata implements Serializable {
         }else{
             tipoToken = this.estados.get(this.estadoActual).getTipoToken();
         }
-        this.tokens.add(new Token(this.linea, this.columna-this.buffer, lexema, tipoToken));
+        if(!tipoToken.equals("&")) this.tokens.add(new Token(this.linea, this.columna-this.buffer, lexema, tipoToken));
         this.cadena = this.cadena.substring(this.buffer, this.cadena.length());
         this.reiniciarAutomata();
     }

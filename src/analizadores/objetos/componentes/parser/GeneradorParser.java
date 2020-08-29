@@ -70,7 +70,7 @@ public class GeneradorParser {
         this.producciones = producciones;
     }
 
-    public void escribirProducciones() {
+    public void escribirSimbolos() {
         for (Variable variable : simbolos.getVariables()) {
             System.out.println(((Simbolo)variable.getValor()).toString());
         }

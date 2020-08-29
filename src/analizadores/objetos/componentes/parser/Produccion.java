@@ -40,7 +40,7 @@ public class Produccion {
     public void setSimbolosDerecha(List<Simbolo> simbolosDerecha) {
         this.simbolosDerecha = simbolosDerecha;
     }
-
+    
     @Override
     public String toString() {
         String simbolosDerechaCadena = "{";

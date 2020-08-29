@@ -673,6 +673,10 @@ class CUP$ParserGramatica$actions {
                                                     nodo = new NodoHoja();
                                                 }else{
                                                     generadorAutomata.asignarTipoToken(identificador, nodo);
+                                                    for(String cadena : cadenasTemporales){
+                                                        generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, cadena));
+                                                    }
+                                                    cadenasTemporales.clear();
                                                 }
                                                 RESULT = nodo;
                                             
@@ -812,6 +816,7 @@ class CUP$ParserGramatica$actions {
               Nodo RESULT =null;
 		
                                                 Nodo nodo = new NodoHoja('\n');
+                                                cadenasTemporales.add("\n");
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",18, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -824,6 +829,7 @@ class CUP$ParserGramatica$actions {
               Nodo RESULT =null;
 		
                                                 Nodo nodo = new NodoHoja('\t');
+                                                cadenasTemporales.add("\t");
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",18, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
@@ -836,6 +842,7 @@ class CUP$ParserGramatica$actions {
               Nodo RESULT =null;
 		
                                                 Nodo nodo = new NodoHoja('\b');
+                                                cadenasTemporales.add("\b");
                                                 RESULT = nodo;
                                             
               CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("expresionRegular",18, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);

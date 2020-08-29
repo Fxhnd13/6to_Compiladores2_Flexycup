@@ -206,6 +206,10 @@ declaracionExpresionRegular::=              ID_T:identificador ASIGNACION_ER exp
                                                     nodo = new NodoHoja();
                                                 }else{
                                                     generadorAutomata.asignarTipoToken(identificador, nodo);
+                                                    for(String cadena : cadenasTemporales){
+                                                        generadorAutomata.getAutomata().getPalabrasReservadas().add(new PR(identificador, cadena));
+                                                    }
+                                                    cadenasTemporales.clear();
                                                 }
                                                 RESULT = nodo;
                                             :}
@@ -248,14 +252,17 @@ expresionRegular::=                         expresionRegular:expresion PUEDE_O_N
                                             :}
                                             |SALTO_DE_LINEA {:
                                                 Nodo nodo = new NodoHoja('\n');
+                                                cadenasTemporales.add("\n");
                                                 RESULT = nodo;
                                             :}
                                             |TABULACION {:
                                                 Nodo nodo = new NodoHoja('\t');
+                                                cadenasTemporales.add("\t");
                                                 RESULT = nodo;
                                             :}
                                             |RETORNO {:
                                                 Nodo nodo = new NodoHoja('\b');
+                                                cadenasTemporales.add("\b");
                                                 RESULT = nodo;
                                             :}
                                             |COR_A expresionRegular:expresion COR_C {:

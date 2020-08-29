@@ -5,21 +5,24 @@
  */
 package analizadores.objetos.componentes.parser;
 
+import analizadores.objetos.componentes.Utilidades;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author jose_
  */
 public class Cerradura {
  
-    private Produccion produccion;
     private String[] simbolosPreAnalisis;
-    private int posicionPunto;
+    private int posicionPunto, produccion;
 
-    public Produccion getProduccion() {
+    public int getProduccion() {
         return produccion;
     }
 
-    public void setProduccion(Produccion produccion) {
+    public void setProduccion(int produccion) {
         this.produccion = produccion;
     }
 
@@ -39,4 +42,21 @@ public class Cerradura {
         this.posicionPunto = posicionPunto;
     }
     
+    private void agregarSimbolosPreAnalisis(String[] simbolos){
+        if(this.simbolosPreAnalisis != null){
+            List<String> temporal = new ArrayList();
+            for (String simbolo : this.simbolosPreAnalisis) {
+                temporal.add(simbolo);
+            }
+            for (String simbolo : simbolos) {
+                if(!Utilidades.existe(simbolo, temporal)) temporal.add(simbolo);
+            }
+            this.simbolosPreAnalisis = new String[temporal.size()];
+            for (int i = 0; i < temporal.size(); i++) {
+                this.simbolosPreAnalisis[i] = temporal.get(i);
+            }
+        }else{
+            this.simbolosPreAnalisis = simbolos;
+        }
+    }
 }

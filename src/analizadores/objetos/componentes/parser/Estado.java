@@ -22,12 +22,4 @@ public class Estado {
     public void setCerraduras(List<Cerradura> cerraduras) {
         this.cerraduras = cerraduras;
     }
-    
-    public Cerradura getNucleo(){
-        if(this.cerraduras!= null && !this.cerraduras.isEmpty()){
-            return this.cerraduras.get(0);
-        }else{
-            return null;
-        }
-    }
 }

@@ -123,4 +123,15 @@ public class Utilidades {
         }
         return retorno;
     }
+
+    public static boolean existe(String simbolo, List<String> arreglo) {
+        boolean valor = false;
+        for (String n : arreglo) {
+            if(n.equals(simbolo)){
+                valor = true;
+                break;
+            }
+        }
+        return valor;
+    }
 }
