@@ -76,10 +76,10 @@ public class Cerradura {
     public String toString() {
         String cadenaSimbolos = "[";
         for (int i = 0; i < simbolosPreAnalisis.length; i++) {
-            cadenaSimbolos+=simbolosPreAnalisis;
+            cadenaSimbolos+=simbolosPreAnalisis[i];
             if((i+1)< simbolosPreAnalisis.length) cadenaSimbolos+=",";
         }
-        return "Cerradura{" + "simbolosPreAnalisis=" + simbolosPreAnalisis + "], posicionPunto=" + posicionPunto + ", produccion=" + produccion + '}';
+        return "Cerradura{" + "simbolosPreAnalisis=" + cadenaSimbolos + "], posicionPunto=" + posicionPunto + ", produccion=" + produccion + '}';
     }
     
 }

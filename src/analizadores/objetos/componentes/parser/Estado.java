@@ -5,6 +5,7 @@
  */
 package analizadores.objetos.componentes.parser;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,6 +16,10 @@ public class Estado {
     
     List<Cerradura> cerraduras;
 
+    public Estado(){
+        this.cerraduras = new ArrayList();
+    }
+    
     public List<Cerradura> getCerraduras() {
         return cerraduras;
     }
@@ -29,7 +34,7 @@ public class Estado {
             cadenaCerraduras+="          "+cerraduras.get(i).toString();
             if((i+1) < cerraduras.size()) cadenaCerraduras+="\n";
         }
-        return "Estado{" + "    cerraduras=" + cerraduras + "\n}";
+        return "Estado{" + "    cerraduras=" + cadenaCerraduras + "\n}";
     }
     
     

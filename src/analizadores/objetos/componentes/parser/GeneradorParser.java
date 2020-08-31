@@ -51,7 +51,7 @@ public class GeneradorParser {
         return estado;
     }
     
-    private List<Cerradura> generarCerraduraConsecuente(List<Cerradura> cerraduras, Cerradura cerradura){
+    private void generarCerraduraConsecuente(List<Cerradura> cerraduras, Cerradura cerradura){
         //obtenemos el simbolo que precede al punto en la cerradura que vamos a evaluar
         Simbolo simbolo = (Simbolo) this.simbolos.getVariable(this.producciones.get(cerradura.getProduccion()).getSimbolosDerecha().get(cerradura.getPosicionPunto()).getSimbolo()).getValor();
         //si es un no terminal, es decir, se agregan mas cerraduras al estado
@@ -63,23 +63,22 @@ public class GeneradorParser {
                     //obtenemos el simbolo que se encuentra un espacio delante del punto
                     Simbolo simboloT = (Simbolo) this.simbolos.getVariable(this.producciones.get(cerradura.getProduccion()).getSimbolosDerecha().get(cerradura.getPosicionPunto()+1).getSimbolo()).getValor();
                     //si el simbolo es terminal
-                    if(!simboloT.isTerminal() && simbolo.isLambda()){
+                    if(!simboloT.isTerminal() && simboloT.isLambda()){
                         preAnalisis = agregarSimbolosPreAnalisis(preAnalisis, simboloT.getPrimeros());
                         preAnalisis = agregarSimbolosPreAnalisis(preAnalisis, cerradura.getSimbolosPreAnalisis());
                     }else{
-                        preAnalisis = simbolo.getPrimeros();
+                        preAnalisis = simboloT.getPrimeros();
                     }
                 }else{
                     preAnalisis = cerradura.getSimbolosPreAnalisis();
                 }
                 Cerradura temporal = new Cerradura(produccion.getId(),0,preAnalisis);
-                if(existeCerradura(temporal, cerraduras)==(-1)){
+                if(existeCerraduraExacta(temporal, cerraduras)==(-1)){
                     cerraduras.add(temporal);
                     generarCerraduraConsecuente(cerraduras, temporal);
                 }
             }
         }
-        return cerraduras;
     }
     
     private List<Produccion> produccionesDelSimboloNoTerminal(String simbolo){
@@ -111,33 +110,44 @@ public class GeneradorParser {
     }
     
     private boolean compararEstados(Estado estadoP, Estado estado){
-        boolean valor = true;
         if(estadoP.getCerraduras().size() == estado.getCerraduras().size()){
             for (Cerradura cerradura : estadoP.getCerraduras()) {
-                if(existeCerradura(cerradura, estado.getCerraduras())==(-1)) valor = false;
+                if(existeCerraduraExacta(cerradura, estado.getCerraduras())==(-1)) return false;
             }
         }else{
-            valor = false;
+            return false;
         }
-        return valor;
+        return true;
     }
     
     private int existeCerradura(Cerradura cerradura, List<Cerradura> cerraduras){
-        int valor = -1;
         for (int i = 0; i < cerraduras.size(); i++) {
-            if(compararCerraduras(cerradura, cerraduras.get(i))) valor = i;
+            if(compararCerraduras(cerradura, cerraduras.get(i))) return i;
         }
-        return valor;
+        return -1;
     }
     
     private boolean compararCerraduras(Cerradura cerraduraP, Cerradura cerradura){
-        boolean valor = false;
+        if(cerraduraP.getProduccion() == cerradura.getProduccion()){
+            if(cerraduraP.getPosicionPunto() == cerradura.getPosicionPunto()) return true;
+        }
+        return false;
+    }
+    
+    private int existeCerraduraExacta(Cerradura cerradura, List<Cerradura> cerraduras){
+        for (int i = 0; i < cerraduras.size(); i++) {
+            if(compararCerradurasExactas(cerradura, cerraduras.get(i))) return i;
+        }
+        return -1;
+    }
+    
+    private boolean compararCerradurasExactas(Cerradura cerraduraP, Cerradura cerradura){
         if(cerraduraP.getProduccion() == cerradura.getProduccion()){
             if(cerraduraP.getPosicionPunto() == cerradura.getPosicionPunto()){
-                if(Arrays.equals(cerraduraP.getSimbolosPreAnalisis(), cerradura.getSimbolosPreAnalisis())) valor = true;
+                if(Arrays.equals(cerraduraP.getSimbolosPreAnalisis(), cerradura.getSimbolosPreAnalisis())) return true;
             }
         }
-        return valor;
+        return false;
     }
     
     private List<Cerradura> getNucleoDe(Estado estado){
@@ -210,6 +220,10 @@ public class GeneradorParser {
         derechaExtension.add(this.producciones.get(0).getSimboloIzquierda());
         derechaExtension.add(new Simbolo("FinCadena",0,0));
         this.producciones.add(0, new Produccion(new Simbolo("InicioCadena",0,0), (ArrayList) derechaExtension));
+        this.simbolos.addVariable(new Variable("InicioCadena",new Simbolo("InicioCadena",0,0)));
+        Variable variable = new Variable("FinCadena", new Simbolo("FinCadena",0,0,10000));
+        ((Simbolo)variable.getValor()).setTerminal(true);
+        this.simbolos.addVariable(variable);
         for (int i = 0; i < this.producciones.size(); i++) {
             this.producciones.get(i).setId(i);
         }

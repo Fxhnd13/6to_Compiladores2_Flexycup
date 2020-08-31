@@ -40,7 +40,7 @@ no terminal E, T,F;
 
 E :: E mas T;
 E :: T;
-T :: T por F;
+T :: F por T;
 T :: F;
 F :: pr_entero;
 F :: parentesis_a E parentesis_c;

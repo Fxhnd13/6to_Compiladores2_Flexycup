@@ -6,6 +6,7 @@
 package analizadores.objetos.componentes.parser;
 
 import analizadores.objetos.componentes.parser.acciones.Accion;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
@@ -20,6 +21,13 @@ public class AutomataParser {
     private Stack<Integer> pilaEstados;
     private Stack<String> pilaSimbolos;
 
+    public AutomataParser(){
+        this.acciones = new ArrayList();
+        this.irA = new ArrayList();
+        this.estados = new ArrayList();
+        this.pilaEstados = new Stack();
+        this.pilaSimbolos = new Stack();
+    }
     public List<Accion[]> getAcciones() {
         return acciones;
     }
