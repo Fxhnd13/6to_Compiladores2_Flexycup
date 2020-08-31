@@ -22,4 +22,15 @@ public class Estado {
     public void setCerraduras(List<Cerradura> cerraduras) {
         this.cerraduras = cerraduras;
     }
+    @Override
+    public String toString() {
+        String cadenaCerraduras = "";
+        for (int i = 0; i < cerraduras.size(); i++) {
+            cadenaCerraduras+="          "+cerraduras.get(i).toString();
+            if((i+1) < cerraduras.size()) cadenaCerraduras+="\n";
+        }
+        return "Estado{" + "    cerraduras=" + cerraduras + "\n}";
+    }
+    
+    
 }

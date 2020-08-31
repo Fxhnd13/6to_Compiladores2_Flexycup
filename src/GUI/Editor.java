@@ -91,9 +91,10 @@ public class Editor extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(TablaTokens);
         if (TablaTokens.getColumnModel().getColumnCount() > 0) {
-            TablaTokens.getColumnModel().getColumn(0).setPreferredWidth(100);
-            TablaTokens.getColumnModel().getColumn(1).setPreferredWidth(130);
-            TablaTokens.getColumnModel().getColumn(2).setPreferredWidth(830);
+            TablaTokens.getColumnModel().getColumn(0).setPreferredWidth(200);
+            TablaTokens.getColumnModel().getColumn(1).setPreferredWidth(200);
+            TablaTokens.getColumnModel().getColumn(2).setPreferredWidth(80);
+            TablaTokens.getColumnModel().getColumn(3).setPreferredWidth(80);
         }
 
         TablaErrores.setModel(new javax.swing.table.DefaultTableModel(
@@ -122,9 +123,9 @@ public class Editor extends javax.swing.JFrame {
         TablaErrores.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         jScrollPane3.setViewportView(TablaErrores);
         if (TablaErrores.getColumnModel().getColumnCount() > 0) {
-            TablaErrores.getColumnModel().getColumn(0).setPreferredWidth(100);
-            TablaErrores.getColumnModel().getColumn(1).setPreferredWidth(130);
-            TablaErrores.getColumnModel().getColumn(2).setPreferredWidth(830);
+            TablaErrores.getColumnModel().getColumn(0).setPreferredWidth(120);
+            TablaErrores.getColumnModel().getColumn(1).setPreferredWidth(135);
+            TablaErrores.getColumnModel().getColumn(2).setPreferredWidth(840);
         }
 
         jLabel1.setText("Listado de tokens");

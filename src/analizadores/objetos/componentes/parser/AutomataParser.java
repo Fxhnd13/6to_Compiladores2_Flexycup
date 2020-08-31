@@ -15,9 +15,50 @@ import java.util.Stack;
  */
 public class AutomataParser {
     
-    private Accion[][] acciones;
+    private List<Accion[]> acciones, irA;
     private List<Estado> estados;
     private Stack<Integer> pilaEstados;
     private Stack<String> pilaSimbolos;
+
+    public List<Accion[]> getAcciones() {
+        return acciones;
+    }
+
+    public void setAcciones(List<Accion[]> acciones) {
+        this.acciones = acciones;
+    }
+
+    public List<Accion[]> getIrA() {
+        return irA;
+    }
+
+    public void setIrA(List<Accion[]> irA) {
+        this.irA = irA;
+    }
+
+    public List<Estado> getEstados() {
+        return estados;
+    }
+
+    public void setEstados(List<Estado> estados) {
+        this.estados = estados;
+    }
+
+    public Stack<Integer> getPilaEstados() {
+        return pilaEstados;
+    }
+
+    public void setPilaEstados(Stack<Integer> pilaEstados) {
+        this.pilaEstados = pilaEstados;
+    }
+
+    public Stack<String> getPilaSimbolos() {
+        return pilaSimbolos;
+    }
+
+    public void setPilaSimbolos(Stack<String> pilaSimbolos) {
+        this.pilaSimbolos = pilaSimbolos;
+    }
+    
     
 }

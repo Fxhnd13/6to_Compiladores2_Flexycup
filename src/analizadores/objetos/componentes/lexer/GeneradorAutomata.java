@@ -52,11 +52,15 @@ public class GeneradorAutomata {
     
     public void crearEstadosAutomata(){
         int indiceEstadoActual = 0;
+        
+        //Aqui agregamos el nodo de "aceptacion"
         int idFinal = ((NodoHoja)((NodoConcat)expresionRegular).getDerecho()).getId();
         Estado estado = new Estado(expresionRegular.primeros());
         if(estado.getIdNodosComponentes()[estado.getIdNodosComponentes().length-1] == idFinal){
             estado.setEstadoFinal(true);
         }
+        
+        //agregamos al automata el primer estado
         automata.getEstados().add(estado);
         while(indiceEstadoActual < automata.getEstados().size()){
             

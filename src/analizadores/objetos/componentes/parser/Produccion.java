@@ -13,7 +13,8 @@ import java.util.List;
  * @author jose_
  */
 public class Produccion {
-    
+
+    private int id;
     private Simbolo simboloIzquierda;
     private List<Simbolo> simbolosDerecha;
 
@@ -39,6 +40,14 @@ public class Produccion {
 
     public void setSimbolosDerecha(List<Simbolo> simbolosDerecha) {
         this.simbolosDerecha = simbolosDerecha;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     @Override

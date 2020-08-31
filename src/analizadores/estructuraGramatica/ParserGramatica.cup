@@ -357,7 +357,7 @@ produccion::=                               ID:parteIzquierda ASIGNACION_GRAMA l
                                                     generadorParser.getProducciones().add(produccion);
                                                 }
                                             :}
-                                            |ID:parteIzquierda FIN_DE_LINEA {:
+                                            |ID:parteIzquierda ASIGNACION_GRAMA FIN_DE_LINEA {:
                                                 if(parteIzquierda != null){
                                                     Produccion produccion = new Produccion(new Simbolo(parteIzquierda,parteIzquierdaleft,parteIzquierdaright), new ArrayList<Simbolo>());
                                                     generadorParser.getProducciones().add(produccion);

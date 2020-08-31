@@ -105,11 +105,15 @@ public class EditorManager {
     }
 
     void guardarTab(JTabbedPane tabs) {
-        Tab tab = (Tab) tabs.getSelectedComponent();
-        if(tab.getOrigen() != null){
-            ArchivosManager.guardarArchivo(tab, tab.getOrigen());
+        if(tabs.getSelectedComponent() != null){
+            Tab tab = (Tab) tabs.getSelectedComponent();
+            if(tab.getOrigen() != null){
+                ArchivosManager.guardarArchivo(tab, tab.getOrigen());
+            }else{
+                ArchivosManager.guardarComo(tab, true);
+            }
         }else{
-            ArchivosManager.guardarComo(tab, true);
+            JOptionPane.showMessageDialog(null, "No se tiene ninguna pestaña activa", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -122,8 +126,12 @@ public class EditorManager {
             parser.parse();
             parser.getGeneradorParser().verificarIntegridad(parser.getErrores(), parser.getTablaDeER(), parser.getTablaDeSimbolosGramaticales());
             if(parser.getErrores().isEmpty()){
+                valor = true;
                 parser.getGeneradorAutomata().calcularArbol();
                 parser.getGeneradorAutomata().crearEstadosAutomata();
+                parser.getGeneradorParser().generarEstados();
+                parser.getGeneradorParser().escribirSimbolos();
+                parser.getGeneradorParser().escribirEstados();
                 Lenguaje lenguaje = new Lenguaje(parser.getInformacion(), parser.getGeneradorAutomata().getAutomata(), null);
                 ArchivosManager.guardarLenguaje(lenguaje);
             }else{
@@ -133,9 +141,9 @@ public class EditorManager {
                 }
                 TablaErrores.setModel(modelo);
             }
-            valor = parser.getErrores().isEmpty();
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "Error EditorManager/ParsearSeccion", "Error", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "Error EditorManager/ParsearSeccion", "Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
         return valor;
     }

@@ -18,6 +18,18 @@ public class Cerradura {
     private String[] simbolosPreAnalisis;
     private int posicionPunto, produccion;
 
+    public Cerradura(Cerradura cerradura){
+        this.posicionPunto = cerradura.getPosicionPunto();
+        this.produccion = cerradura.getProduccion();
+        this.simbolosPreAnalisis = cerradura.getSimbolosPreAnalisis();
+    }
+    
+    public Cerradura(int produccion, int posicionPunto, String[] simbolosPreAnalisis){
+        this.produccion = produccion;
+        this.posicionPunto = posicionPunto;
+        this.simbolosPreAnalisis = simbolosPreAnalisis;
+    }
+    
     public int getProduccion() {
         return produccion;
     }
@@ -59,4 +71,15 @@ public class Cerradura {
             this.simbolosPreAnalisis = simbolos;
         }
     }
+
+    @Override
+    public String toString() {
+        String cadenaSimbolos = "[";
+        for (int i = 0; i < simbolosPreAnalisis.length; i++) {
+            cadenaSimbolos+=simbolosPreAnalisis;
+            if((i+1)< simbolosPreAnalisis.length) cadenaSimbolos+=",";
+        }
+        return "Cerradura{" + "simbolosPreAnalisis=" + simbolosPreAnalisis + "], posicionPunto=" + posicionPunto + ", produccion=" + produccion + '}';
+    }
+    
 }

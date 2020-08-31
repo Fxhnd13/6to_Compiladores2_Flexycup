@@ -58,7 +58,7 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\002\004\005\000\002\004\005\000\002\005\004\000\002" +
     "\005\003\000\002\006\006\000\002\006\007\000\002\006" +
     "\004\000\002\007\004\000\002\007\003\000\002\010\007" +
-    "\000\002\010\004\000\002\010\004\000\002\016\004\000" +
+    "\000\002\010\005\000\002\010\004\000\002\016\004\000" +
     "\002\016\003\000\002\021\005\000\002\021\003\000\002" +
     "\013\004\000\002\013\003\000\002\011\003\000\002\011" +
     "\003\000\002\011\003\000\002\011\002\000\002\017\005" +
@@ -186,15 +186,15 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\000\012\003\uffda\014\uffda\042\uffda\043\uffda\001\002\000" +
     "\006\026\uffc8\047\uffc8\001\002\000\012\003\uffdc\014\uffdc" +
     "\042\uffdc\043\uffdc\001\002\000\004\026\144\001\002\000" +
-    "\006\003\125\037\123\001\002\000\006\012\131\026\132" +
-    "\001\002\000\010\002\uffde\003\125\037\123\001\002\000" +
-    "\004\026\127\001\002\000\010\002\uffd6\003\uffd6\037\uffd6" +
-    "\001\002\000\010\002\uffd3\003\uffd3\037\uffd3\001\002\000" +
-    "\010\002\uffd7\003\uffd7\037\uffd7\001\002\000\004\037\133" +
-    "\001\002\000\010\002\uffd4\003\uffd4\037\uffd4\001\002\000" +
-    "\012\011\142\026\uffcf\034\uffcf\037\uffcf\001\002\000\010" +
-    "\026\uffd1\034\uffd1\037\uffd1\001\002\000\010\026\uffc3\034" +
-    "\137\037\133\001\002\000\010\026\uffd2\034\uffd2\037\uffd2" +
+    "\006\003\125\037\123\001\002\000\004\012\131\001\002" +
+    "\000\010\002\uffde\003\125\037\123\001\002\000\004\026" +
+    "\127\001\002\000\010\002\uffd6\003\uffd6\037\uffd6\001\002" +
+    "\000\010\002\uffd3\003\uffd3\037\uffd3\001\002\000\010\002" +
+    "\uffd7\003\uffd7\037\uffd7\001\002\000\006\026\135\037\132" +
+    "\001\002\000\012\011\142\026\uffcf\034\uffcf\037\uffcf\001" +
+    "\002\000\010\026\uffd1\034\uffd1\037\uffd1\001\002\000\010" +
+    "\026\uffc3\034\137\037\132\001\002\000\010\002\uffd4\003" +
+    "\uffd4\037\uffd4\001\002\000\010\026\uffd2\034\uffd2\037\uffd2" +
     "\001\002\000\004\026\uffc4\001\002\000\004\026\141\001" +
     "\002\000\010\002\uffd5\003\uffd5\037\uffd5\001\002\000\004" +
     "\037\143\001\002\000\010\026\uffd0\034\uffd0\037\uffd0\001" +
@@ -254,9 +254,9 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\001\001\000\002\001\001\000\002\001\001\000\006\007" +
     "\123\010\125\001\001\000\002\001\001\000\004\010\127" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
-    "\001\000\002\001\001\000\006\016\134\021\133\001\001" +
-    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
-    "\006\012\137\021\135\001\001\000\002\001\001\000\002" +
+    "\001\000\002\001\001\000\006\016\133\021\132\001\001" +
+    "\000\002\001\001\000\002\001\001\000\006\012\137\021" +
+    "\135\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\006\007\145" +
     "\010\125\001\001\000\004\010\127\001\001\000\002\001" +
@@ -1100,19 +1100,19 @@ class CUP$ParserGramatica$actions {
           return CUP$ParserGramatica$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 45: // produccion ::= ID FIN_DE_LINEA 
+          case 45: // produccion ::= ID ASIGNACION_GRAMA FIN_DE_LINEA 
             {
               Object RESULT =null;
-		int parteIzquierdaleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).left;
-		int parteIzquierdaright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).right;
-		String parteIzquierda = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)).value;
+		int parteIzquierdaleft = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).left;
+		int parteIzquierdaright = ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).right;
+		String parteIzquierda = (String)((java_cup.runtime.Symbol) CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)).value;
 		
                                                 if(parteIzquierda != null){
                                                     Produccion produccion = new Produccion(new Simbolo(parteIzquierda,parteIzquierdaleft,parteIzquierdaright), new ArrayList<Simbolo>());
                                                     generadorParser.getProducciones().add(produccion);
                                                 } 
                                             
-              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-1)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
+              CUP$ParserGramatica$result = parser.getSymbolFactory().newSymbol("produccion",6, ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.elementAt(CUP$ParserGramatica$top-2)), ((java_cup.runtime.Symbol)CUP$ParserGramatica$stack.peek()), RESULT);
             }
           return CUP$ParserGramatica$result;
 

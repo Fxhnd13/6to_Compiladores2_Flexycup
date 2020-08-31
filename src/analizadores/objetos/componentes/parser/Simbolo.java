@@ -57,6 +57,10 @@ public class Simbolo {
 
     public void setTerminal(boolean terminal) {
         this.terminal = terminal;
+        if(terminal){
+            this.primeros = new String[1];
+            this.primeros[0] = this.simbolo;
+        }
     }
 
     public int getLinea() {
@@ -85,7 +89,12 @@ public class Simbolo {
 
     @Override
     public String toString() {
-        return "Simbolo{" + "simbolo=" + simbolo + ", linea=" + linea + ", columna=" + columna + ", precedencia=" + precedencia + ", lambda=" + lambda + ", terminal=" + terminal + '}';
+        String cadenaPrimeros ="[";
+        for (int i = 0; i < primeros.length; i++) {
+            cadenaPrimeros+=primeros[i];
+            if((i+1)<primeros.length)cadenaPrimeros+=", ";
+        }
+        return "Simbolo{" + "simbolo=" + simbolo + ", linea=" + linea + ", columna=" + columna + ", precedencia=" + precedencia + ", lambda=" + lambda + ", terminal=" + terminal + ", primeros = "+cadenaPrimeros+ "]}";
     }
     
 }

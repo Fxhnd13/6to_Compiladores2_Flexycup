@@ -21,24 +21,27 @@ public Integer suma(Integer numero1,Integer numero2){
 %% //Sección de expresiones regulares 
  
 mas = "+";
-menos = "-";
+por = "*";
+parentesis_a = "(";
+parentesis_c = ")";
+identificador = "a";
 pr_entero = [0-9]+;
-pr_decimal = pr_entero((.)pr_entero)?;
  
 %% //Seccion de simbolos terminales y no terminales 
  
-terminal por, div; 
-terminal mas, menos; 
-terminal enter; 
+terminal por; 
+terminal mas; 
+terminal parentesis_a, parentesis_c;
+terminal pr_entero, identificador; 
  
-no terminal A, B; 
-no terminal S;
+no terminal E, T,F; 
 
 %%
 
-S :: E:val {printf("Resultado = %d",val);};
-E :: E:val menos E:val2 {RESULT=val - val2;}; 
-E :: E:val mas E:val2 {RESULT=val + val2;}; 
-E :: E:val por E:val2 {RESULT=val * val2;}; 
-E :: E:val div E:val2 {RESULT=val / val2;}; 
-E :: enter:val {RESULT=val;}; 
+E :: E mas T;
+E :: T;
+T :: T por F;
+T :: F;
+F :: pr_entero;
+F :: parentesis_a E parentesis_c;
+F :: identificador;
