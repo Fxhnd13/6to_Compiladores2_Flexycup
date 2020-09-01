@@ -121,6 +121,7 @@ public class ArchivosManager {
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error no se encontro la ruta para guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
+                ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error en ArchivosManager/guardarLenguajes.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

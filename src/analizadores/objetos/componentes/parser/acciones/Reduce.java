@@ -5,18 +5,27 @@
  */
 package analizadores.objetos.componentes.parser.acciones;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class Reduce implements Accion{
+public class Reduce implements Accion, Serializable{
     
     private int indiceProduccion;
+    private String simbolo;
     
-    public Reduce(int indice){
+    public Reduce(String simbolo, int indice){
+        this.simbolo = simbolo;
         this.indiceProduccion = indice;
     }
     
+    public void setSimbolo(String simbolo) { this.simbolo = simbolo; }
+    public String getSimbolo(){ return this.simbolo; }
     public void setIndiceProduccion(int indice){ this.indiceProduccion = indice; }
-    public int getIndiceProduccion(){ return this.indiceProduccion; }
+    public int getValor(){ return this.indiceProduccion; }
+    public String toString(){
+        return "Reduce("+indiceProduccion+")";
+    }
 }

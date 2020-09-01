@@ -54,6 +54,9 @@ public class Editor extends javax.swing.JFrame {
         EliminarLenguaje = new javax.swing.JDialog();
         LenguajesComboBox = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
+        DialogoTablaAnalisisSintactico = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        TablaDeAnalisisSintactico = new javax.swing.JTable();
         tabs = new javax.swing.JTabbedPane();
         informacionLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -69,6 +72,9 @@ public class Editor extends javax.swing.JFrame {
         jMenuItem7 = new javax.swing.JMenuItem();
         jMenuItem9 = new javax.swing.JMenuItem();
         MenuLenguajes = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem10 = new javax.swing.JMenuItem();
+        jMenuItem11 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         ReporteErroresEstructuraGramatica.setSize(new java.awt.Dimension(1270, 600));
@@ -195,6 +201,38 @@ public class Editor extends javax.swing.JFrame {
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
+        DialogoTablaAnalisisSintactico.setModal(true);
+        DialogoTablaAnalisisSintactico.setModalityType(java.awt.Dialog.ModalityType.DOCUMENT_MODAL);
+        DialogoTablaAnalisisSintactico.setResizable(false);
+        DialogoTablaAnalisisSintactico.setSize(this.getToolkit().getScreenSize());
+
+        TablaDeAnalisisSintactico.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane2.setViewportView(TablaDeAnalisisSintactico);
+
+        javax.swing.GroupLayout DialogoTablaAnalisisSintacticoLayout = new javax.swing.GroupLayout(DialogoTablaAnalisisSintactico.getContentPane());
+        DialogoTablaAnalisisSintactico.getContentPane().setLayout(DialogoTablaAnalisisSintacticoLayout);
+        DialogoTablaAnalisisSintacticoLayout.setHorizontalGroup(
+            DialogoTablaAnalisisSintacticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogoTablaAnalisisSintacticoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 1251, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        DialogoTablaAnalisisSintacticoLayout.setVerticalGroup(
+            DialogoTablaAnalisisSintacticoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogoTablaAnalisisSintacticoLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         informacionLabel.setText("Linea: 0  |  Columna: 0");
@@ -282,6 +320,21 @@ public class Editor extends javax.swing.JFrame {
         MenuLenguajes.setText("Lenguajes");
         jMenuBar1.add(MenuLenguajes);
 
+        jMenu4.setText("Ver");
+
+        jMenuItem10.setText("Ver tabla de analisis sintactico");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem10);
+
+        jMenuItem11.setText("Ver proceso estado de pila durante analisis");
+        jMenu4.add(jMenuItem11);
+
+        jMenuBar1.add(jMenu4);
+
         jMenu2.setText("Acerca de...");
         jMenu2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -311,7 +364,7 @@ public class Editor extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(informacionLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 327, Short.MAX_VALUE)
+                .addComponent(tabs, javax.swing.GroupLayout.DEFAULT_SIZE, 339, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -394,6 +447,11 @@ public class Editor extends javax.swing.JFrame {
         cargarLenguajes();
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        manager.crearTablaDeAnalisisSintactico(this.MenuLenguajes, TablaDeAnalisisSintactico);
+        this.DialogoTablaAnalisisSintactico.setVisible(true);
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
+
     public JMenu getMenuLenguajes(){ return this.MenuLenguajes; }
     
     public EditorManager getEditorManager(){ return this.manager; }
@@ -433,10 +491,12 @@ public class Editor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JDialog DialogoTablaAnalisisSintactico;
     private javax.swing.JDialog EliminarLenguaje;
     private javax.swing.JComboBox<String> LenguajesComboBox;
     private javax.swing.JMenu MenuLenguajes;
     private javax.swing.JDialog ReporteErroresEstructuraGramatica;
+    private javax.swing.JTable TablaDeAnalisisSintactico;
     private javax.swing.JTable TablaErrores;
     private javax.swing.JTable TablaTokens;
     private javax.swing.JLabel informacionLabel;
@@ -446,8 +506,11 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem10;
+    private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -457,6 +520,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane tabs;
     // End of variables declaration//GEN-END:variables

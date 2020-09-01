@@ -9,6 +9,9 @@ package analizadores.objetos.componentes.parser.acciones;
  *
  * @author jose_
  */
-public interface Accion {
+public interface Accion{
     
+    public String getSimbolo();
+    public int getValor();
+    public String toString();
 }

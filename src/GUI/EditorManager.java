@@ -9,7 +9,11 @@ import analizadores.analizadorFinal.Lenguaje;
 import analizadores.estructuraGramatica.LexerGramatica;
 import analizadores.estructuraGramatica.ParserGramatica;
 import analizadores.objetos.ErrorAnalisis;
+import analizadores.objetos.Variable;
+import analizadores.objetos.componentes.Utilidades;
 import analizadores.objetos.componentes.lexer.Token;
+import analizadores.objetos.componentes.parser.Estado;
+import analizadores.objetos.componentes.parser.Simbolo;
 import java.awt.Component;
 import java.io.BufferedReader;
 import java.io.File;
@@ -126,14 +130,22 @@ public class EditorManager {
             parser.parse();
             parser.getGeneradorParser().verificarIntegridad(parser.getErrores(), parser.getTablaDeER(), parser.getTablaDeSimbolosGramaticales());
             if(parser.getErrores().isEmpty()){
-                valor = true;
                 parser.getGeneradorAutomata().calcularArbol();
                 parser.getGeneradorAutomata().crearEstadosAutomata();
-                parser.getGeneradorParser().generarEstados();
-                parser.getGeneradorParser().escribirSimbolos();
-                parser.getGeneradorParser().escribirEstados();
-                Lenguaje lenguaje = new Lenguaje(parser.getInformacion(), parser.getGeneradorAutomata().getAutomata(), null);
-                ArchivosManager.guardarLenguaje(lenguaje);
+                parser.getGeneradorParser().generarEstados(parser.getErrores());
+                if(parser.getErrores().isEmpty()){
+                    valor = true;
+                    parser.getGeneradorParser().getAutomata().setProducciones(parser.getGeneradorParser().getProducciones());
+                    parser.getGeneradorParser().getAutomata().setSimbolos(parser.getGeneradorParser().getSimbolos());
+                    Lenguaje lenguaje = new Lenguaje(parser.getInformacion(), parser.getGeneradorAutomata().getAutomata(), parser.getGeneradorParser().getAutomata());
+                    ArchivosManager.guardarLenguaje(lenguaje);
+                }else{
+                    DefaultTableModel modelo = (DefaultTableModel) TablaErrores.getModel();
+                    for (ErrorAnalisis error : parser.getErrores()) {
+                        modelo.addRow(new String[]{error.getTipo(), error.getValor(), error.getDescripcion(), String.valueOf(error.getLinea()), String.valueOf(error.getColumna())});
+                    }
+                    TablaErrores.setModel(modelo);
+                }
             }else{
                 DefaultTableModel modelo = (DefaultTableModel) TablaErrores.getModel();
                 for (ErrorAnalisis error : parser.getErrores()) {
@@ -169,6 +181,39 @@ public class EditorManager {
             }
         }else{
             JOptionPane.showMessageDialog(null, "No ha seleccionado ningun lenguaje del menú 'Lenguajes'.","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    void crearTablaDeAnalisisSintactico(JMenu menuLenguajes, JTable TablaDeAnalisisSintactico) {
+        String nombreLenguaje = null;
+        for (Component menuComponent : menuLenguajes.getMenuComponents()) {
+            if(((JRadioButtonMenuItem)menuComponent).isSelected()) nombreLenguaje = ((JRadioButtonMenuItem)menuComponent).getName();
+        }
+        if(nombreLenguaje != null){
+            Lenguaje lenguaje = ArchivosManager.cargarLenguaje(nombreLenguaje);
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Estado");
+            for(Variable variable : lenguaje.getParser().getAutomata().getSimbolos().getVariables()) {
+                Simbolo simbolo = (Simbolo) variable.getValor();
+                if(simbolo.isTerminal()) modelo.addColumn(simbolo.getSimbolo());
+            }
+            for(Variable variable : lenguaje.getParser().getAutomata().getSimbolos().getVariables()) {
+                Simbolo simbolo = (Simbolo) variable.getValor();
+                if(!simbolo.isTerminal() && !simbolo.getSimbolo().equals("InicioCadena")) modelo.addColumn(simbolo.getSimbolo());
+            }
+            for (int i = 0; i < lenguaje.getParser().getAutomata().getEstados().size(); i++) {
+                modelo.setRowCount(modelo.getRowCount()+1);
+                modelo.setValueAt(i, i, 0);
+                for (int j = 0; j < modelo.getColumnCount(); j++) {
+                    String valor = Utilidades.obtenerAccionDe(modelo.getColumnName(j), lenguaje.getParser().getAutomata().getEstados().get(i).getAcciones());
+                    if(valor != null){
+                        modelo.setValueAt(valor, i, j);
+                    }
+                }
+            }
+            TablaDeAnalisisSintactico.setModel(modelo);
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay lenguajes en el repositorio del programa.","Error",JOptionPane.ERROR_MESSAGE);
         }
     }
 }

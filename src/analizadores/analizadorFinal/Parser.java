@@ -18,5 +18,20 @@ public class Parser implements Serializable{
     
     List<Token> tokens;
     AutomataParser automata;
-    
+
+    public List<Token> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<Token> tokens) {
+        this.tokens = tokens;
+    }
+
+    public AutomataParser getAutomata() {
+        return automata;
+    }
+
+    public void setAutomata(AutomataParser automata) {
+        this.automata = automata;
+    }
 }

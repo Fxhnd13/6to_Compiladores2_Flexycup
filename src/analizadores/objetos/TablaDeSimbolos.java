@@ -5,6 +5,7 @@
  */
 package analizadores.objetos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author jose_
  */
-public class TablaDeSimbolos {
+public class TablaDeSimbolos implements Serializable{
     
     List<Variable> variables = new ArrayList<Variable>();
     

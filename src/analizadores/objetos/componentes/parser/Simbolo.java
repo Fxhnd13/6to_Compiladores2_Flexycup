@@ -5,11 +5,13 @@
  */
 package analizadores.objetos.componentes.parser;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class Simbolo {
+public class Simbolo implements Serializable{
     
     private String[] primeros;
     private String simbolo;

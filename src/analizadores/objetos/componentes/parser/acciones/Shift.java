@@ -5,18 +5,27 @@
  */
 package analizadores.objetos.componentes.parser.acciones;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class Shift implements Accion{
+public class Shift implements Accion, Serializable{
     
     private int indiceProduccion;
+    private String simbolo;
     
-    public Shift(int indiceProduccion){
+    public Shift(String simbolo, int indiceProduccion){
+        this.simbolo = simbolo;
         this.indiceProduccion = indiceProduccion;
     }
     
+    public void setSimbolo(String simbolo) { this.simbolo = simbolo; }
+    public String getSimbolo(){ return this.simbolo; }
     public void setIndiceProduccion(int indice){ this.indiceProduccion = indice; }
-    public int getIndiceProduccion(){ return this.indiceProduccion; }
+    public int getValor(){ return this.indiceProduccion; }
+    public String toString(){
+        return "Shift("+indiceProduccion+")";
+    }
 }

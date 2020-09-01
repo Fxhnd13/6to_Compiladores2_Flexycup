@@ -5,7 +5,9 @@
  */
 package analizadores.objetos.componentes.parser;
 
+import analizadores.objetos.TablaDeSimbolos;
 import analizadores.objetos.componentes.parser.acciones.Accion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -14,34 +16,18 @@ import java.util.Stack;
  *
  * @author jose_
  */
-public class AutomataParser {
+public class AutomataParser implements Serializable{
     
-    private List<Accion[]> acciones, irA;
     private List<Estado> estados;
+    private TablaDeSimbolos simbolos;
+    private List<Produccion> producciones;
     private Stack<Integer> pilaEstados;
     private Stack<String> pilaSimbolos;
 
     public AutomataParser(){
-        this.acciones = new ArrayList();
-        this.irA = new ArrayList();
         this.estados = new ArrayList();
         this.pilaEstados = new Stack();
         this.pilaSimbolos = new Stack();
-    }
-    public List<Accion[]> getAcciones() {
-        return acciones;
-    }
-
-    public void setAcciones(List<Accion[]> acciones) {
-        this.acciones = acciones;
-    }
-
-    public List<Accion[]> getIrA() {
-        return irA;
-    }
-
-    public void setIrA(List<Accion[]> irA) {
-        this.irA = irA;
     }
 
     public List<Estado> getEstados() {
@@ -67,6 +53,21 @@ public class AutomataParser {
     public void setPilaSimbolos(Stack<String> pilaSimbolos) {
         this.pilaSimbolos = pilaSimbolos;
     }
-    
+
+    public TablaDeSimbolos getSimbolos() {
+        return simbolos;
+    }
+
+    public void setSimbolos(TablaDeSimbolos simbolos) {
+        this.simbolos = simbolos;
+    }
+
+    public List<Produccion> getProducciones() {
+        return producciones;
+    }
+
+    public void setProducciones(List<Produccion> producciones) {
+        this.producciones = producciones;
+    }
     
 }

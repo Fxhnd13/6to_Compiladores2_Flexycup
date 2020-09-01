@@ -5,6 +5,7 @@
  */
 package analizadores.objetos.componentes;
 
+import analizadores.objetos.componentes.parser.acciones.Accion;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -133,5 +134,26 @@ public class Utilidades {
             }
         }
         return valor;
+    }
+
+    public static boolean existe(int i, int[] cerradurasEvaluadas, int indiceCerradurasEvaluadas) {
+        for (int j = 0; j < indiceCerradurasEvaluadas; j++) {
+            if(i == cerradurasEvaluadas[j]) return true;
+        }
+        return false;
+    }
+
+    public static boolean existe(String simbolo, String[] simbolosPreAnalisisT) {
+        for (String n : simbolosPreAnalisisT) {
+            if(n.equals(simbolo)) return true;
+        }
+        return false;
+    }
+
+    public static String obtenerAccionDe(String columnName, List<Accion> acciones) {
+        for (Accion accion : acciones) {
+            if(columnName.equals(accion.getSimbolo())) return accion.toString();
+        }
+        return null;
     }
 }

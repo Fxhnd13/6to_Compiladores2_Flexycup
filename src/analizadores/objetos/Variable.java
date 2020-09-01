@@ -5,11 +5,13 @@
  */
 package analizadores.objetos;
 
+import java.io.Serializable;
+
 /**
  *
  * @author jose_
  */
-public class Variable {
+public class Variable implements Serializable{
     
     String id;
     Object valor;

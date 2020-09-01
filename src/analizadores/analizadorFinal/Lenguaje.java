@@ -7,6 +7,7 @@ package analizadores.analizadorFinal;
 
 import analizadores.objetos.componentes.Informacion;
 import analizadores.objetos.componentes.lexer.Automata;
+import analizadores.objetos.componentes.parser.AutomataParser;
 import java.io.Serializable;
 
 /**
@@ -20,10 +21,11 @@ public class Lenguaje implements Serializable {
     private Lexer lexer = new Lexer();
     private Parser parser = new Parser();
 
-    public Lenguaje(Informacion informacion, Automata automata, Object object) {
+    public Lenguaje(Informacion informacion, Automata automata, AutomataParser parserAutomata) {
         this.informacion = informacion;
         this.nombre = informacion.getNombre();
         this.lexer.setAutomata(automata);
+        this.parser.setAutomata(parserAutomata);
     }
 
     public Lexer getLexer() {

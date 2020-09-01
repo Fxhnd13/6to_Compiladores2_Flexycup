@@ -5,6 +5,7 @@
  */
 package analizadores.objetos.componentes.parser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ import java.util.List;
  *
  * @author jose_
  */
-public class Produccion {
+public class Produccion implements Serializable{
 
     private int id;
     private Simbolo simboloIzquierda;

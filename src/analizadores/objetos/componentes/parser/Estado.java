@@ -5,6 +5,8 @@
  */
 package analizadores.objetos.componentes.parser;
 
+import analizadores.objetos.componentes.parser.acciones.Accion;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,12 +14,22 @@ import java.util.List;
  *
  * @author jose_
  */
-public class Estado {
+public class Estado implements Serializable{
     
-    List<Cerradura> cerraduras;
+    private List<Cerradura> cerraduras;
+    private List<Accion> acciones;
 
     public Estado(){
+        this.acciones = new ArrayList();
         this.cerraduras = new ArrayList();
+    }
+
+    public List<Accion> getAcciones() {
+        return acciones;
+    }
+
+    public void setAcciones(List<Accion> acciones) {
+        this.acciones = acciones;
     }
     
     public List<Cerradura> getCerraduras() {
