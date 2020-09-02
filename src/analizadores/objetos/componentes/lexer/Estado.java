@@ -36,34 +36,66 @@ public class Estado implements Serializable {
         }
     }
     
+    /**
+     *
+     * @return
+     */
     public boolean isEstadoFinal() {
         return estadoFinal;
     }
 
+    /**
+     *
+     * @param estadoFinal
+     */
     public void setEstadoFinal(boolean estadoFinal) {
         this.estadoFinal = estadoFinal;
     }
 
+    /**
+     *
+     * @return
+     */
     public int[] getIdNodosComponentes() {
         return idNodosComponentes;
     }
 
+    /**
+     *
+     * @param idNodosComponentes
+     */
     public void setIdNodosComponentes(int[] idNodosComponentes) {
         this.idNodosComponentes = idNodosComponentes;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTipoToken() {
         return tipoToken;
     }
 
+    /**
+     *
+     * @param tipoToken
+     */
     public void setTipoToken(String tipoToken) {
         this.tipoToken = tipoToken;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Transicion> getTransiciones() {
         return transiciones;
     }
 
+    /**
+     *
+     * @param transiciones
+     */
     public void setTransiciones(List<Transicion> transiciones) {
         this.transiciones = transiciones;
     }

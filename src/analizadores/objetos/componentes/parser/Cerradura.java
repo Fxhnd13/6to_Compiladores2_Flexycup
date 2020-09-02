@@ -19,38 +19,72 @@ public class Cerradura implements Serializable{
     private String[] simbolosPreAnalisis;
     private int posicionPunto, produccion;
 
+    /**
+     *
+     * @param cerradura
+     */
     public Cerradura(Cerradura cerradura){
         this.posicionPunto = cerradura.getPosicionPunto();
         this.produccion = cerradura.getProduccion();
         this.simbolosPreAnalisis = cerradura.getSimbolosPreAnalisis();
     }
     
+    /**
+     *
+     * @param produccion
+     * @param posicionPunto
+     * @param simbolosPreAnalisis
+     */
     public Cerradura(int produccion, int posicionPunto, String[] simbolosPreAnalisis){
         this.produccion = produccion;
         this.posicionPunto = posicionPunto;
         this.simbolosPreAnalisis = simbolosPreAnalisis;
     }
     
+    /**
+     *
+     * @return
+     */
     public int getProduccion() {
         return produccion;
     }
 
+    /**
+     *
+     * @param produccion
+     */
     public void setProduccion(int produccion) {
         this.produccion = produccion;
     }
 
+    /**
+     *
+     * @return
+     */
     public String[] getSimbolosPreAnalisis() {
         return simbolosPreAnalisis;
     }
 
+    /**
+     *
+     * @param simbolosPreAnalisis
+     */
     public void setSimbolosPreAnalisis(String[] simbolosPreAnalisis) {
         this.simbolosPreAnalisis = simbolosPreAnalisis;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getPosicionPunto() {
         return posicionPunto;
     }
 
+    /**
+     *
+     * @param posicionPunto
+     */
     public void setPosicionPunto(int posicionPunto) {
         this.posicionPunto = posicionPunto;
     }

@@ -16,23 +16,44 @@ public class PR  implements Serializable{
     String tipo;
     String cadena;
 
+    /**
+     *
+     * @param tipo
+     * @param cadena
+     */
     public PR(String tipo, String cadena) {
         this.tipo = tipo;
         this.cadena = cadena;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTipo() {
         return tipo;
     }
 
+    /**
+     *
+     * @param tipo
+     */
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCadena() {
         return cadena;
     }
 
+    /**
+     *
+     * @param cadena
+     */
     public void setCadena(String cadena) {
         this.cadena = cadena;
     }

@@ -16,23 +16,44 @@ public class Variable implements Serializable{
     String id;
     Object valor;
 
+    /**
+     *
+     * @param id
+     * @param valor
+     */
     public Variable(String id, Object valor){
         this.id = id;
         this.valor = valor;
     }
     
+    /**
+     *
+     * @return
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(String id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object getValor() {
         return valor;
     }
 
+    /**
+     *
+     * @param valor
+     */
     public void setValor(Object valor) {
         this.valor = valor;
     }

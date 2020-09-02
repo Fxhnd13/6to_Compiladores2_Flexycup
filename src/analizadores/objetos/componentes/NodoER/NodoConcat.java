@@ -15,14 +15,33 @@ public class NodoConcat implements Nodo {
 
     private Nodo izquierdo, derecho;
     
+    /**
+     *
+     */
     public NodoConcat() {}
+
+    /**
+     *
+     * @param izquierdo
+     */
     public NodoConcat(Nodo izquierdo){
         this.izquierdo = izquierdo;
     }
+
+    /**
+     *
+     * @param izquierdo
+     * @param derecho
+     */
     public NodoConcat(Nodo izquierdo, Nodo derecho){
         this.izquierdo = izquierdo;
         this.derecho = derecho;
     }
+
+    /**
+     *
+     * @param nuevo
+     */
     public NodoConcat(NodoConcat nuevo){
         if(nuevo.getIzquierdo() instanceof NodoConcat){
             this.izquierdo = new NodoConcat((NodoConcat) nuevo.getIzquierdo());
@@ -48,22 +67,42 @@ public class NodoConcat implements Nodo {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public Nodo getIzquierdo() {
         return izquierdo;
     }
 
+    /**
+     *
+     * @param izquierdo
+     */
     public void setIzquierdo(Nodo izquierdo) {
         this.izquierdo = izquierdo;
     }
 
+    /**
+     *
+     * @return
+     */
     public Nodo getDerecho() {
         return derecho;
     }
 
+    /**
+     *
+     * @param derecho
+     */
     public void setDerecho(Nodo derecho) {
         this.derecho = derecho;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] primeros() {
         int[] primeros = null;
@@ -80,6 +119,10 @@ public class NodoConcat implements Nodo {
         return primeros;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] ultimos() {
         int[] ultimos = null;
@@ -96,6 +139,11 @@ public class NodoConcat implements Nodo {
         return ultimos;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public int[] siguientes(int id) {
         if(izquierdo.siguientes(id) != null){
@@ -105,11 +153,20 @@ public class NodoConcat implements Nodo {
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isAnulable() {
         return (izquierdo.isAnulable() && derecho.isAnulable());
     }
 
+    /**
+     *
+     * @param id
+     * @param ids
+     */
     @Override
     public void agregarSiguientes(int id, int[] ids) {
         if(izquierdo.siguientes(id) != null){

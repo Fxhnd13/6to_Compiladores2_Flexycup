@@ -23,11 +23,15 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Esta clase administra, el acceso a los ficheros, escribiendo y leyendo los archivos que se requieran
  * @author jose_
  */
 public class ArchivosManager {
     
+    /**
+     * Muestra un JFileChooser, permite seleccionar una archivo
+     * @return file, el archivo que el usuario haya seleccionado
+     */
     public static File cargarArchivo(){
         File file = null;
         
@@ -40,6 +44,11 @@ public class ArchivosManager {
         return file;
     }
     
+    /**
+     * Permite guardar un archivo de texto
+     * @param tab Es la pestaña activa
+     * @param origen Es el archivo de origen que tiene el documento actual
+     */
     public static void guardarArchivo(Tab tab, File origen){
         FileWriter fichero = null;
         PrintWriter pw = null;
@@ -65,6 +74,11 @@ public class ArchivosManager {
         }
     }
     
+    /**
+     * Permite guardar una copia del archivo, aunque este ya se encuentre guardado en otro fichero
+     * @param tab pestaña activa
+     * @param cambiar //diferencia en el mensaje de salida
+     */
     public static void guardarComo(Tab tab, boolean cambiar){
         JFileChooser filechooser = new JFileChooser();
         filechooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -84,6 +98,11 @@ public class ArchivosManager {
         }
     }
     
+    /**
+     * Permite cargar un lenguaje, seleccionando su nombre
+     * @param nombre nombre del lenguaje
+     * @return el lenguaje seleccionado
+     */
     public static Lenguaje cargarLenguaje(String nombre){
         Lenguaje lenguaje = null;
         
@@ -110,14 +129,23 @@ public class ArchivosManager {
         return lenguaje;
     }
     
-    public static void guardarLenguaje(Lenguaje lenguaje){
+    /**
+     * Guarda el lenguaje en el repositorio de lenguajes
+     * @param lenguaje lenguaje a guardar
+     * @param valor valor del mensaje a mostrar al usuario
+     */
+    public static void guardarLenguaje(Lenguaje lenguaje, boolean valor){
         File file = new File("Repositorio_Lenguajes/");
         if(!file.mkdir()){
             file = new File("Repositorio_Lenguajes/"+lenguaje.getNombre()+".lngs");
             try {
                 ObjectOutputStream lectorObjeto = new ObjectOutputStream(new FileOutputStream(file));
                 lectorObjeto.writeObject(lenguaje);
-                JOptionPane.showMessageDialog(null, "Se ha guardado con exito el nuevo lenguaje.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                if(valor){
+                    JOptionPane.showMessageDialog(null, "Se ha guardado con exito el nuevo lenguaje.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                }else{
+                    JOptionPane.showMessageDialog(null, "Se ha analizado correctamente la cadena que ha ingresado.", "Informacion", JOptionPane.INFORMATION_MESSAGE);
+                }
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error no se encontro la ruta para guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
@@ -127,6 +155,10 @@ public class ArchivosManager {
         }
     }
 
+    /**
+     * carga todos los nombres de los lenguajes que existen en el repositorio
+     * @return retorna una lista con los nombres
+     */
     public static List<String> cargarNombresLenguajes() {
         List<String> lenguajes = new ArrayList();
         

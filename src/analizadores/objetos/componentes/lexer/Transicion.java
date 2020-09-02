@@ -26,18 +26,34 @@ public class Transicion implements Serializable {
         this.caracter = caracter;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getIdDestino() {
         return idDestino;
     }
 
+    /**
+     *
+     * @param idDestino
+     */
     public void setIdDestino(int idDestino) {
         this.idDestino = idDestino;
     }
 
+    /**
+     *
+     * @return
+     */
     public char getCaracter() {
         return caracter;
     }
 
+    /**
+     *
+     * @param caracter
+     */
     public void setCaracter(char caracter) {
         this.caracter = caracter;
     }

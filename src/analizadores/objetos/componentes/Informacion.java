@@ -17,46 +17,93 @@ public class Informacion implements Serializable {
  
     private String nombre, autor, version, lanzamiento, extension;
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getAutor() {
         return autor;
     }
 
+    /**
+     *
+     * @param autor
+     */
     public void setAutor(String autor) {
         this.autor = autor;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getVersion() {
         return version;
     }
 
+    /**
+     *
+     * @param version
+     */
     public void setVersion(String version) {
         this.version = version;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getLanzamiento() {
         return lanzamiento;
     }
 
+    /**
+     *
+     * @param lanzamiento
+     */
     public void setLanzamiento(String lanzamiento) {
         this.lanzamiento = lanzamiento;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getExtension() {
         return extension;
     }
 
+    /**
+     *
+     * @param extension
+     */
     public void setExtension(String extension) {
         this.extension = extension;
     }
     
+    /**
+     *
+     * @param dato
+     * @param linea
+     * @param columna
+     * @param errores
+     */
     public void agregarDato(Dato dato, int linea, int columna, List<ErrorAnalisis> errores){
         switch(dato.getTipo()){
             case "Nombre":{
@@ -100,5 +147,15 @@ public class Informacion implements Serializable {
                 break;
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        String cadena = "Nombre: "+this.nombre;
+        if(this.extension != null) cadena+="\nExtension: "+this.extension;
+        if(this.version != null) cadena+="\nVersion: "+this.version;
+        if(this.autor != null) cadena+="\nAutor: "+this.autor;
+        if(this.lanzamiento != null) cadena+="\nLanzamiento: "+this.lanzamiento;
+        return cadena;
     }
 }

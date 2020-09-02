@@ -1,6 +1,6 @@
 //Informacion del lenguaje 
  
-nombre: java; 
+nombre: gramaticaNumeros2; 
 version: 11.0.7; 
 autor: sun Microsystems; 
 lanzamiento: 1996; 
@@ -41,3 +41,4 @@ E :: E:val menos E:val2 {RESULT=val - val2;};
 E :: E:val mas E:val2 {RESULT=val + val2;}; 
 E :: E:val por E:val2 {RESULT=val * val2;}; 
 E :: E:val div E:val2 {RESULT=val / val2;}; 
+E :: pr_entero;

@@ -13,12 +13,19 @@ import java.io.Serializable;
  */
 public class Aceptacion implements Accion, Serializable{
 
-    
+    /**
+     *
+     * @return
+     */
     @Override
     public String getSimbolo() {
         return "FinCadena";
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int getValor() {
         return -1;

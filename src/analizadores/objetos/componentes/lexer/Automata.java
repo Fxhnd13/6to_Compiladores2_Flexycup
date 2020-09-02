@@ -5,6 +5,7 @@
  */
 package analizadores.objetos.componentes.lexer;
 
+import analizadores.objetos.ErrorAnalisis;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +20,24 @@ public class Automata implements Serializable {
     private List<PR> palabrasReservadas; //para comparar palabras reservadas al final
     private List<Estado> estados; //conjunto de estados, donde se encuentran las transiciones que cada uno posee
     private List<Token> tokens; //listado de tokens encontrados
-    private List<String> errores; //listado de errores encontrados
+    private List<ErrorAnalisis> errores; //listado de errores encontrados
     private int estadoActual, buffer, linea, columna, indiceCaracter; //herramientas para la lectura
     private char[] caracteres; //caracteres para el analisis
     private Stack<Integer> estadosRecorridos; //para recuperacion de errores
     private String cadena; //cadena a analizar
     
+    /**
+     *
+     */
     public Automata(){
         this.estados = new ArrayList();
         this.palabrasReservadas = new ArrayList();
         this.errores = new ArrayList();
     }
     
+    /**
+     *
+     */
     public void analizar(){
         this.estadosRecorridos = new Stack();
         this.caracteres = cadena.toCharArray();
@@ -59,6 +66,7 @@ public class Automata implements Serializable {
             this.columna++;
             if(((this.indiceCaracter+1) == this.caracteres.length)&&(!this.estadosRecorridos.isEmpty())) this.verificarEstado();
         }
+        this.tokens.add(new Token(linea,columna,"$","FinCadena"));
     }
 
     private void verificarEstado(){
@@ -79,7 +87,7 @@ public class Automata implements Serializable {
     
     private void verificarRetroceso(){
         if(this.estadosRecorridos.isEmpty()){
-            this.errores.add("Se encontro un error en <linea: "+this.linea+", columna: "+this.columna+" con el caracter : '"+this.caracteres[this.indiceCaracter]+"'");
+            this.errores.add(new ErrorAnalisis("Lexico",String.valueOf(this.caracteres[this.indiceCaracter]),"El caracter no pertenece a lo especificado en el archivo de entrada.",this.linea, this.columna));
             this.cadena = this.cadena.substring(1,cadena.length());
         }else{
             this.estadoActual = this.estadosRecorridos.pop();
@@ -107,42 +115,83 @@ public class Automata implements Serializable {
         return valor;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Token> getTokens() {
         return tokens;
     }
 
+    /**
+     *
+     * @param tokens
+     */
     public void setTokens(List<Token> tokens) {
         this.tokens = tokens;
     }
 
-    public List<String> getErrores() {
+    /**
+     *
+     * @return
+     */
+    public List<ErrorAnalisis> getErrores() {
         return errores;
     }
 
-    public void setErrores(List<String> errores) {
+    /**
+     *
+     * @param errores
+     */
+    public void setErrores(List<ErrorAnalisis> errores) {
         this.errores = errores;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCadena() {
         return cadena;
     }
 
+    /**
+     *
+     * @param cadena
+     */
     public void setCadena(String cadena) {
+        this.errores.clear();
         this.cadena = cadena;
     }
     
+    /**
+     *
+     * @return
+     */
     public List<PR> getPalabrasReservadas() {
         return palabrasReservadas;
     }
 
+    /**
+     *
+     * @param palabrasReservadas
+     */
     public void setPalabrasReservadas(List<PR> palabrasReservadas) {
         this.palabrasReservadas = palabrasReservadas;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Estado> getEstados() {
         return estados;
     }
 
+    /**
+     *
+     * @param estados
+     */
     public void setEstados(List<Estado> estados) {
         this.estados = estados;
     }

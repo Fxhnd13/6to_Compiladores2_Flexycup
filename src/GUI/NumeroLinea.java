@@ -8,11 +8,26 @@ import javax.swing.border.*;
 import javax.swing.event.*;
 import javax.swing.text.*;
 
+/**
+ * Clase para poder añadir a un text area un contador de lineas
+ * @author jose_
+ */
 public class NumeroLinea extends JPanel
         implements CaretListener, DocumentListener, PropertyChangeListener {
 
+    /**
+     *
+     */
     public final static float LEFT = 0.0f;
+
+    /**
+     *
+     */
     public final static float CENTER = 0.5f;
+
+    /**
+     *
+     */
     public final static float RIGHT = 1.0f;
     private Color color1 = new Color(7,86,100);
     private final static Border OUTER = new MatteBorder(0, 0, 0, 2,Color.BLACK);
@@ -34,12 +49,19 @@ public class NumeroLinea extends JPanel
 
     private HashMap<String, FontMetrics> fonts;
 
-    
+    /**
+     *
+     * @param component
+     */
     public NumeroLinea(JTextComponent component) {
         this(component, 3);
     }
 
-    
+    /**
+     *
+     * @param component
+     * @param minimumDisplayDigits
+     */
     public NumeroLinea(JTextComponent component, int minimumDisplayDigits) {
         this.component = component;
 
@@ -55,22 +77,34 @@ public class NumeroLinea extends JPanel
         component.addPropertyChangeListener("font", this);
     }
 
-    
+    /**
+     *
+     * @return
+     */
     public boolean getUpdateFont() {
         return updateFont;
     }
 
-    
+    /**
+     *
+     * @param updateFont
+     */
     public void setUpdateFont(boolean updateFont) {
         this.updateFont = updateFont;
     }
 
-    
+    /**
+     *
+     * @return
+     */
     public int getBorderGap() {
         return borderGap;
     }
 
-    
+    /**
+     *
+     * @param borderGap
+     */
     public void setBorderGap(int borderGap) {
         this.borderGap = borderGap;
         Border inner = new EmptyBorder(0, borderGap, 0, borderGap);
@@ -79,31 +113,51 @@ public class NumeroLinea extends JPanel
         setPreferredWidth();
     }
 
-   
+    /**
+     *
+     * @return
+     */
     public Color getCurrentLineForeground() {
         return currentLineForeground == null ? getForeground() : currentLineForeground;
     }
 
-    
+    /**
+     *
+     * @param currentLineForeground
+     */
     public void setCurrentLineForeground(Color currentLineForeground) {
         this.currentLineForeground = currentLineForeground;
     }
 
-    
+    /**
+     *
+     * @return
+     */
     public float getDigitAlignment() {
         return digitAlignment;
     }
+
+    /**
+     *
+     * @param digitAlignment
+     */
     public void setDigitAlignment(float digitAlignment) {
         this.digitAlignment
                 = digitAlignment > 1.0f ? 1.0f : digitAlignment < 0.0f ? -1.0f : digitAlignment;
     }
 
-   
+    /**
+     *
+     * @return
+     */
     public int getMinimumDisplayDigits() {
         return minimumDisplayDigits;
     }
 
-   
+    /**
+     *
+     * @param minimumDisplayDigits
+     */
     public void setMinimumDisplayDigits(int minimumDisplayDigits) {
         this.minimumDisplayDigits = minimumDisplayDigits;
         setPreferredWidth();
@@ -172,6 +226,11 @@ public class NumeroLinea extends JPanel
         }
     }
 
+    /**
+     *
+     * @param rowStartOffset
+     * @return
+     */
     protected String getTextLineNumber(int rowStartOffset) {
         Element root = component.getDocument().getDefaultRootElement();
         int index = root.getElementIndex(rowStartOffset);

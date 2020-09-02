@@ -19,23 +19,42 @@ public class Estado implements Serializable{
     private List<Cerradura> cerraduras;
     private List<Accion> acciones;
 
+    /**
+     *
+     */
     public Estado(){
         this.acciones = new ArrayList();
         this.cerraduras = new ArrayList();
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Accion> getAcciones() {
         return acciones;
     }
 
+    /**
+     *
+     * @param acciones
+     */
     public void setAcciones(List<Accion> acciones) {
         this.acciones = acciones;
     }
     
+    /**
+     *
+     * @return
+     */
     public List<Cerradura> getCerraduras() {
         return cerraduras;
     }
 
+    /**
+     *
+     * @param cerraduras
+     */
     public void setCerraduras(List<Cerradura> cerraduras) {
         this.cerraduras = cerraduras;
     }

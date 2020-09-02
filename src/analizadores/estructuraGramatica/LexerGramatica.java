@@ -13,6 +13,11 @@ import javax.swing.table.DefaultTableModel;
 
 
 // See https://github.com/jflex-de/jflex/issues/222
+
+/**
+ *
+ * @author jose_
+ */
 @SuppressWarnings("FallThrough")
 public class LexerGramatica implements java_cup.runtime.Scanner {
 
@@ -23,11 +28,31 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
   private static final int ZZ_BUFFERSIZE = 16384;
 
   // Lexical states.
+
+    /**
+     *
+     */
   public static final int YYINITIAL = 0;
-  public static final int JAVACODE = 2;
-  public static final int EXPRESIONES_REGULARES = 4;
-  public static final int DECLARACION_SIMBOLOS = 6;
-  public static final int REGLAS_SEMANTICAS = 8;
+
+    /**
+     *
+     */
+    public static final int JAVACODE = 2;
+
+    /**
+     *
+     */
+    public static final int EXPRESIONES_REGULARES = 4;
+
+    /**
+     *
+     */
+    public static final int DECLARACION_SIMBOLOS = 6;
+
+    /**
+     *
+     */
+    public static final int REGLAS_SEMANTICAS = 8;
 
   /**
    * ZZ_LEXSTATE[l] is the state in the DFA for the lexical state l
@@ -434,18 +459,34 @@ public class LexerGramatica implements java_cup.runtime.Scanner {
         return simbolo;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<ErrorAnalisis> getErrores(){
         return errores;
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean isAnalizando(){
         return leyendo;
     }
     
+    /**
+     *
+     * @param tablaTokens
+     */
     public void setTablaTokens(JTable tablaTokens){
         this.tablaTokens = (DefaultTableModel) tablaTokens.getModel();
     }
     
+    /**
+     *
+     * @return
+     */
     public JTable getTablaTokens(){ return new JTable(tablaTokens); }
 
 

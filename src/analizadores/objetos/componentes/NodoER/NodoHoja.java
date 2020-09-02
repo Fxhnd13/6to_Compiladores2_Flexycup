@@ -22,54 +22,110 @@ public class NodoHoja implements Nodo{
     private int[] siguientes = new int[0];
     private String tipoToken;
     
+    /**
+     *
+     * @param nuevo
+     */
     public NodoHoja(NodoHoja nuevo){
         this.valor = nuevo.getValor();
     }
+
+    /**
+     *
+     * @param id
+     * @param valor
+     */
     public NodoHoja(int id, char valor){
         this.id = id;
         this.valor = valor;
     }
+
+    /**
+     *
+     * @param valor
+     */
     public NodoHoja(char valor) {
         this.valor = valor;
     }
+
+    /**
+     *
+     */
     public NodoHoja() {}
 
+    /**
+     *
+     * @return
+     */
     public char getValor() {
         return valor;
     }
 
+    /**
+     *
+     * @param valor
+     */
     public void setValor(char valor) {
         this.valor = valor;
     }
 
+    /**
+     *
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public int[] getSiguientes() {
         return siguientes;
     }
 
+    /**
+     *
+     * @param siguientes
+     */
     public void setSiguientes(int[] siguientes) {
         this.siguientes = siguientes;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] primeros() {
         int[] primeros = {id};
         return primeros;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] ultimos() {
         int[] ultimos = {id};
         return ultimos;
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public int[] siguientes(int id) {
         if(id == this.id){
@@ -79,11 +135,20 @@ public class NodoHoja implements Nodo{
         }
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isAnulable() {
         return false;
     }
 
+    /**
+     *
+     * @param id
+     * @param ids
+     */
     @Override
     public void agregarSiguientes(int id, int[] ids) {
         if(siguientes != null){
@@ -103,10 +168,18 @@ public class NodoHoja implements Nodo{
         }
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTipoToken() {
         return tipoToken;
     }
 
+    /**
+     *
+     * @param tipoToken
+     */
     public void setTipoToken(String tipoToken) {
         this.tipoToken = tipoToken;
     }

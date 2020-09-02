@@ -16,14 +16,38 @@ public class Reduce implements Accion, Serializable{
     private int indiceProduccion;
     private String simbolo;
     
+    /**
+     *
+     * @param simbolo
+     * @param indice
+     */
     public Reduce(String simbolo, int indice){
         this.simbolo = simbolo;
         this.indiceProduccion = indice;
     }
     
+    /**
+     *
+     * @param simbolo
+     */
     public void setSimbolo(String simbolo) { this.simbolo = simbolo; }
+
+    /**
+     *
+     * @return
+     */
     public String getSimbolo(){ return this.simbolo; }
+
+    /**
+     *
+     * @param indice
+     */
     public void setIndiceProduccion(int indice){ this.indiceProduccion = indice; }
+
+    /**
+     *
+     * @return
+     */
     public int getValor(){ return this.indiceProduccion; }
     public String toString(){
         return "Reduce("+indiceProduccion+")";

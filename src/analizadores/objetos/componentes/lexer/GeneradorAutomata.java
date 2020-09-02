@@ -25,24 +25,46 @@ public class GeneradorAutomata {
     private Nodo expresionRegular;
     private Automata automata;
     
+    /**
+     *
+     */
     public GeneradorAutomata(){
         this.automata = new Automata();
     }
 
+    /**
+     *
+     * @return
+     */
     public Automata getAutomata() {
         return automata;
     }
 
+    /**
+     *
+     * @param automata
+     */
     public void setAutomata(Automata automata) {
         this.automata = automata;
     }
     
+    /**
+     *
+     * @param expresion
+     */
     public void setExpresionRegular(Nodo expresion){
         this.expresionRegular = expresion;
     }
     
+    /**
+     *
+     * @return
+     */
     public Nodo getExpresionRegular(){ return expresionRegular; }
     
+    /**
+     *
+     */
     public void calcularArbol(){
         int idAceptacion = numerarNodosHoja(1, expresionRegular);
         Nodo nodo = new NodoConcat(expresionRegular, new NodoHoja(idAceptacion, (char)3));
@@ -50,6 +72,9 @@ public class GeneradorAutomata {
         calcularSiguientes(expresionRegular);
     }
     
+    /**
+     *
+     */
     public void crearEstadosAutomata(){
         int indiceEstadoActual = 0;
         
@@ -117,6 +142,11 @@ public class GeneradorAutomata {
         }
     }
     
+    /**
+     *
+     * @param token
+     * @param expresion
+     */
     public void asignarTipoToken(String token, Nodo expresion){
         if(expresion instanceof NodoConcat){
             asignarTipoToken(token, ((NodoConcat) expresion).getIzquierdo());
@@ -135,6 +165,12 @@ public class GeneradorAutomata {
         }
     }
     
+    /**
+     *
+     * @param id
+     * @param expresion
+     * @return
+     */
     public int numerarNodosHoja(int id, Nodo expresion){
         if(expresion instanceof NodoConcat){
             id = numerarNodosHoja(id, ((NodoConcat) expresion).getIzquierdo());
@@ -154,6 +190,10 @@ public class GeneradorAutomata {
         return id;
     }
     
+    /**
+     *
+     * @param expresion
+     */
     public void calcularSiguientes(Nodo expresion){
         if(expresion instanceof NodoConcat){
             calcularSiguientes(((NodoConcat) expresion).getIzquierdo());
@@ -179,6 +219,12 @@ public class GeneradorAutomata {
         }
     }
     
+    /**
+     *
+     * @param rango
+     * @param opcion
+     * @return
+     */
     public Nodo agregarRango(String rango, int opcion){
         Nodo raiz = new NodoDis();
         char[] caracteres = Utilidades.obtenerCaracteres(rango, opcion);
@@ -197,6 +243,11 @@ public class GeneradorAutomata {
         return raiz;
     }
     
+    /**
+     *
+     * @param cadena
+     * @return
+     */
     public Nodo agregarCadena(String cadena){
         Nodo raiz = new NodoConcat();
         char[] caracteres = cadena.toCharArray();

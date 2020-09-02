@@ -21,6 +21,12 @@ public class Lenguaje implements Serializable {
     private Lexer lexer = new Lexer();
     private Parser parser = new Parser();
 
+    /**
+     *
+     * @param informacion
+     * @param automata
+     * @param parserAutomata
+     */
     public Lenguaje(Informacion informacion, Automata automata, AutomataParser parserAutomata) {
         this.informacion = informacion;
         this.nombre = informacion.getNombre();
@@ -28,34 +34,66 @@ public class Lenguaje implements Serializable {
         this.parser.setAutomata(parserAutomata);
     }
 
+    /**
+     *
+     * @return
+     */
     public Lexer getLexer() {
         return lexer;
     }
 
+    /**
+     *
+     * @param lexer
+     */
     public void setLexer(Lexer lexer) {
         this.lexer = lexer;
     }
 
+    /**
+     *
+     * @return
+     */
     public Parser getParser() {
         return parser;
     }
 
+    /**
+     *
+     * @param parser
+     */
     public void setParser(Parser parser) {
         this.parser = parser;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public Informacion getInformacion() {
         return informacion;
     }
 
+    /**
+     *
+     * @param informacion
+     */
     public void setInformacion(Informacion informacion) {
         this.informacion = informacion;
     }

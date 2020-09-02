@@ -6,13 +6,13 @@
 package GUI;
 
 import analizadores.analizadorFinal.Lenguaje;
+import analizadores.analizadorFinal.Registro;
 import analizadores.estructuraGramatica.LexerGramatica;
 import analizadores.estructuraGramatica.ParserGramatica;
 import analizadores.objetos.ErrorAnalisis;
 import analizadores.objetos.Variable;
 import analizadores.objetos.componentes.Utilidades;
 import analizadores.objetos.componentes.lexer.Token;
-import analizadores.objetos.componentes.parser.Estado;
 import analizadores.objetos.componentes.parser.Simbolo;
 import java.awt.Component;
 import java.io.BufferedReader;
@@ -21,31 +21,31 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JMenu;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
-import javax.swing.JTextArea;
-import javax.swing.MenuElement;
 import javax.swing.table.DefaultTableModel;
 
 /**
- *
+ * manejador del editor, hace todas las funcionalidades que el editor debe realizar
  * @author jose_
  */
 public class EditorManager {
     
-    List<Lenguaje> lenguajes;
+    private String textoCompilado = null;
     
+    /**
+     *
+     */
     public EditorManager(){
-        this.lenguajes = new ArrayList();
     }
     
+    /**
+     * agrega un nuevo tab, al editor
+     * @param panel panel al que agregaremos el nuevo tab
+     */
     public void nuevoTab(JTabbedPane panel){
         String nombre = JOptionPane.showInputDialog(null, "¿Qué nombre desea tenga su nueva pestaña?", "Informacion", JOptionPane.QUESTION_MESSAGE);
         if(nombre != null && !nombre.isEmpty()){
@@ -55,6 +55,10 @@ public class EditorManager {
         }
     }
     
+    /**
+     * agrega un nuevo tab al editor a partir de cargar un archivo
+     * @param panel panel al que agregaremos el nuevo tab
+     */
     public void cargarTab(JTabbedPane panel){
         File file = ArchivosManager.cargarArchivo();
         if(file == null || file.getName().equals("")){
@@ -121,6 +125,13 @@ public class EditorManager {
         }
     }
     
+    /**
+     * Analisa lexica y sintacticamente la entrada, para poder generar un lenguaje
+     * @param texto texto a analizar
+     * @param TablaTokens listado de los tokens detectados por el analizador lexico
+     * @param TablaErrores tabla de errores (si los hay) durante el analalisis
+     * @return valor, si es que se encontraron o no errores
+     */
     public boolean parsearSecciones(String texto, JTable TablaTokens, JTable TablaErrores) {
         boolean valor = false;
         try {
@@ -138,7 +149,7 @@ public class EditorManager {
                     parser.getGeneradorParser().getAutomata().setProducciones(parser.getGeneradorParser().getProducciones());
                     parser.getGeneradorParser().getAutomata().setSimbolos(parser.getGeneradorParser().getSimbolos());
                     Lenguaje lenguaje = new Lenguaje(parser.getInformacion(), parser.getGeneradorAutomata().getAutomata(), parser.getGeneradorParser().getAutomata());
-                    ArchivosManager.guardarLenguaje(lenguaje);
+                    ArchivosManager.guardarLenguaje(lenguaje, true);
                 }else{
                     DefaultTableModel modelo = (DefaultTableModel) TablaErrores.getModel();
                     for (ErrorAnalisis error : parser.getErrores()) {
@@ -160,7 +171,13 @@ public class EditorManager {
         return valor;
     }
 
-    void compilarTexto(JMenu menuLenguajes, Tab tab) {
+    /**
+     * carga el lenguaje seleccionado por el usuario, para posteriormente utilizarlo para analizar la cadena de entrada
+     * @param menuLenguajes lenguaje seleccionado
+     * @param tab texto a analizar
+     * @param TablaErrores tabla en la que registraremos todos los errores
+     */
+    public void compilarTexto(JMenu menuLenguajes, Tab tab, JTable TablaErrores) {
         String nombreLenguaje = null;
         for (Component menuComponent : menuLenguajes.getMenuComponents()) {
             if(((JRadioButtonMenuItem)menuComponent).isSelected()) nombreLenguaje = ((JRadioButtonMenuItem)menuComponent).getName();
@@ -170,11 +187,16 @@ public class EditorManager {
             if(tab.getExtension().equals(lenguaje.getInformacion().getExtension())){
                 lenguaje.getLexer().getAutomata().setCadena(tab.getTexto().getText());
                 lenguaje.getLexer().getAutomata().analizar();
-                for (Token token : lenguaje.getLexer().getAutomata().getTokens()) {
-                    System.out.println(token.toString());
-                }
-                for (String error : lenguaje.getLexer().getAutomata().getErrores()) {
-                    System.out.println(error);
+                lenguaje.getParser().setErrores(lenguaje.getLexer().getAutomata().getErrores());
+                lenguaje.getParser().setTokens(lenguaje.getLexer().getAutomata().getTokens());
+                lenguaje.getParser().analizar();
+                if(lenguaje.getParser().getErrores().isEmpty()){
+                    ArchivosManager.guardarLenguaje(lenguaje, false);
+                }else{
+                    DefaultTableModel modelo = (DefaultTableModel) TablaErrores.getModel();
+                    for (ErrorAnalisis error : lenguaje.getParser().getErrores()) {
+                        modelo.addRow(new String[]{error.getTipo(),error.getValor(),error.getDescripcion(),String.valueOf(error.getLinea()),String.valueOf(error.getColumna())});
+                    }
                 }
             }else{
                 JOptionPane.showMessageDialog(null, "El texto a analizar, no pertenece al tipo de extension especificado durante la creacion del lenguaje.","Error",JOptionPane.ERROR_MESSAGE);
@@ -184,7 +206,12 @@ public class EditorManager {
         }
     }
 
-    void crearTablaDeAnalisisSintactico(JMenu menuLenguajes, JTable TablaDeAnalisisSintactico) {
+    /**
+     * genera la tabla de analisis sintactico del lenguaje seleccionado en el editor
+     * @param menuLenguajes lenguaje seleccionado
+     * @param TablaDeAnalisisSintactico tabla en la que se anotarán todas las acciones
+     */
+    public void crearTablaDeAnalisisSintactico(JMenu menuLenguajes, JTable TablaDeAnalisisSintactico) {
         String nombreLenguaje = null;
         for (Component menuComponent : menuLenguajes.getMenuComponents()) {
             if(((JRadioButtonMenuItem)menuComponent).isSelected()) nombreLenguaje = ((JRadioButtonMenuItem)menuComponent).getName();
@@ -210,6 +237,48 @@ public class EditorManager {
                         modelo.setValueAt(valor, i, j);
                     }
                 }
+            }
+            TablaDeAnalisisSintactico.setModel(modelo);
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay lenguajes en el repositorio del programa.","Error",JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * muestra al usuario un mensaje con la informacion del lenguaje seleccionado
+     * @param menuLenguajes lenguaje seleccionado
+     */
+    public void mostrarInformacionDelLenguaje(JMenu menuLenguajes) {
+        String nombreLenguaje = null;
+        for (Component menuComponent : menuLenguajes.getMenuComponents()) {
+            if(((JRadioButtonMenuItem)menuComponent).isSelected()) nombreLenguaje = ((JRadioButtonMenuItem)menuComponent).getName();
+        }
+        if(nombreLenguaje != null){
+            Lenguaje lenguaje = ArchivosManager.cargarLenguaje(nombreLenguaje);
+            JOptionPane.showMessageDialog(null, lenguaje.getInformacion().toString(), "Informacion del lenguaje", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    /**
+     * crea la tabla donde se muestra en pantalla el proceso que el analizador sintactico del lenguaje seleccionado, las acciones y los pasos 
+     * @param menuLenguajes lenguaje seleccionado
+     * @param TablaDeAnalisisSintactico tabla en la que se iran añadiendo todos los registros realizados
+     */
+    public void crearTablaDeAnalisisCadena(JMenu menuLenguajes, JTable TablaDeAnalisisSintactico) {
+        String nombreLenguaje = null;
+        for (Component menuComponent : menuLenguajes.getMenuComponents()) {
+            if(((JRadioButtonMenuItem)menuComponent).isSelected()) nombreLenguaje = ((JRadioButtonMenuItem)menuComponent).getName();
+        }
+        if(nombreLenguaje != null){
+            Lenguaje lenguaje = ArchivosManager.cargarLenguaje(nombreLenguaje);
+            DefaultTableModel modelo = new DefaultTableModel();
+            modelo.addColumn("Pila de Estados");
+            modelo.addColumn("Pila de simbolos");
+            modelo.addColumn("Tokens de entrada");
+            modelo.addColumn("Accion realizada");
+            TablaDeAnalisisSintactico.setModel(modelo);
+            for (Registro registro : lenguaje.getParser().getHistorial()) {
+                modelo.addRow(new String[]{registro.getPila(),registro.getSimbolos(),registro.getEntrada(), registro.getAccion()});
             }
             TablaDeAnalisisSintactico.setModel(modelo);
         }else{

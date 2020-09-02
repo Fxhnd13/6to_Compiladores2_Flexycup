@@ -26,7 +26,11 @@ import java_cup.runtime.XMLElement;
 @SuppressWarnings({"rawtypes"})
 public class ParserGramatica extends java_cup.runtime.lr_parser {
 
- public final Class getSymbolContainer() {
+    /**
+     *
+     * @return
+     */
+    public final Class getSymbolContainer() {
     return sym.class;
 }
 
@@ -34,11 +38,14 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
   @Deprecated
   public ParserGramatica() {super();}
 
-  /** Constructor which sets the default scanner. */
+  /** Constructor which sets the default scanner.
+     * @param s */
   @Deprecated
   public ParserGramatica(java_cup.runtime.Scanner s) {super(s);}
 
-  /** Constructor which sets the default scanner. */
+  /** Constructor which sets the default scanner.
+     * @param s
+     * @param sf */
   public ParserGramatica(java_cup.runtime.Scanner s, java_cup.runtime.SymbolFactory sf) {super(s,sf);}
 
   /** Production table. */
@@ -65,7 +72,8 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\000\002\017\003\000\002\020\005\000\002\020\003\000" +
     "\002\012\003\000\002\012\002" });
 
-  /** Access to production table. */
+  /** Access to production table.
+     * @return  */
   public short[][] production_table() {return _production_table;}
 
   /** Parse-action table. */
@@ -217,7 +225,8 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\002\000\020\003\ufffc\004\ufffc\005\ufffc\006\ufffc\007\ufffc" +
     "\010\ufffc\014\ufffc\001\002" });
 
-  /** Access to parse-action table. */
+  /** Access to parse-action table.
+     * @return  */
   public short[][] action_table() {return _action_table;}
 
   /** <code>reduce_goto</code> table. */
@@ -269,7 +278,8 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     "\004\013\170\001\001\000\002\001\001\000\002\001\001" +
     "" });
 
-  /** Access to <code>reduce_goto</code> table. */
+  /** Access to <code>reduce_goto</code> table.
+     * @return  */
   public short[][] reduce_table() {return _reduce_table;}
 
   /** Instance of action encapsulation class. */
@@ -281,7 +291,13 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
       action_obj = new CUP$ParserGramatica$actions(this);
     }
 
-  /** Invoke a user supplied parse action. */
+  /** Invoke a user supplied parse action.
+     * @param act_num
+     * @param parser
+     * @param stack
+     * @param top
+     * @return
+     * @throws java.lang.Exception  */
   public java_cup.runtime.Symbol do_action(
     int                        act_num,
     java_cup.runtime.lr_parser parser,
@@ -293,15 +309,19 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
     return action_obj.CUP$ParserGramatica$do_action(act_num, parser, stack, top);
   }
 
-  /** Indicates start state. */
+  /** Indicates start state.
+     * @return  */
   public int start_state() {return 0;}
-  /** Indicates start production. */
+  /** Indicates start production.
+     * @return  */
   public int start_production() {return 0;}
 
-  /** <code>EOF</code> Symbol index. */
+  /** <code>EOF</code> Symbol index.
+     * @return  */
   public int EOF_sym() {return 0;}
 
-  /** <code>error</code> Symbol index. */
+  /** <code>error</code> Symbol index.
+     * @return  */
   public int error_sym() {return 1;}
 
 
@@ -314,7 +334,11 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
         private GeneradorParser generadorParser;
         private Informacion informacionLenguaje;
 
-        public ParserGramatica(LexerGramatica lex) { 
+    /**
+     *
+     * @param lex
+     */
+    public ParserGramatica(LexerGramatica lex) { 
             super(lex);   
             listErrores = lex.getErrores();
             generadorAutomata = new GeneradorAutomata();
@@ -325,11 +349,21 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
             informacionLenguaje = new Informacion();
 	}
         
-        public void setAccion(String tipo, String mensaje, String accion){
+    /**
+     *
+     * @param tipo
+     * @param mensaje
+     * @param accion
+     */
+    public void setAccion(String tipo, String mensaje, String accion){
             System.out.println(tipo+"         "+mensaje);
         }
 
-        public void unrecovered_syntax_error(Symbol cur_token){
+    /**
+     *
+     * @param cur_token
+     */
+    public void unrecovered_syntax_error(Symbol cur_token){
             if(cur_token.toString().equals("#0")){
                 listErrores.add(new ErrorAnalisis("Sintactico","Fin del archivo", "No se pudo recuperar y seguir analizando, no se encontraron mas tokens.",cur_token.left,cur_token.right));
             }else{
@@ -337,7 +371,11 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
             }
         }
 
-        public void syntax_error(Symbol s){
+    /**
+     *
+     * @param s
+     */
+    public void syntax_error(Symbol s){
             String message = "";
             StringBuilder m = new StringBuilder("Error: ");
             String cadena = (String) s.value;
@@ -372,13 +410,47 @@ public class ParserGramatica extends java_cup.runtime.lr_parser {
             listErrores.add(new ErrorAnalisis("Sintactico",cadena,message,linea,columna));
         }
 
-        public List<ErrorAnalisis> getErrores(){return listErrores;}
-        public void setErrores(List<ErrorAnalisis> e){listErrores = e;}
-        public GeneradorAutomata getGeneradorAutomata(){ return generadorAutomata; }
-        public GeneradorParser getGeneradorParser() { return generadorParser; }
-        public TablaDeSimbolos getTablaDeER(){ return expresionesRegulares; }
-        public TablaDeSimbolos getTablaDeSimbolosGramaticales(){ return simbolosGramatica;}
-        public Informacion getInformacion(){ return informacionLenguaje; }
+    /**
+     *
+     * @return
+     */
+    public List<ErrorAnalisis> getErrores(){return listErrores;}
+
+    /**
+     *
+     * @param e
+     */
+    public void setErrores(List<ErrorAnalisis> e){listErrores = e;}
+
+    /**
+     *
+     * @return
+     */
+    public GeneradorAutomata getGeneradorAutomata(){ return generadorAutomata; }
+
+    /**
+     *
+     * @return
+     */
+    public GeneradorParser getGeneradorParser() { return generadorParser; }
+
+    /**
+     *
+     * @return
+     */
+    public TablaDeSimbolos getTablaDeER(){ return expresionesRegulares; }
+
+    /**
+     *
+     * @return
+     */
+    public TablaDeSimbolos getTablaDeSimbolosGramaticales(){ return simbolosGramatica;}
+
+    /**
+     *
+     * @return
+     */
+    public Informacion getInformacion(){ return informacionLenguaje; }
 
 
 

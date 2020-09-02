@@ -11,7 +11,21 @@ package analizadores.objetos.componentes.parser.acciones;
  */
 public interface Accion{
     
+    /**
+     *
+     * @return
+     */
     public String getSimbolo();
+
+    /**
+     *
+     * @return
+     */
     public int getValor();
+
+    /**
+     *
+     * @return
+     */
     public String toString();
 }

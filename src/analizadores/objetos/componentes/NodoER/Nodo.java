@@ -11,13 +11,35 @@ package analizadores.objetos.componentes.NodoER;
  */
 public interface Nodo {
     
+    /**
+     *
+     * @return
+     */
     public int[] primeros();
     
+    /**
+     *
+     * @return
+     */
     public int[] ultimos();
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public int[] siguientes(int id);
     
+    /**
+     *
+     * @param id
+     * @param ids
+     */
     public void agregarSiguientes(int id, int[] ids);
     
+    /**
+     *
+     * @return
+     */
     public boolean isAnulable();
 }

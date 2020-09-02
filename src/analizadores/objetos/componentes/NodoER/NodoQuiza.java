@@ -13,6 +13,10 @@ public class NodoQuiza implements Nodo{
 
     private Nodo hijo;
     
+    /**
+     *
+     * @param nuevo
+     */
     public NodoQuiza(NodoQuiza nuevo){
         if(nuevo.getHijo() instanceof NodoConcat){
             this.hijo = new NodoConcat((NodoConcat) nuevo.getHijo());
@@ -26,39 +30,78 @@ public class NodoQuiza implements Nodo{
             this.hijo = new NodoHoja((NodoHoja) nuevo.getHijo());
         }
     }
+
+    /**
+     *
+     * @param hijo
+     */
     public NodoQuiza(Nodo hijo){
         this.hijo = hijo;
     }
+
+    /**
+     *
+     */
     public NodoQuiza() {}
 
+    /**
+     *
+     * @return
+     */
     public Nodo getHijo() {
         return hijo;
     }
 
+    /**
+     *
+     * @param hijo
+     */
     public void setHijo(Nodo hijo) {
         this.hijo = hijo;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] primeros() {
         return hijo.primeros();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int[] ultimos() {
         return hijo.ultimos();
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @Override
     public int[] siguientes(int id) {
         return hijo.siguientes(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public boolean isAnulable() {
         return true;
     }
 
+    /**
+     *
+     * @param id
+     * @param ids
+     */
     @Override
     public void agregarSiguientes(int id, int[] ids) {
         hijo.agregarSiguientes(id, ids);

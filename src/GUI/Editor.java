@@ -6,6 +6,8 @@
 package GUI;
 
 import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.List;
@@ -21,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.BadLocationException;
 
 /**
- *
+ * Interfaz grafica principal, editor de texto
  * @author jose_
  */
 public class Editor extends javax.swing.JFrame {
@@ -73,8 +75,9 @@ public class Editor extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         MenuLenguajes = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
+        jMenuItem12 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
-        jMenuItem11 = new javax.swing.JMenuItem();
+        VerPila = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
         ReporteErroresEstructuraGramatica.setSize(new java.awt.Dimension(1270, 600));
@@ -201,8 +204,6 @@ public class Editor extends javax.swing.JFrame {
                 .addContainerGap(42, Short.MAX_VALUE))
         );
 
-        DialogoTablaAnalisisSintactico.setModal(true);
-        DialogoTablaAnalisisSintactico.setModalityType(java.awt.Dialog.ModalityType.DOCUMENT_MODAL);
         DialogoTablaAnalisisSintactico.setResizable(false);
         DialogoTablaAnalisisSintactico.setSize(this.getToolkit().getScreenSize());
 
@@ -289,7 +290,7 @@ public class Editor extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Pruebas");
+        jMenu3.setText("Acciones");
 
         jMenuItem8.setText("Compilar");
         jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
@@ -322,6 +323,14 @@ public class Editor extends javax.swing.JFrame {
 
         jMenu4.setText("Ver");
 
+        jMenuItem12.setText("Ver informacion del lenguaje activo");
+        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem12ActionPerformed(evt);
+            }
+        });
+        jMenu4.add(jMenuItem12);
+
         jMenuItem10.setText("Ver tabla de analisis sintactico");
         jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -330,8 +339,14 @@ public class Editor extends javax.swing.JFrame {
         });
         jMenu4.add(jMenuItem10);
 
-        jMenuItem11.setText("Ver proceso estado de pila durante analisis");
-        jMenu4.add(jMenuItem11);
+        VerPila.setText("Ver proceso estado de pila durante analisis");
+        VerPila.setEnabled(false);
+        VerPila.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                VerPilaActionPerformed(evt);
+            }
+        });
+        jMenu4.add(VerPila);
 
         jMenuBar1.add(jMenu4);
 
@@ -426,8 +441,15 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        ((DefaultTableModel) TablaErrores.getModel()).setRowCount(0);
+        ((DefaultTableModel) TablaTokens.getModel()).setRowCount(0);
         if(((Tab)tabs.getSelectedComponent()) != null){
-            manager.compilarTexto(this.MenuLenguajes, (Tab)tabs.getSelectedComponent());
+            manager.compilarTexto(this.MenuLenguajes, (Tab)tabs.getSelectedComponent(), TablaErrores);
+            if(((DefaultTableModel) TablaErrores.getModel()).getRowCount() != 0){
+                this.ReporteErroresEstructuraGramatica.setVisible(true);
+            }else{
+                this.VerPila.setEnabled(true);
+            }
         }else{
             JOptionPane.showMessageDialog(null, "No hay ninguna pestaña con texto activa", "Error", JOptionPane.ERROR_MESSAGE);
         }
@@ -448,12 +470,31 @@ public class Editor extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        this.DialogoTablaAnalisisSintactico.setTitle("TABLA DE ANALISIS SINTACTICO");
         manager.crearTablaDeAnalisisSintactico(this.MenuLenguajes, TablaDeAnalisisSintactico);
         this.DialogoTablaAnalisisSintactico.setVisible(true);
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
+    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+        manager.mostrarInformacionDelLenguaje(this.MenuLenguajes);
+    }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void VerPilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerPilaActionPerformed
+        this.DialogoTablaAnalisisSintactico.setTitle("PROCESO DE LA PILA DURANTE EL ANALISIS DE LA CADENA");
+        manager.crearTablaDeAnalisisCadena(this.MenuLenguajes, TablaDeAnalisisSintactico);
+        this.DialogoTablaAnalisisSintactico.setVisible(true);
+    }//GEN-LAST:event_VerPilaActionPerformed
+
+    /**
+     * 
+     * @return el menu de lenguajes cargados
+     */
     public JMenu getMenuLenguajes(){ return this.MenuLenguajes; }
     
+    /**
+     * 
+     * @return el manager del editor
+     */
     public EditorManager getEditorManager(){ return this.manager; }
     /**
      * @param args the command line arguments
@@ -499,6 +540,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JTable TablaDeAnalisisSintactico;
     private javax.swing.JTable TablaErrores;
     private javax.swing.JTable TablaTokens;
+    private javax.swing.JMenuItem VerPila;
     private javax.swing.JLabel informacionLabel;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -510,7 +552,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem11;
+    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -550,12 +592,23 @@ public class Editor extends javax.swing.JFrame {
         });
     }
 
+    /**
+     * Metodo que carga en el menú lenguajes los lenguajes existentes en el repositorio local
+     * 
+     */
     public void cargarLenguajes() {
+        VerPila.setEnabled(false);
         MenuLenguajes.removeAll();
         List<String> lenguajes =  ArchivosManager.cargarNombresLenguajes();
         ButtonGroup grupo = new ButtonGroup();
         for (int i = 0; i < lenguajes.size(); i++){
             JRadioButtonMenuItem item = new JRadioButtonMenuItem(lenguajes.get(i));
+            item.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    VerPila.setEnabled(false);
+                }
+            });
             if(i==0) item.setSelected(true);
             item.setName(lenguajes.get(i));
             grupo.add(item);

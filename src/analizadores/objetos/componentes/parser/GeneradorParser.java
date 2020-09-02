@@ -29,12 +29,19 @@ public class GeneradorParser {
     private AutomataParser automata;
     private int estadoActual;
     
+    /**
+     *
+     */
     public GeneradorParser(){
         this.producciones = new ArrayList();
         this.simbolos = new TablaDeSimbolos();
         this.automata = new AutomataParser();
     }
     
+    /**
+     *
+     * @param errores
+     */
     public void generarEstados(List<ErrorAnalisis> errores){
         this.estadoActual = 0;
         List<Cerradura> cerraduras = new ArrayList(); //creamos la cerradura de la primer produdcion
@@ -257,6 +264,12 @@ public class GeneradorParser {
         return cerraduras;
     }
     
+    /**
+     *
+     * @param errores
+     * @param expresionRegulares
+     * @param simbolos
+     */
     public void verificarIntegridad(List<ErrorAnalisis> errores, TablaDeSimbolos expresionRegulares, TablaDeSimbolos simbolos){
         //verificar que cada simbolo terminal, exista una expresion regular
         for (Variable variable : simbolos.getVariables()) {
@@ -306,10 +319,18 @@ public class GeneradorParser {
         return simbolos;
     }
     
+    /**
+     *
+     * @return
+     */
     public List<Produccion> getProducciones() {
         return producciones;
     }
 
+    /**
+     *
+     * @param producciones
+     */
     public void setProducciones(List<Produccion> producciones) {
         this.producciones = producciones;
     }
@@ -343,6 +364,9 @@ public class GeneradorParser {
         return simbolosOrigen;
     }
 
+    /**
+     *
+     */
     public void calcularPrimeros() {
         for (Variable variable : this.simbolos.getVariables()) {
             Simbolo simbolo = (Simbolo) variable.getValor();
@@ -385,6 +409,9 @@ public class GeneradorParser {
         return false;
     }
 
+    /**
+     *
+     */
     public void escribirEstados() {
         int estadoActual=0;
         String cadenaAcciones ="";
@@ -402,6 +429,9 @@ public class GeneradorParser {
         System.out.println(cadenaAcciones);
     }
 
+    /**
+     *
+     */
     public void escribirSimbolos() {
         for (Variable variable : simbolos.getVariables()) {
             System.out.println(((Simbolo)variable.getValor()).toString());
@@ -441,25 +471,54 @@ public class GeneradorParser {
     
     private int valorPrecedenciaDe(int produccion){
         int mayor = 0;
-        for (Simbolo simbolo : this.producciones.get(produccion).getSimbolosDerecha()) {
-            if(((Simbolo)this.simbolos.getVariable(simbolo.getSimbolo()).getValor()).getPrecedencia() > mayor) mayor = ((Simbolo)this.simbolos.getVariable(simbolo.getSimbolo()).getValor()).getPrecedencia();
+        if(tieneTerminales(produccion)){
+            for (Simbolo simbolo : this.producciones.get(produccion).getSimbolosDerecha()) {
+                if(((Simbolo)this.simbolos.getVariable(simbolo.getSimbolo()).getValor()).isTerminal()){
+                    if(((Simbolo)this.simbolos.getVariable(simbolo.getSimbolo()).getValor()).getPrecedencia() > mayor) mayor = ((Simbolo)this.simbolos.getVariable(simbolo.getSimbolo()).getValor()).getPrecedencia();
+                }
+            }
+        }else{
+            mayor = 1000000;
         }
         return mayor;
     }
 
+    /**
+     *
+     * @return
+     */
     public AutomataParser getAutomata() {
         return automata;
     }
 
+    /**
+     *
+     * @param automata
+     */
     public void setAutomata(AutomataParser automata) {
         this.automata = automata;
     }
 
+    /**
+     *
+     * @return
+     */
     public TablaDeSimbolos getSimbolos() {
         return simbolos;
     }
 
+    /**
+     *
+     * @param simbolos
+     */
     public void setSimbolos(TablaDeSimbolos simbolos) {
         this.simbolos = simbolos;
+    }
+
+    private boolean tieneTerminales(int produccionId) {
+        for (Simbolo simbolo : this.producciones.get(produccionId).getSimbolosDerecha()) {
+            if(((Simbolo)this.simbolos.getVariable(simbolo.getSimbolo()).getValor()).isTerminal()) return true;
+        }
+        return false;
     }
 }

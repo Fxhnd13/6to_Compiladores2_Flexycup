@@ -15,10 +15,22 @@ import java.util.List;
  */
 public class Utilidades {
 
+    /**
+     *
+     */
     public static final char[] ARREGLO_LETRAS = {'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z',
                                                  'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+
+    /**
+     *
+     */
     public static final char[] ARREGLO_NUMEROS = {'0','1','2','3','4','5','6','7','8','9','0','1','2','3','4','5','6','7','8','9'};
     
+    /**
+     *
+     * @param arreglo
+     * @return
+     */
     public static int[] ordenar(int[] arreglo){
         for (int i = 1; i < arreglo.length; i++) {
             for (int j = 0; j < arreglo.length-i; j++) {
@@ -32,6 +44,10 @@ public class Utilidades {
         return arreglo;
     }
     
+    /**
+     *
+     * @param arreglo
+     */
     public static void ordenar(List<Integer> arreglo){
         for (int i = 1; i < arreglo.size(); i++) {
             for (int j = 0; j < arreglo.size()-i; j++) {
@@ -44,6 +60,12 @@ public class Utilidades {
         }
     }
     
+    /**
+     *
+     * @param numero
+     * @param arreglo
+     * @return
+     */
     public static boolean existe(int numero, int[] arreglo){
         boolean valor = false;
         for (int n : arreglo) {
@@ -55,6 +77,12 @@ public class Utilidades {
         return valor;
     }
     
+    /**
+     *
+     * @param numero
+     * @param arreglo
+     * @return
+     */
     public static boolean existe(int numero, List<Integer> arreglo){
         boolean valor = false;
         for (int n : arreglo) {
@@ -66,6 +94,11 @@ public class Utilidades {
         return valor;
     }
     
+    /**
+     *
+     * @param arreglo
+     * @return
+     */
     public static String escribirArreglo(int[] arreglo){
         String cadena = "[";
         for (int i = 0; i < arreglo.length; i++) {
@@ -75,6 +108,11 @@ public class Utilidades {
         return (cadena+"]");
     }
     
+    /**
+     *
+     * @param arreglo
+     * @return
+     */
     public static String escribirArreglo(List<Integer> arreglo){
         String cadena = "[";
         for (int i = 0; i < arreglo.size(); i++) {
@@ -84,6 +122,12 @@ public class Utilidades {
         return (cadena+"]");
     }
     
+    /**
+     *
+     * @param rango
+     * @param opcion
+     * @return
+     */
     public static char[] obtenerCaracteres(String rango, int opcion){
         List<String> caracteres = new ArrayList();
         rango = rango.substring(1, rango.length()-1);
@@ -125,6 +169,12 @@ public class Utilidades {
         return retorno;
     }
 
+    /**
+     *
+     * @param simbolo
+     * @param arreglo
+     * @return
+     */
     public static boolean existe(String simbolo, List<String> arreglo) {
         boolean valor = false;
         for (String n : arreglo) {
@@ -136,6 +186,13 @@ public class Utilidades {
         return valor;
     }
 
+    /**
+     *
+     * @param i
+     * @param cerradurasEvaluadas
+     * @param indiceCerradurasEvaluadas
+     * @return
+     */
     public static boolean existe(int i, int[] cerradurasEvaluadas, int indiceCerradurasEvaluadas) {
         for (int j = 0; j < indiceCerradurasEvaluadas; j++) {
             if(i == cerradurasEvaluadas[j]) return true;
@@ -143,6 +200,12 @@ public class Utilidades {
         return false;
     }
 
+    /**
+     *
+     * @param simbolo
+     * @param simbolosPreAnalisisT
+     * @return
+     */
     public static boolean existe(String simbolo, String[] simbolosPreAnalisisT) {
         for (String n : simbolosPreAnalisisT) {
             if(n.equals(simbolo)) return true;
@@ -150,6 +213,12 @@ public class Utilidades {
         return false;
     }
 
+    /**
+     *
+     * @param columnName
+     * @param acciones
+     * @return
+     */
     public static String obtenerAccionDe(String columnName, List<Accion> acciones) {
         for (Accion accion : acciones) {
             if(columnName.equals(accion.getSimbolo())) return accion.toString();

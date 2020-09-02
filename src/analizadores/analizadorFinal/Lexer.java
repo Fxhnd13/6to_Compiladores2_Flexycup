@@ -20,18 +20,34 @@ public class Lexer implements Serializable {
     private String cadena; 
     private Automata automata = new Automata();
 
+    /**
+     *
+     * @return
+     */
     public String getCadena() {
         return cadena;
     }
 
+    /**
+     *
+     * @param cadena
+     */
     public void setCadena(String cadena) {
         this.cadena = cadena;
     }
 
+    /**
+     *
+     * @return
+     */
     public Automata getAutomata() {
         return automata;
     }
 
+    /**
+     *
+     * @param automata
+     */
     public void setAutomata(Automata automata) {
         this.automata = automata;
     }

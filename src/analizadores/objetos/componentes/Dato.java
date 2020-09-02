@@ -13,25 +13,49 @@ public class Dato {
     
     private String tipo, valor;
 
+    /**
+     *
+     * @param tipo
+     * @param valor
+     */
     public Dato(String tipo, String valor) {
         this.tipo = tipo;
         this.valor = valor;
     }
 
+    /**
+     *
+     */
     public Dato() {}
     
+    /**
+     *
+     * @return
+     */
     public String getTipo() {
         return tipo;
     }
 
+    /**
+     *
+     * @param tipo
+     */
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getValor() {
         return valor;
     }
 
+    /**
+     *
+     * @param valor
+     */
     public void setValor(String valor) {
         this.valor = valor;
     }

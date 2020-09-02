@@ -17,6 +17,11 @@ public class TablaDeSimbolos implements Serializable{
     
     List<Variable> variables = new ArrayList<Variable>();
     
+    /**
+     *
+     * @param nuevo
+     * @return
+     */
     public boolean verificarDisponibilidad(String nuevo){
         boolean valor = true;
         for (Variable variable : variables) {
@@ -28,6 +33,11 @@ public class TablaDeSimbolos implements Serializable{
         return valor;
     }
     
+    /**
+     *
+     * @param variable
+     * @return
+     */
     public boolean addVariable(Variable variable){
         if(verificarDisponibilidad(variable.getId())){
             variables.add(variable);
@@ -37,6 +47,11 @@ public class TablaDeSimbolos implements Serializable{
         }
     }
     
+    /**
+     *
+     * @param id
+     * @return
+     */
     public Variable getVariable(String id){
         Variable retorno = null;
         if(!verificarDisponibilidad(id)){
@@ -49,10 +64,18 @@ public class TablaDeSimbolos implements Serializable{
         return retorno;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Variable> getVariables() {
         return variables;
     }
 
+    /**
+     *
+     * @param variables
+     */
     public void setVariables(List<Variable> variables) {
         this.variables = variables;
     }
