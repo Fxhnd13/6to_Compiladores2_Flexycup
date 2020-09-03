@@ -141,20 +141,14 @@ public class EditorManager {
             parser.parse();
             parser.getGeneradorParser().verificarIntegridad(parser.getErrores(), parser.getTablaDeER(), parser.getTablaDeSimbolosGramaticales());
             if(parser.getErrores().isEmpty()){
-                System.out.println("Me analice bien");
                 parser.getGeneradorAutomata().calcularArbol();
-                System.out.println("Todo bien al calcular el arbol ER");
                 parser.getGeneradorAutomata().crearEstadosAutomata();
-                System.out.println("Se crearon los estados del automata");
                 parser.getGeneradorParser().generarEstados(parser.getErrores());
                 if(parser.getErrores().isEmpty()){
                     valor = true;
                     parser.getGeneradorParser().getAutomata().setProducciones(parser.getGeneradorParser().getProducciones());
-                    System.out.println("cambiaron mis producciones");
                     parser.getGeneradorParser().getAutomata().setSimbolos(parser.getGeneradorParser().getSimbolos());
-                    System.out.println("cambiaron mis simbolos");
                     Lenguaje lenguaje = new Lenguaje(parser.getInformacion(), parser.getGeneradorAutomata().getAutomata(), parser.getGeneradorParser().getAutomata());
-                    System.out.println("me guarde");
                     ArchivosManager.guardarLenguaje(lenguaje, true);
                 }else{
                     DefaultTableModel modelo = (DefaultTableModel) TablaErrores.getModel();

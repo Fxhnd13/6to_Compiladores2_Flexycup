@@ -613,27 +613,31 @@ public class Editor extends javax.swing.JFrame {
 
     private void agregarEventosAlTab() {
         Tab tab = (Tab) tabs.getSelectedComponent();
-        tab.getTexto().addCaretListener(new CaretListener() {
-            public void caretUpdate(CaretEvent e) {
-                int pos = e.getDot();
-                int row = 0, col=0;
-                try {
-                    row = tab.getTexto().getLineOfOffset(pos) + 1;
-                    col = pos - tab.getTexto().getLineStartOffset(row - 1) + 1;
-                } catch (BadLocationException ex) {
-                    Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
+        if(tab != null){
+            
+            tab.getTexto().addCaretListener(new CaretListener() {
+                public void caretUpdate(CaretEvent e) {
+                    int pos = e.getDot();
+                    int row = 0, col=0;
+                    try {
+                        row = tab.getTexto().getLineOfOffset(pos) + 1;
+                        col = pos - tab.getTexto().getLineStartOffset(row - 1) + 1;
+                    } catch (BadLocationException ex) {
+                        Logger.getLogger(EditorManager.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    informacionLabel.setText("Línea: " + row + "  |  Columna: " + col);
                 }
-                informacionLabel.setText("Línea: " + row + "  |  Columna: " + col);
-            }
-        });
-        tab.getTexto().addKeyListener(new KeyListener(){
-            @Override
-            public void keyPressed(KeyEvent e) {tab.setModificado(true);}
-            @Override
-            public void keyTyped(KeyEvent e) {}
-            @Override
-            public void keyReleased(KeyEvent e) {}
-        });
+            });
+            tab.getTexto().addKeyListener(new KeyListener(){
+                @Override
+                public void keyPressed(KeyEvent e) {tab.setModificado(true);}
+                @Override
+                public void keyTyped(KeyEvent e) {}
+                @Override
+                public void keyReleased(KeyEvent e) {}
+            });
+            
+        }
     }
 
     /**
