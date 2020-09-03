@@ -1,6 +1,6 @@
 //Informacion del lenguaje
 
-nombre: pruebaSofi;
+nombre: identificadores;
 version: 11.0.7;
 autor: sun Microsystems;
 lanzamiento: 1996;
