@@ -86,7 +86,7 @@ public class ArchivosManager {
         if(resultado == JFileChooser.APPROVE_OPTION){
             File temp = filechooser.getSelectedFile();
             if(temp != null){
-                String nombre = JOptionPane.showInputDialog("Por favor ingrese el nombre del archivo:\nNOTA: No olvide revisar la extension.", tab.getNombre()+"."+tab.getExtension());
+                String nombre = JOptionPane.showInputDialog("Por favor ingrese el nombre del archivo:\nNOTA: No olvide revisar la extension.", tab.getNombre()+"."+((tab.getExtension()==null)? "txt":tab.getExtension()));
                 if(nombre == null || nombre.isEmpty() || !nombre.contains(".")){
                     JOptionPane.showMessageDialog(null, "No se ingreso un nombre valido para el archivo, no se guardaron los cambios.", "Error", JOptionPane.ERROR_MESSAGE);
                 }else{
@@ -149,7 +149,6 @@ public class ArchivosManager {
             } catch (FileNotFoundException ex) {
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error no se encontro la ruta para guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
             } catch (IOException ex) {
-                ex.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Ha ocurrido un error en ArchivosManager/guardarLenguajes.", "Error", JOptionPane.ERROR_MESSAGE);
             }
         }

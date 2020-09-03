@@ -15,7 +15,7 @@ import javax.swing.JTextArea;
  */
 public class Tab extends JScrollPane{
     
-    private String nombre, extension="txt";
+    private String nombre, extension;
     private File origen;
     private boolean modificado;
     private JTextArea texto;

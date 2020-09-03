@@ -165,8 +165,7 @@ public class EditorManager {
                 TablaErrores.setModel(modelo);
             }
         } catch (Exception ex) {
-            //JOptionPane.showMessageDialog(null, "Error EditorManager/ParsearSeccion", "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Error EditorManager/ParsearSeccion", "Error", JOptionPane.ERROR_MESSAGE);
         }
         return valor;
     }
@@ -184,7 +183,13 @@ public class EditorManager {
         }
         if(nombreLenguaje != null){
             Lenguaje lenguaje = ArchivosManager.cargarLenguaje(nombreLenguaje);
-            if(tab.getExtension().equals(lenguaje.getInformacion().getExtension())){
+            boolean evaluar = false;
+            if(lenguaje.getInformacion().getExtension() == null){
+                evaluar = true;
+            }else if(tab.getExtension() == null){
+                evaluar = true;
+            }else if(tab.getExtension().equals(lenguaje.getInformacion().getExtension())) evaluar = true;
+            if(evaluar){
                 lenguaje.getLexer().getAutomata().setCadena(tab.getTexto().getText());
                 lenguaje.getLexer().getAutomata().analizar();
                 lenguaje.getParser().setErrores(lenguaje.getLexer().getAutomata().getErrores());
@@ -199,7 +204,7 @@ public class EditorManager {
                     }
                 }
             }else{
-                JOptionPane.showMessageDialog(null, "El texto a analizar, no pertenece al tipo de extension especificado durante la creacion del lenguaje.","Error",JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "El texto a analizar, no pertenece al tipo de extension especificado durante la creacion del lenguaje "+lenguaje.getNombre()+".","Error",JOptionPane.ERROR_MESSAGE);
             }
         }else{
             JOptionPane.showMessageDialog(null, "No ha seleccionado ningun lenguaje del menú 'Lenguajes'.","Error",JOptionPane.ERROR_MESSAGE);

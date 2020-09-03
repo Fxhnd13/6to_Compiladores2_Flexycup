@@ -46,6 +46,7 @@ public class Automata implements Serializable {
         this.buffer = 0;
         this.linea = 1; columna = 1;
         for (this.indiceCaracter = 0; this.indiceCaracter < this.caracteres.length; this.indiceCaracter++) {
+            int bufferT = this.buffer;
             if(this.caracteres[this.indiceCaracter] == '\n') {
                 this.linea++;
                 this.columna = 1;
@@ -63,7 +64,7 @@ public class Automata implements Serializable {
                     this.verificarRetroceso();
                 }
             }
-            this.columna++;
+            this.columna = this.columna+((this.buffer>bufferT)?this.buffer-bufferT:0);
             if(((this.indiceCaracter+1) == this.caracteres.length)&&(!this.estadosRecorridos.isEmpty())) this.verificarEstado();
         }
         this.tokens.add(new Token(linea,columna,"$","FinCadena"));
@@ -87,7 +88,7 @@ public class Automata implements Serializable {
     
     private void verificarRetroceso(){
         if(this.estadosRecorridos.isEmpty()){
-            this.errores.add(new ErrorAnalisis("Lexico",String.valueOf(this.caracteres[this.indiceCaracter]),"El caracter no pertenece a lo especificado en el archivo de entrada.",this.linea, this.columna));
+            this.errores.add(new ErrorAnalisis("Lexico",String.valueOf(this.caracteres[this.indiceCaracter]),"El caracter no pertenece a lo especificado en el archivo de entrada.",this.linea, this.columna-this.buffer));
             this.cadena = this.cadena.substring(1,cadena.length());
         }else{
             this.estadoActual = this.estadosRecorridos.pop();

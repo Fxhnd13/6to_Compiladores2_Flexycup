@@ -59,6 +59,9 @@ public class Editor extends javax.swing.JFrame {
         DialogoTablaAnalisisSintactico = new javax.swing.JDialog();
         jScrollPane2 = new javax.swing.JScrollPane();
         TablaDeAnalisisSintactico = new javax.swing.JTable();
+        DialogoTablaAnalisisSintactico1 = new javax.swing.JDialog();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        TablaDeAnalisisSintactico1 = new javax.swing.JTable();
         tabs = new javax.swing.JTabbedPane();
         informacionLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -75,8 +78,8 @@ public class Editor extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         MenuLenguajes = new javax.swing.JMenu();
         jMenu4 = new javax.swing.JMenu();
-        jMenuItem12 = new javax.swing.JMenuItem();
-        jMenuItem10 = new javax.swing.JMenuItem();
+        VerTabla = new javax.swing.JMenuItem();
+        VerInfo = new javax.swing.JMenuItem();
         VerPila = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
 
@@ -234,6 +237,36 @@ public class Editor extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
+        DialogoTablaAnalisisSintactico1.setResizable(false);
+        DialogoTablaAnalisisSintactico1.setSize(this.getToolkit().getScreenSize());
+
+        TablaDeAnalisisSintactico1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane4.setViewportView(TablaDeAnalisisSintactico1);
+
+        javax.swing.GroupLayout DialogoTablaAnalisisSintactico1Layout = new javax.swing.GroupLayout(DialogoTablaAnalisisSintactico1.getContentPane());
+        DialogoTablaAnalisisSintactico1.getContentPane().setLayout(DialogoTablaAnalisisSintactico1Layout);
+        DialogoTablaAnalisisSintactico1Layout.setHorizontalGroup(
+            DialogoTablaAnalisisSintactico1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogoTablaAnalisisSintactico1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 1251, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        DialogoTablaAnalisisSintactico1Layout.setVerticalGroup(
+            DialogoTablaAnalisisSintactico1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(DialogoTablaAnalisisSintactico1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         informacionLabel.setText("Linea: 0  |  Columna: 0");
@@ -323,21 +356,21 @@ public class Editor extends javax.swing.JFrame {
 
         jMenu4.setText("Ver");
 
-        jMenuItem12.setText("Ver informacion del lenguaje activo");
-        jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
+        VerTabla.setText("Ver informacion del lenguaje activo");
+        VerTabla.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem12ActionPerformed(evt);
+                VerTablaActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem12);
+        jMenu4.add(VerTabla);
 
-        jMenuItem10.setText("Ver tabla de analisis sintactico");
-        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+        VerInfo.setText("Ver tabla de analisis sintactico");
+        VerInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem10ActionPerformed(evt);
+                VerInfoActionPerformed(evt);
             }
         });
-        jMenu4.add(jMenuItem10);
+        jMenu4.add(VerInfo);
 
         VerPila.setText("Ver proceso estado de pila durante analisis");
         VerPila.setEnabled(false);
@@ -406,10 +439,14 @@ public class Editor extends javax.swing.JFrame {
     //GuardarComo
     private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
         Tab tab = (Tab) tabs.getSelectedComponent();
-        if(tab.getOrigen() == null){
-            ArchivosManager.guardarComo(tab, true);
+        if(tab != null){
+            if(tab.getOrigen() == null){
+                ArchivosManager.guardarComo(tab, true);
+            }else{
+                ArchivosManager.guardarComo(tab, false);
+            }
         }else{
-            ArchivosManager.guardarComo(tab, false);
+            JOptionPane.showMessageDialog(null, "No hay ninguna pestaña activa. ", "Error",JOptionPane.ERROR_MESSAGE );
         }
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
@@ -432,11 +469,15 @@ public class Editor extends javax.swing.JFrame {
     private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
         ((DefaultTableModel) TablaTokens.getModel()).setRowCount(0);
         ((DefaultTableModel) TablaErrores.getModel()).setRowCount(0);
-        boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TablaErrores);
-        if(!mostrarErrores){
-            this.ReporteErroresEstructuraGramatica.setVisible(true);
+        if(tabs.getSelectedComponent() != null){
+            boolean mostrarErrores = manager.parsearSecciones(((Tab)tabs.getSelectedComponent()).getTexto().getText(), TablaTokens, TablaErrores);
+            if(!mostrarErrores){
+                this.ReporteErroresEstructuraGramatica.setVisible(true);
+            }else{
+                cargarLenguajes();
+            }
         }else{
-            cargarLenguajes();
+            JOptionPane.showMessageDialog(null, "No hay una pestaña activa.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }//GEN-LAST:event_jMenuItem7ActionPerformed
 
@@ -469,20 +510,20 @@ public class Editor extends javax.swing.JFrame {
         cargarLenguajes();
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+    private void VerInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerInfoActionPerformed
         this.DialogoTablaAnalisisSintactico.setTitle("TABLA DE ANALISIS SINTACTICO");
         manager.crearTablaDeAnalisisSintactico(this.MenuLenguajes, TablaDeAnalisisSintactico);
         this.DialogoTablaAnalisisSintactico.setVisible(true);
-    }//GEN-LAST:event_jMenuItem10ActionPerformed
+    }//GEN-LAST:event_VerInfoActionPerformed
 
-    private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
+    private void VerTablaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerTablaActionPerformed
         manager.mostrarInformacionDelLenguaje(this.MenuLenguajes);
-    }//GEN-LAST:event_jMenuItem12ActionPerformed
+    }//GEN-LAST:event_VerTablaActionPerformed
 
     private void VerPilaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_VerPilaActionPerformed
-        this.DialogoTablaAnalisisSintactico.setTitle("PROCESO DE LA PILA DURANTE EL ANALISIS DE LA CADENA");
-        manager.crearTablaDeAnalisisCadena(this.MenuLenguajes, TablaDeAnalisisSintactico);
-        this.DialogoTablaAnalisisSintactico.setVisible(true);
+        this.DialogoTablaAnalisisSintactico1.setTitle("PROCESO DE LA PILA DURANTE EL ANALISIS DE LA CADENA");
+        manager.crearTablaDeAnalisisCadena(this.MenuLenguajes, TablaDeAnalisisSintactico1);
+        this.DialogoTablaAnalisisSintactico1.setVisible(true);
     }//GEN-LAST:event_VerPilaActionPerformed
 
     /**
@@ -533,14 +574,18 @@ public class Editor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDialog DialogoTablaAnalisisSintactico;
+    private javax.swing.JDialog DialogoTablaAnalisisSintactico1;
     private javax.swing.JDialog EliminarLenguaje;
     private javax.swing.JComboBox<String> LenguajesComboBox;
     private javax.swing.JMenu MenuLenguajes;
     private javax.swing.JDialog ReporteErroresEstructuraGramatica;
     private javax.swing.JTable TablaDeAnalisisSintactico;
+    private javax.swing.JTable TablaDeAnalisisSintactico1;
     private javax.swing.JTable TablaErrores;
     private javax.swing.JTable TablaTokens;
+    private javax.swing.JMenuItem VerInfo;
     private javax.swing.JMenuItem VerPila;
+    private javax.swing.JMenuItem VerTabla;
     private javax.swing.JLabel informacionLabel;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
@@ -551,8 +596,6 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem10;
-    private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
@@ -564,6 +607,7 @@ public class Editor extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane tabs;
     // End of variables declaration//GEN-END:variables
 
@@ -613,6 +657,13 @@ public class Editor extends javax.swing.JFrame {
             item.setName(lenguajes.get(i));
             grupo.add(item);
             MenuLenguajes.add(item);
+        }
+        if(!lenguajes.isEmpty()){
+            VerTabla.setEnabled(true);
+            VerInfo.setEnabled(true);
+        }else{
+            VerTabla.setEnabled(false);
+            VerInfo.setEnabled(false);
         }
     }
 }
