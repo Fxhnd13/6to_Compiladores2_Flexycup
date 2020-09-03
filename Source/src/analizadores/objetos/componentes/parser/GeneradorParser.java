@@ -136,6 +136,7 @@ public class GeneradorParser {
             }
             estadoActual++;
         }
+        //generarLALR();
     }
     
     private Estado crearEstadoAPartirDe(List<Cerradura> cerraduras){
@@ -252,14 +253,6 @@ public class GeneradorParser {
         return false;
     }
     
-    private List<Cerradura> getNucleoDe(Estado estado){
-        List<Cerradura> cerraduras = new ArrayList();
-        for (Cerradura cerradura : estado.getCerraduras()) {
-            if(cerradura.getPosicionPunto() != 0) cerraduras.add(new Cerradura(cerradura));
-        }
-        return cerraduras;
-    }
-    
     /**
      * metodo utilizado después de terminar el analisis del archivo de la estructura de la gramatica
      * @param errores listado de errores, para agregar si se presenta alguno
@@ -300,19 +293,6 @@ public class GeneradorParser {
             extenderGramatica();
             calcularPrimeros();
         }
-    }
-
-    private List<Simbolo> getSimbolosT_NT(int opcion){
-        List<Simbolo> simbolos = new ArrayList();
-        for (Variable variable : this.simbolos.getVariables()) {
-            Simbolo simbolo = (Simbolo) variable.getValor();
-            if(opcion == 0){
-                if(simbolo.isTerminal()) simbolos.add(simbolo);
-            }else{
-                if(!simbolo.isTerminal()) simbolos.add(simbolo);
-            }
-        }
-        return simbolos;
     }
     
     /**
@@ -516,5 +496,142 @@ public class GeneradorParser {
             if(((Simbolo)this.simbolos.getVariable(simbolo.getSimbolo()).getValor()).isTerminal()) return true;
         }
         return false;
+    }
+    
+    private void generarLALR(){
+        //vamos a hacer un arreglo de arreglos
+        List<List<Integer>> estadosSimilares = new ArrayList();
+        List<Integer> estadosAnalizados = new ArrayList();
+        List<Integer> temporal = new ArrayList();
+        for (int i = 0; i < this.automata.getEstados().size(); i++) {
+            if(!Utilidades.existe(i, estadosAnalizados)){
+                temporal.add(i);
+                for (int j = (i+1); j < this.automata.getEstados().size(); j++) {
+                    if(!Utilidades.existe(j, estadosAnalizados)){
+                        if(sonEstadosSimilares(temporal.get(0), j)){
+                            temporal.add(j);
+                        }
+                    }
+                }
+            }
+            for (Integer integer : temporal) {
+                estadosAnalizados.add(integer);   
+            }
+            if(!temporal.isEmpty()) estadosSimilares.add(new ArrayList(temporal));
+            temporal.clear();
+        }
+        for (List<Integer> estadoSimilar : estadosSimilares) {
+            System.out.println("Similares {");
+            for (Integer integer : estadoSimilar) {
+                System.out.println("     "+integer);
+            }
+            System.out.println("}");
+        }
+        AutomataParser nuevoAutomata = new AutomataParser();
+        boolean valorGeneral  = true;
+        for (List<Integer> estadosUnir : estadosSimilares) {
+            List<Estado> estadosEvaluar = new ArrayList();
+            if(estadosUnir.size() > 1){
+                for (int i = 0; i < estadosUnir.size(); i++) {
+                    estadosEvaluar.add(this.automata.getEstados().get(estadosUnir.get(i)));
+                }
+                for (Variable variable : this.simbolos.getVariables()) {
+                    Simbolo simbolo = (Simbolo) variable.getValor();
+                    List<Accion> accionesEvaluar = new ArrayList();
+                    for (Estado estado : estadosEvaluar) {
+                        Accion accion = obtenerAccion(estado, simbolo);
+                        if(accion != null) accionesEvaluar.add(accion);
+                    }
+                    if(!accionesEvaluar.isEmpty()){
+                        if(valorGeneral) valorGeneral = verificarIncosistencias(accionesEvaluar, estadosSimilares);
+                    }
+                }
+                if(valorGeneral){
+                    Estado nuevoEstado = new Estado();
+                    nuevoEstado.setAcciones(this.automata.getEstados().get(estadosUnir.get(0)).getAcciones());
+                    nuevoAutomata.getEstados().add(nuevoEstado);
+                }
+            }else if(estadosUnir.size() == 1){
+                Estado nuevoEstado = new Estado();
+                nuevoEstado.setAcciones(this.automata.getEstados().get(estadosUnir.get(0)).getAcciones());
+                nuevoAutomata.getEstados().add(nuevoEstado);
+            }
+        }
+        if(valorGeneral){
+            nuevoAutomata.setProducciones(this.automata.getProducciones());
+            nuevoAutomata.setSimbolos(this.automata.getSimbolos());
+            this.automata = nuevoAutomata;
+        }
+    }
+
+    private boolean sonEstadosSimilares(Integer estadoBase, int estadoNuevo) {
+        if(this.automata.getEstados().get(estadoBase).getCerraduras().size() == this.automata.getEstados().get(estadoNuevo).getCerraduras().size()){
+            for (Cerradura cerradura : this.automata.getEstados().get(estadoBase).getCerraduras()) {
+                if(existeCerradura(cerradura, this.automata.getEstados().get(estadoNuevo).getCerraduras()) == (-1)) return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private Accion obtenerAccion(Estado estado, Simbolo simbolo) {
+        for (Accion accion : estado.getAcciones()) {
+            if(simbolo.getSimbolo().equals(accion.getSimbolo())) return accion;
+        }
+        return null;
+    }
+
+    private boolean verificarIncosistencias(List<Accion> accionesEvaluar, List<List<Integer>> estadosSimilares) {
+        boolean valor = true;
+        Accion anterior = null;
+        for (Accion accion : accionesEvaluar) {
+            if(anterior == null){
+                anterior = accion;
+            }else{
+                if(obtenerTipoAccion(accion) != obtenerTipoAccion(anterior)) valor = false;
+            }
+        }
+        if(valor){
+            if(accionesEvaluar.get(0) instanceof Reduce){
+                anterior = null;
+                for (Accion accion : accionesEvaluar) {
+                    if(anterior == null){
+                        anterior = accion;
+                    }else{
+                        if(accion.getValor() != anterior.getValor()) valor = false;
+                    }
+                }
+            }else{
+                int indiceEstadosEvaluar = -1;
+                for (int i = 0; i < estadosSimilares.size(); i++) {
+                    for (int j = 0; j < estadosSimilares.get(i).size(); j++) {
+                        if(estadosSimilares.get(i).get(j) == accionesEvaluar.get(0).getValor()){
+                            indiceEstadosEvaluar = i;
+                            break;
+                        }
+                        if(indiceEstadosEvaluar != (-1)) break;
+                    }
+                }
+                for (Accion accion : accionesEvaluar) {
+                    if(!Utilidades.existe(accion.getValor(), estadosSimilares.get(indiceEstadosEvaluar))){
+                        valor = false;
+                        break;
+                    }
+                }
+            }
+        }
+        return valor;
+    }
+
+    private int obtenerTipoAccion(Accion accion) {
+        if(accion instanceof Shift){
+            return 0;
+        }else if(accion instanceof Reduce){
+            return 1;
+        }else if(accion instanceof GoTo){
+            return 2;
+        }else{
+            return 3;
+        }
     }
 }

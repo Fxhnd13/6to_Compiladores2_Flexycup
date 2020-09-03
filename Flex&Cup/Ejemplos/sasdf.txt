@@ -1,0 +1,37 @@
+//Informacion del lenguaje
+
+nombre: pruebaSofi;
+version: 11.0.7;
+autor: sun Microsystems;
+lanzamiento: 1996;
+extension: java;
+
+%% //codigo fuente
+
+List<String> listString=new ArrayList<>();
+
+public void addString(String valor){
+         listString.add(valor); 
+}
+
+public Integer suma(Integer numero1,Integer numero2){
+          return numero1+numero2; 
+}
+
+%% //Sección de expresiones regulares
+
+palabra = [a-z]+;
+pr_entero = [0-9]+; 
+
+
+%% //Seccion de simbolos terminales y no terminales
+
+terminal pr_entero, palabra;
+
+no terminal E, R; 
+%%
+
+E :: E R;
+E :: R;
+R :: pr_entero;
+R :: palabra;

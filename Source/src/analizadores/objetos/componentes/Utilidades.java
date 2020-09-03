@@ -147,6 +147,7 @@ public class Utilidades {
                             caracteres.add(String.valueOf(ARREGLO_LETRAS[i]));
                         }
                     }
+                    break;
                 }
             }else{
                 for (int i = 0; i < ARREGLO_NUMEROS.length; i++) {
